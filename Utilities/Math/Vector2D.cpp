@@ -1,5 +1,7 @@
 #include "Vector2D.h"
-#include "MyMath2D.h"
+#include "MyMath.h"
+
+using namespace Utilities::MY_Math;
 
 cVector2D::cVector2D()
 {
@@ -31,6 +33,12 @@ void cVector2D::SetXY(float _x, float _y)
 	mY = _y;
 }
 
+float cVector2D::GetSize() const
+{
+	return sqrt(SQUARE(mX) + SQUARE(mY));
+}
+
+
 cVector2D cVector2D::Round() const
 {
 	cVector2D v(ROUND(mX), ROUND(mY));
@@ -45,80 +53,64 @@ cVector2D cVector2D::Nomaliztion() const
 	return v;
 }
 
-float cVector2D::GetLength(const cVector2D& _a, const cVector2D& _b)
+float GetLength(const cVector2D& _a, const cVector2D& _b)
 {
 	return(sqrt(SQUARE(_b.mX - _a.mX) + SQUARE(_b.mY - _a.mY)));
 }
 
-float cVector2D::GetSize() const
+
+//내적
+float Utilities::MY_Math::DotOperator(const cVector2D& _v1, const cVector2D& _v2)
 {
-	return sqrt(SQUARE(mX) + SQUARE(mY));
+	return (_v1.mX * _v2.mX) + (_v1.mY * _v2.mY);
 }
 
 
-bool operator ==(const cVector2D& _v1, const cVector2D& _v2)
+bool Utilities::MY_Math::operator ==(const cVector2D& _v1, const cVector2D& _v2)
 {
 	return (_v1.mX == _v2.mX) && (_v1.mY == _v2.mY);
 }
 
-bool operator!=(const cVector2D&  _v1, const cVector2D& _v2)
+bool Utilities::MY_Math::operator!=(const cVector2D&  _v1, const cVector2D& _v2)
 {
 	return (_v1.mX != _v2.mX) || (_v1.mY != _v2.mY);
 }
 
-bool operator< (const cVector2D& _v1, const cVector2D& _v2)
+bool Utilities::MY_Math::operator< (const cVector2D& _v1, const cVector2D& _v2)
 {
 	return (_v1.mX < _v2.mX) && (_v1.mY < _v2.mY);
 }
 //합
-cVector2D operator+(const cVector2D& _v1, const cVector2D& _v2)
+cVector2D Utilities::MY_Math::operator+(const cVector2D& _v1, const cVector2D& _v2)
 {
 	cVector2D v(_v1.mX + _v2.mX, _v1.mY + _v2.mY);
 	return v;
 }
 //차
-cVector2D operator-(const cVector2D& _v1, const cVector2D& _v2)
+cVector2D Utilities::MY_Math::operator-(const cVector2D& _v1, const cVector2D& _v2)
 {
 	cVector2D v(_v1.mX - _v2.mX, _v1.mY - _v2.mY);
 	return v;
 }
 
 //곱
-cVector2D operator*(const cVector2D& _v, float _scalar)
+cVector2D Utilities::MY_Math::operator*(const cVector2D& _v, float _scalar)
 {
 	cVector2D v(_scalar*_v.mX, _scalar*_v.mY);
 	return v;
 }
 
-float operator*(const cVector2D& _a, const cVector2D& _b)
+float Utilities::MY_Math::operator*(const cVector2D& _a, const cVector2D& _b)
 {
 	return (_a.mX * _b.mY) - (_a.mY * _b.mX);
 }
 
-cVector2D operator*(const cVector2D& _v, const sMatrix4X4& _m)
-{
-	float my[4] = { _v.mX,_v.mY,0,1 };
-	float result[4] = { 0,0,0,0 };
 
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			result[i] += (my[j] * _m.e[j][i]);
-		}
-	}
-	return cVector2D{ result[0], result[1] };
-}
-//내적
-float DotOperator(const cVector2D& _v1, const cVector2D& _v2)
-{
-	return (_v1.mX * _v2.mX) + (_v1.mY * _v2.mY);
-}
 
 cVector2D ProJ(const cVector2D& _v, const cVector2D& _n) //벡터 프로젝
 {
 	//벡터의 사이의 cos 값 
-	float cos = DotOperator(_v, _n) / (_n.GetSize() * _v.GetSize());
+	float cos = Utilities::MY_Math::DotOperator(_v, _n) / (_n.GetSize() * _v.GetSize());
 	//정규화에 곱할 스칼라 값
 	float scalar = cos * _v.GetSize();
 	//n을 정규화
@@ -138,10 +130,3 @@ cVector2D ProJa(const cVector2D& _v, const cVector2D& _n) //벡터 프로젝
 	//결과 값
 	return v * scalar;
 }
-
-
-//std::ostream &operator<<(std::ostream& _cout, const cVector2D& _v)
-//{
-//	_cout << "( " << _v.mX << ", " << _v.mY << " )";
-//	return _cout;
-//}

@@ -2,29 +2,30 @@
 #ifndef _SINGLE_TON_H_
 #define _SINGLE_TON_H
 
-
-template <class T>
-class SingleTon
+namespace Utilities
 {
-	static T* mInstance;
-public:
-	static T* GetInstance()
+	template <class T>
+	class SingleTon
 	{
-		if (mInstance == nullptr)
+		static T* mInstance;
+	public:
+		static T* GetInstance()
 		{
-			mInstance = new T();
+			if (mInstance == nullptr)
+			{
+				mInstance = new T();
+			}
+			return mInstance;
 		}
-		return mInstance;
-	}
 
-	static void Destroy()
-	{
-		mInstance = nullptr;
-	}
-};
+		static void Destroy()
+		{
+			mInstance = nullptr;
+		}
+	};
 
-template<class T>
-T* SingleTon<T>::mInstance = nullptr;
+	template<class T>
+	T* SingleTon<T>::mInstance = nullptr;
 
-
+}
 #endif // !_SINGLE_TON_H_

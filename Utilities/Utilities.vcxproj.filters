@@ -87,15 +87,18 @@
     <ClInclude Include="XML\include\tinyxml.h">
       <Filter>XML\include</Filter>
     </ClInclude>
-    <ClInclude Include="Math\MyMath2D.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Math\Vector2D.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="SingleTon.h">
       <Filter>Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MyMath.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +120,6 @@
     </ClCompile>
     <ClCompile Include="XML\include\tinyxmlparser.cpp">
       <Filter>XML\include</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\MyMath2D.cpp">
-      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Math\Vector2D.cpp">
       <Filter>Math</Filter>
