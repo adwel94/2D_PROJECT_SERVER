@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DB">
+      <UniqueIdentifier>{e81ceec2-b345-4a11-9581-6dc329b86713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{2102bdca-a4cd-466e-aafa-439e72696f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singleton">
+      <UniqueIdentifier>{7dc42232-7bcb-4759-acb7-76e8b5edaed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{d9d0266c-70be-44a8-8071-96cce1e4e773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\include">
+      <UniqueIdentifier>{95aaf25e-66b0-428d-afb4-c31dd62a8b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\lib">
+      <UniqueIdentifier>{1c7f4001-7bf4-465e-81d8-cc94aa128b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\include\mysql">
+      <UniqueIdentifier>{8c3c214d-56ab-490e-b5d7-c8cd829a171b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\include\openssl">
+      <UniqueIdentifier>{392a6702-83cc-4fb0-852a-03d58b1d8110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML\include">
+      <UniqueIdentifier>{93a9ede2-dd68-4e46-b994-028a95b53daa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DB\DB.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\errmsg.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\field_types.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\my_command.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\my_compress.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\my_list.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql_com.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql_time.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql_version.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysqld_error.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysqlx_ername.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysqlx_error.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysqlx_version.h">
+      <Filter>DB\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql\client_plugin.h">
+      <Filter>DB\include\mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql\plugin_auth_common.h">
+      <Filter>DB\include\mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\include\mysql\udf_registration_types.h">
+      <Filter>DB\include\mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="XML\include\tinystr.h">
+      <Filter>XML\include</Filter>
+    </ClInclude>
+    <ClInclude Include="XML\include\tinyxml.h">
+      <Filter>XML\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MyMath2D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="SingleTon.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DB\DB.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="DB\include\openssl\applink.c">
+      <Filter>DB\include\openssl</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\include\tinystr.cpp">
+      <Filter>XML\include</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\include\tinyxml.cpp">
+      <Filter>XML\include</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\include\tinyxmlerror.cpp">
+      <Filter>XML\include</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\include\tinyxmlparser.cpp">
+      <Filter>XML\include</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\MyMath2D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DB\lib\libcrypto-1_1-x64.dll">
+      <Filter>DB\lib</Filter>
+    </None>
+    <None Include="DB\lib\libmysql.dll">
+      <Filter>DB\lib</Filter>
+    </None>
+    <None Include="DB\lib\libssl-1_1-x64.dll">
+      <Filter>DB\lib</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DB\lib\libmysql.lib">
+      <Filter>DB\lib</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
