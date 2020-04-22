@@ -157,10 +157,11 @@
     <ClInclude Include="DB\include\my_command.h" />
     <ClInclude Include="DB\include\my_compress.h" />
     <ClInclude Include="DB\include\my_list.h" />
+    <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Math\MyMath.h" />
     <ClInclude Include="Math\Vector2D.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="SingleTon.h" />
+    <ClInclude Include="Math\Matrix.h" />
+    <ClInclude Include="Singleton\SingleTon.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="XML\include\tinystr.h" />
     <ClInclude Include="XML\include\tinyxml.h" />
@@ -168,6 +169,7 @@
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp" />
     <ClCompile Include="DB\include\openssl\applink.c" />
+    <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Vector2D.cpp" />
     <ClCompile Include="XML\include\tinystr.cpp" />

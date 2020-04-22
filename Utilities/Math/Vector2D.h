@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _VECTOR2D_H_
 #define _VECTOR2D_H_
-#include <math.h>
+
 
 
 

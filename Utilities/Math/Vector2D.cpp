@@ -1,5 +1,6 @@
 #include "Vector2D.h"
 #include "MyMath.h"
+#include <math.h>
 
 using namespace Utilities::MY_Math;
 

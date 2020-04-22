@@ -28,6 +28,9 @@
     <Filter Include="XML\include">
       <UniqueIdentifier>{93a9ede2-dd68-4e46-b994-028a95b53daa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{8aab0ead-da7d-4930-a7d6-2d2e9121aa0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DB\DB.h">
@@ -91,14 +94,17 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h" />
-    <ClInclude Include="SingleTon.h">
-      <Filter>Singleton</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Math\MyMath.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton\SingleTon.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\Log.h">
+      <Filter>Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Math\Vector2D.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\Log.cpp">
+      <Filter>Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
