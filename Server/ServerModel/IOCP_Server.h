@@ -8,7 +8,9 @@
 #include <WS2tcpip.h>
 
 #include "..\Client\Client.h"
-#include <..\Utilities\Thread\Thread.h>
+#include <Utilities/Thread\Thread.h>
+#include <Utilities/Log/Log.h>
+
 
 #define IOCP_THREAD_COUNT 8
 
@@ -18,11 +20,14 @@ namespace Server
 	class cIOCP_SERVER
 	{
 	protected:
+		Utilities::cLog mLog;
 		HANDLE mPort;
 		OVERLAPPED mExit;
 		Utilities::cThread* mProcess_thread[IOCP_THREAD_COUNT];
 	public:
 
+		cIOCP_SERVER();
+		virtual ~cIOCP_SERVER();
 
 		bool Create_Server();
 		void End_Server();
