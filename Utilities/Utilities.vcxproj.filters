@@ -37,6 +37,9 @@
     <Filter Include="Log">
       <UniqueIdentifier>{a72c6d16-a127-4ae8-8388-9f047aa35954}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Byte">
+      <UniqueIdentifier>{46321345-c2b6-465f-8339-69591f6e9349}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DB\DB.h">
@@ -118,6 +121,9 @@
     <ClInclude Include="Thread\Thread.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="Byte\Byte.h">
+      <Filter>Byte</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp">
@@ -146,9 +152,6 @@
     </ClCompile>
     <ClCompile Include="Lock\Lock.cpp">
       <Filter>Lock</Filter>
-    </ClCompile>
-    <ClCompile Include="Thread\Thread.cpp">
-      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

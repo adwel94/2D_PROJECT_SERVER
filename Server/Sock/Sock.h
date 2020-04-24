@@ -1,6 +1,8 @@
 #pragma once
 #ifndef _SOCK_H_
 #define _SOCK_H_
+
+
 #pragma comment(lib,"msimg32")
 #pragma comment(lib,"ws2_32")
 #include <winsock2.h>
@@ -8,8 +10,22 @@
 
 namespace Server
 {
+	inline void WSA_Err_display(const TCHAR* msg)
+	{
+		LPVOID lpMsgBuf;
+		FormatMessage(
+			FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+			NULL, WSAGetLastError(),
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			(LPTSTR)&lpMsgBuf, 0, NULL);
+		MessageBox(NULL, (LPCTSTR)lpMsgBuf, msg, MB_ICONERROR);
+		LocalFree(lpMsgBuf);
+	}
+
+
 	namespace Socket
 	{
+
 		class cSock
 		{
 
@@ -38,17 +54,7 @@ namespace Server
 			const SOCKADDR_IN& GetAddr() { return mAddr; }
 		};
 
-		void Err_display(const TCHAR* msg)
-		{
-			LPVOID lpMsgBuf;
-			FormatMessage(
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-				NULL, WSAGetLastError(),
-				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-				(LPTSTR)&lpMsgBuf, 0, NULL);
-			MessageBox(NULL, (LPCTSTR)lpMsgBuf, msg, MB_ICONERROR);
-			LocalFree(lpMsgBuf);
-		}
+
 	}
 }
 

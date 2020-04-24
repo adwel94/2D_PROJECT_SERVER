@@ -5,8 +5,18 @@
 namespace Utilities
 {
 	template <class T>
-	class SingleTon
+	class cSingleTon
 	{
+		cSingleTon<T>()
+		{
+
+		}
+
+		~cSingleTon<T>()
+		{
+
+		}
+
 		static T* mInstance;
 	public:
 		static T* GetInstance()
@@ -25,7 +35,7 @@ namespace Utilities
 	};
 
 	template<class T>
-	T* SingleTon<T>::mInstance = nullptr;
+	T* cSingleTon<T>::mInstance = nullptr;
 
 }
 #endif // !_SINGLE_TON_H_

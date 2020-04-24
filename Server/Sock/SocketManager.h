@@ -2,12 +2,14 @@
 #ifndef _SOCKET_MANAGER_H_
 #define _SOCKET_MANAGER_H_
 #include "Sock.h"
+#include <Singleton/SingleTon.h>
+
+
 
 namespace Server
 {
 	namespace Socket
 	{
-
 		enum IP_VER
 		{
 			IPv4 = AF_INET,
@@ -22,7 +24,7 @@ namespace Server
 
 
 		//소켓 사용시 최초 호출
-		bool Sock_Start()
+		inline bool Sock_Start()
 		{
 			WSADATA wsa;
 			//윈도우 dll 초기화 윈속 할당
@@ -59,6 +61,8 @@ namespace Server
 			//reuseaddr -bind 재사용 
 			bool Reuse_Socket(cSock* _sock);
 		};
+
+		typedef Utilities::cSingleTon<cSockManager> st_cSockManager;
 	}
 }
 

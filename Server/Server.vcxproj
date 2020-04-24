@@ -100,6 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Utilities</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,7 +146,7 @@
     <ClInclude Include="Sock\Sock.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Utilities\test.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="ServerModel\IOCP_Server.cpp" />
     <ClCompile Include="Sock\SocketManager.cpp" />
   </ItemGroup>

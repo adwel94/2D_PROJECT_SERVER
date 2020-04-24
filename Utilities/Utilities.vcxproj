@@ -39,7 +39,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Byte\Byte.h" />
     <ClInclude Include="DB\DB.h" />
     <ClInclude Include="DB\include\errmsg.h" />
     <ClInclude Include="DB\include\field_types.h" />
@@ -175,7 +176,6 @@
     <ClCompile Include="Lock\Lock.cpp" />
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="Math\Vector2D.cpp" />
-    <ClCompile Include="Thread\Thread.cpp" />
     <ClCompile Include="XML\include\tinystr.cpp" />
     <ClCompile Include="XML\include\tinyxml.cpp" />
     <ClCompile Include="XML\include\tinyxmlerror.cpp" />

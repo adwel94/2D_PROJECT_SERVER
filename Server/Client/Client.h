@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
-#include "..\Sock\Sock.h"
+#include "../Sock/Sock.h"
 
 namespace Server
 {
@@ -11,17 +11,19 @@ namespace Server
 		WSABUF wsabuf;
 	};
 
-	class cClient : public Server::Socket::cSock
+	class cClient : public Socket::cSock
 	{
 		WSAoverlapEX mRecvOverlap;
 		WSAoverlapEX mSendOverlap;
 	protected:
 
 	public:
-		bool SendPacket();
-		bool RecvPacket();
-		bool WSArecvPacket();
-		bool WSAsendPacket();
+		//cClient() {}
+		//~cClient() {}
+		//bool SendPacket();
+		//bool RecvPacket();
+		//bool WSArecvPacket();
+		//bool WSAsendPacket();
 	};
 
 }

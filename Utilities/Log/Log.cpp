@@ -1,12 +1,13 @@
-#include "Log.h"
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <string.h>
-
+#include <cstdarg>
+#include <time.h>
+#include "Log.h"
 bool Utilities::cLog::Connect(const char* _name, const char* _path)
 {
-	//길이 초과시 실패
-	if ((strlen(_name) + strlen(_path)) >= MAX_LEN)
+	//이름 길이 + 경로 길이 >= MAX_LEN
+	if ((strlen(_name) + strlen(_path)) > MAX_LEN)
 	{
 		printf_s("Name Size Over \n");
 		return false;
@@ -20,7 +21,6 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 		strcat_s(mMsg, _path);
 		mMsg[strlen(_path)] = '\\';
 		mMsg[strlen(_path) + 1] = '\0';
-
 	}
 
 	//파일 이름+
@@ -37,41 +37,43 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 	return true;
 }
 
-bool Utilities::cLog::Record(const char* _msg)
+bool Utilities::cLog::Record(const char* _msg, ...)
 {
-
 	if (mFp == nullptr) return false;
+
 	if (strlen(_msg) >= MAX_LEN) return false;
 
 	//시간 구하는 변수, 함수
 	time_t timer = time(NULL);
 	tm now;
 
-	//최대길이 + 널 + 시간값 길이
-	char log[MAX_LEN + 32 + 1] = "\0";
-
+	//최대길이+ 시간값 길이
+	char log[MAX_LEN +1 ] = "\0";
+	char timeinfo[30] = "\0";
 
 	if (localtime_s(&now, &timer) != 0)
 	{
 		//현재시간을 알수 없을 경우
-		strcat_s(log, "Unknown Time - ");
+		sprintf_s(timeinfo, "Unknown Time - ");
 	}
 	else
-	{
-		//시간을 이어 붙임
-		char timeinfo[32];
+	{	//시간을 이어 붙임
 		sprintf_s(timeinfo, "%d-%d-%d %d:%d:%d - ", now.tm_year+1900, now.tm_mon+1, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec);
-		strcat_s(log, timeinfo);
 	}
 
-	//마지막에 줄바꿈 추가
-	strcat_s(log, _msg);
+	//가변 인수 확인
+	va_list arg;
+	va_start(arg, _msg); 
+	vsprintf_s(log, _msg, arg);
+	va_end(arg);
+
 	log[strlen(log) + 1] = '\0';
 	log[strlen(log)] = '\n';
 
 
-	fputs(log,mFp);
-	return true;
+	fputs(timeinfo, mFp);
+	fputs(log, mFp);
+	return true;	
 }
 
 bool Utilities::cLog::Close()
