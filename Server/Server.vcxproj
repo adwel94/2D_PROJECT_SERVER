@@ -74,6 +74,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)Utilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -138,6 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Client\Client.h" />
+    <ClInclude Include="ServerModel\IOCP_Server.h" />
+    <ClInclude Include="Sock\SocketManager.h" />
+    <ClInclude Include="Sock\Sock.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Utilities\test.cpp" />
+    <ClCompile Include="ServerModel\IOCP_Server.cpp" />
+    <ClCompile Include="Sock\SocketManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

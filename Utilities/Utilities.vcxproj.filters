@@ -28,8 +28,14 @@
     <Filter Include="XML\include">
       <UniqueIdentifier>{93a9ede2-dd68-4e46-b994-028a95b53daa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lock">
+      <UniqueIdentifier>{91d4011f-0e43-4e71-9518-7077f7f4dc31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{9a289460-081f-4b00-a068-5f0190ade4e5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Log">
-      <UniqueIdentifier>{8aab0ead-da7d-4930-a7d6-2d2e9121aa0e}</UniqueIdentifier>
+      <UniqueIdentifier>{a72c6d16-a127-4ae8-8388-9f047aa35954}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +112,17 @@
     <ClInclude Include="Log\Log.h">
       <Filter>Log</Filter>
     </ClInclude>
+    <ClInclude Include="Lock\Lock.h">
+      <Filter>Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\Thread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp">
       <Filter>DB</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="DB\include\openssl\applink.c">
       <Filter>DB\include\openssl</Filter>
     </ClCompile>
@@ -132,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="Log\Log.cpp">
       <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock\Lock.cpp">
+      <Filter>Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\Thread.cpp">
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

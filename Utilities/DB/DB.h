@@ -7,7 +7,7 @@
 
 namespace Utilities
 {
-	namespace MY_SQL
+	namespace DB
 	{
 		//쿼리의 결과 값을 저장
 		class cDB_Result

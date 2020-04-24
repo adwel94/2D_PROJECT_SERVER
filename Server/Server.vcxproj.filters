@@ -1,2 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Sock\Sock.h">
+      <Filter>Sock</Filter>
+    </ClInclude>
+    <ClInclude Include="Sock\SocketManager.h">
+      <Filter>Sock</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerModel\IOCP_Server.h">
+      <Filter>ServerModel</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Client.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Utilities\test.cpp" />
+    <ClCompile Include="Sock\SocketManager.cpp">
+      <Filter>Sock</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerModel\IOCP_Server.cpp">
+      <Filter>ServerModel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sock">
+      <UniqueIdentifier>{a90d8879-1218-4f20-864a-a15500f3f90d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerModel">
+      <UniqueIdentifier>{82c804f6-e784-46df-b3a6-615aab93aa62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{45cb6d9c-aa59-40bc-badf-913dc06a2f26}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

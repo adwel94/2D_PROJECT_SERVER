@@ -1,12 +1,12 @@
 #include "DB.h"
 
-Utilities::MY_SQL::cDB_Result::cDB_Result()
+Utilities::DB::cDB_Result::cDB_Result()
 {
 	mCurrent_Row = -1;
 	mSql_Result = nullptr;
 }
 
-Utilities::MY_SQL::cDB_Result::~cDB_Result()
+Utilities::DB::cDB_Result::~cDB_Result()
 {
 	if (mSql_Result != nullptr)
 	{
@@ -15,7 +15,7 @@ Utilities::MY_SQL::cDB_Result::~cDB_Result()
 	}
 }
 
-bool Utilities::MY_SQL::cDB_Result::Move_Row(unsigned int _index)
+bool Utilities::DB::cDB_Result::Move_Row(unsigned int _index)
 {
 	mysql_data_seek(mSql_Result, _index - 1);
 	if (mysql_fetch_row(mSql_Result) == NULL)
@@ -26,7 +26,7 @@ bool Utilities::MY_SQL::cDB_Result::Move_Row(unsigned int _index)
 	return true;
 }
 
-bool Utilities::MY_SQL::cDB_Result::Next_Row()
+bool Utilities::DB::cDB_Result::Next_Row()
 {
 	if (mysql_fetch_row(mSql_Result) == NULL)
 	{
@@ -36,18 +36,18 @@ bool Utilities::MY_SQL::cDB_Result::Next_Row()
 	return true;
 }
 
-void Utilities::MY_SQL::cDB_Result::Set_Result(MYSQL_RES* _result)
+void Utilities::DB::cDB_Result::Set_Result(MYSQL_RES* _result)
 {
 	mCurrent_Row = 0;
 	mSql_Result = _result;
 }
 
-int Utilities::MY_SQL::cDB_Result::Current_Row_Index()
+int Utilities::DB::cDB_Result::Current_Row_Index()
 {
 	return mCurrent_Row;
 }
 
-const char* Utilities::MY_SQL::cDB_Result::Current_Row(int _index)
+const char* Utilities::DB::cDB_Result::Current_Row(int _index)
 {
 	//index 범위 검사
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
@@ -55,7 +55,7 @@ const char* Utilities::MY_SQL::cDB_Result::Current_Row(int _index)
 	return mSql_Result->current_row[_index];
 }
 
-const char* Utilities::MY_SQL::cDB_Result::operator[](unsigned int _index)
+const char* Utilities::DB::cDB_Result::operator[](unsigned int _index)
 {
 	//index 범위 검사
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
@@ -63,7 +63,7 @@ const char* Utilities::MY_SQL::cDB_Result::operator[](unsigned int _index)
 	return mSql_Result->current_row[_index];
 }
 
-const char* Utilities::MY_SQL::cDB_Result::Current_Row(const char* _filed)
+const char* Utilities::DB::cDB_Result::Current_Row(const char* _filed)
 {
 	//열 갯수 만큼 검사
 	for (int i = 0; i < (mSql_Result->field_count); i++)
@@ -77,19 +77,19 @@ const char* Utilities::MY_SQL::cDB_Result::Current_Row(const char* _filed)
 	return nullptr;
 }
 
-int Utilities::MY_SQL::cDB_Result::Row_Count()
+int Utilities::DB::cDB_Result::Row_Count()
 {
 	if (mSql_Result == nullptr) return 0;
 	return mSql_Result->row_count;
 }
 
-int Utilities::MY_SQL::cDB_Result::Column_Count()
+int Utilities::DB::cDB_Result::Column_Count()
 {
 	if (mSql_Result == nullptr) return 0;
 	return mSql_Result->field_count;
 }
 
-const char* Utilities::MY_SQL::cDB_Result::Flied_Name(unsigned int _index)
+const char* Utilities::DB::cDB_Result::Flied_Name(unsigned int _index)
 {
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
 	return mSql_Result->fields[_index].name;
@@ -99,20 +99,20 @@ const char* Utilities::MY_SQL::cDB_Result::Flied_Name(unsigned int _index)
 //-----------------------------------------------------------------------------------------------------
 
 
-Utilities::MY_SQL::cDatabase::cDatabase()
+Utilities::DB::cDatabase::cDatabase()
 {
 	mConnection = mysql_init(NULL);
 }
 
-Utilities::MY_SQL::cDatabase::~cDatabase()
+Utilities::DB::cDatabase::~cDatabase()
 {
 	if (mConnection)
 	{
-		MY_SQL::cDatabase::Close();
+		DB::cDatabase::Close();
 	}
 }
 
-bool Utilities::MY_SQL::cDatabase::Conncetion(const char* _HOST, const char* _USER, const char* _PASS, const char* _NAME, unsigned int _PORT, const char* _UNIX_SOCK, unsigned long _CLIENT_FLAG)
+bool Utilities::DB::cDatabase::Conncetion(const char* _HOST, const char* _USER, const char* _PASS, const char* _NAME, unsigned int _PORT, const char* _UNIX_SOCK, unsigned long _CLIENT_FLAG)
 {
 	//DB접속 
 	if (mysql_real_connect(mConnection, _HOST, _USER, _PASS, _NAME, _PORT, (char*)NULL, 0) == NULL)
@@ -126,7 +126,7 @@ bool Utilities::MY_SQL::cDatabase::Conncetion(const char* _HOST, const char* _US
 	return true;
 }
 
-bool Utilities::MY_SQL::cDatabase::Run_SQL(const char* _query)
+bool Utilities::DB::cDatabase::Run_SQL(const char* _query)
 {
 	//쿼리 적용
 	int retval = mysql_query(mConnection, _query);
@@ -142,7 +142,7 @@ bool Utilities::MY_SQL::cDatabase::Run_SQL(const char* _query)
 	return true;
 }
 
-bool Utilities::MY_SQL::cDatabase::Get_Result(OUT cDB_Result& _result)
+bool Utilities::DB::cDatabase::Get_Result(OUT cDB_Result& _result)
 {
 	MYSQL_RES* result = nullptr;
 	//결과값을 저장한다.
@@ -154,7 +154,7 @@ bool Utilities::MY_SQL::cDatabase::Get_Result(OUT cDB_Result& _result)
 	return false;
 }
 
-void Utilities::MY_SQL::cDatabase::Close()
+void Utilities::DB::cDatabase::Close()
 {
 	//DB 연결해제
 	mysql_close(mConnection);

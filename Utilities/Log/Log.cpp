@@ -6,7 +6,7 @@
 bool Utilities::cLog::Connect(const char* _name, const char* _path)
 {
 	//길이 초과시 실패
-	if ((strlen(_name) + strlen(_path)) >= MAX_LEN +1)
+	if ((strlen(_name) + strlen(_path)) >= MAX_LEN)
 	{
 		printf_s("Name Size Over \n");
 		return false;
