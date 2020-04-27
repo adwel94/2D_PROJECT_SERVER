@@ -7,21 +7,20 @@
     <ClInclude Include="Sock\SocketManager.h">
       <Filter>Sock</Filter>
     </ClInclude>
-    <ClInclude Include="ServerModel\IOCP_Server.h">
-      <Filter>ServerModel</Filter>
-    </ClInclude>
     <ClInclude Include="Client\Client.h">
       <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerModel\IOCP_Manager.h">
+      <Filter>ServerModel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sock\SocketManager.cpp">
       <Filter>Sock</Filter>
     </ClCompile>
-    <ClCompile Include="ServerModel\IOCP_Server.cpp">
+    <ClCompile Include="ServerModel\IOCP_Manager.cpp">
       <Filter>ServerModel</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sock">

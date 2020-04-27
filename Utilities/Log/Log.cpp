@@ -37,6 +37,7 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 	}
 
 	printf_s("Log Connect Success Name : %s \n", _name);
+	Record("---------------------Connect-----------------------");
 	return true;
 }
 

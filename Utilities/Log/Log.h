@@ -30,7 +30,7 @@ namespace Utilities
 		}
 
 		//파일이름,경로
-		bool Connect(const char* _name, const char* _path = "\0");
+		bool Connect(const char* _name, const char* _path = "..\\LogFile");
 		//기록
 		bool Record(const char* _msg, ...);
 		//해제

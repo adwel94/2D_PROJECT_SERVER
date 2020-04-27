@@ -3,7 +3,7 @@
 #define _THREAD_H_
 #include <process.h>
 #include <Windows.h>
-
+#include <stdio.h>
 
 namespace Utilities
 {
@@ -29,9 +29,10 @@ namespace Utilities
 			while (true)
 			{
 				WaitForSingleObject(thread->mRunEvt, INFINITE);
-				if (thread->mProc(thread->mData) == false) break;
+				if (thread->mProc(thread->mData) == false) break; //비정상 종료 일경우 
 				if (WaitForSingleObject(thread->mExitEvt, 0) == WAIT_OBJECT_0)
 				{
+					//스레드 종료
 					break;
 				}
 			}
@@ -42,26 +43,52 @@ namespace Utilities
 
 	public:
 
-		cThread(ThreadProc _proc, LPVOID _ptr)
+		cThread()
 		{
-	
+
 			mthread = NULL;
-			mThredID = 0;
+			mThredID = -1;
 			mRunEvt = NULL;
 			mExitEvt = NULL;
 			mFinishEvt = NULL;
-			mProc = _proc;
-			mData = _ptr;			
+			mProc = NULL;
+			mData = NULL;
 		}
 
-		bool Create()
+		~cThread()
+		{
+			Destroy();
+			CloseHandle(mthread);
+		}
+
+		bool Create(ThreadProc _proc, LPVOID _ptr,bool _start = false, bool _repeat = false)
 		{
 			if (mthread != NULL) return false;
-			//ResetEvt 사용 시그널 off로 시작
+
+			mProc = _proc;
+			mData = _ptr;
+
+			//2- reset사용, 3-on/off 
 			mRunEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mExitEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mFinishEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
-			mthread = (HANDLE)_beginthreadex(NULL, 0, &Process, this, CREATE_SUSPENDED, &mThredID);
+			mthread = (HANDLE)_beginthreadex(NULL, 0, &Process, this, 0, &mThredID);
+
+			printf_s("Thread Create ID: %d \n", mThredID);
+
+			//바로 시작할경우 run on
+			if (_start)
+			{
+				SetEvent(mRunEvt);
+			}
+
+			//반복을 안할경우 바로 exit on
+			if (!_repeat)
+			{
+				SetEvent(mExitEvt);
+			}	
+
+
 			return true;
 		}
 
@@ -91,6 +118,8 @@ namespace Utilities
 			CloseHandle(mExitEvt);
 			CloseHandle(mRunEvt);
 			CloseHandle(mFinishEvt);
+
+			printf_s("Thread Destroy ID: %d \n",mThredID);
 
 			return true;
 		}

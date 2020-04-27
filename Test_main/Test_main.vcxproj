@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{C62B785A-53C4-4ADE-98DB-AB0B9CF310CD}</ProjectGuid>
-    <RootNamespace>Utilities</RootNamespace>
+    <ProjectGuid>{5E336AA5-6A20-4478-A3CE-8C1546C01C2A}</ProjectGuid>
+    <RootNamespace>Testmain</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -39,7 +39,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -69,15 +69,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>DB\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>DB\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)Library</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -85,25 +81,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Server\;..\Utilities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Utilities.lib;Server.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,52 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Byte\Byte.h" />
-    <ClInclude Include="DB\DB.h" />
-    <ClInclude Include="DB\include\errmsg.h" />
-    <ClInclude Include="DB\include\field_types.h" />
-    <ClInclude Include="DB\include\mysql.h" />
-    <ClInclude Include="DB\include\mysqld_error.h" />
-    <ClInclude Include="DB\include\mysqlx_ername.h" />
-    <ClInclude Include="DB\include\mysqlx_error.h" />
-    <ClInclude Include="DB\include\mysqlx_version.h" />
-    <ClInclude Include="DB\include\mysql\client_plugin.h" />
-    <ClInclude Include="DB\include\mysql\plugin_auth_common.h" />
-    <ClInclude Include="DB\include\mysql\udf_registration_types.h" />
-    <ClInclude Include="DB\include\mysql_com.h" />
-    <ClInclude Include="DB\include\mysql_time.h" />
-    <ClInclude Include="DB\include\mysql_version.h" />
-    <ClInclude Include="DB\include\my_command.h" />
-    <ClInclude Include="DB\include\my_compress.h" />
-    <ClInclude Include="DB\include\my_list.h" />
-    <ClInclude Include="Lock\Lock.h" />
-    <ClInclude Include="Log\Log.h" />
-    <ClInclude Include="Math\MyMath.h" />
-    <ClInclude Include="Math\Vector2D.h" />
-    <ClInclude Include="Math\Matrix.h" />
-    <ClInclude Include="Singleton\SingleTon.h" />
-    <ClInclude Include="Thread\Thread.h" />
-    <ClInclude Include="XML\include\tinystr.h" />
-    <ClInclude Include="XML\include\tinyxml.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="DB\DB.cpp" />
-    <ClCompile Include="DB\include\openssl\applink.c" />
-    <ClCompile Include="Lock\Lock.cpp" />
-    <ClCompile Include="Log\Log.cpp" />
-    <ClCompile Include="Math\Vector2D.cpp" />
-    <ClCompile Include="XML\include\tinystr.cpp" />
-    <ClCompile Include="XML\include\tinyxml.cpp" />
-    <ClCompile Include="XML\include\tinyxmlerror.cpp" />
-    <ClCompile Include="XML\include\tinyxmlparser.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DB\lib\libcrypto-1_1-x64.dll" />
-    <None Include="DB\lib\libmysql.dll" />
-    <None Include="DB\lib\libssl-1_1-x64.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="DB\lib\libmysql.lib" />
+    <ClCompile Include="Test_Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

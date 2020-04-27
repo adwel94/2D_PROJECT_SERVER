@@ -102,7 +102,6 @@
     <ClInclude Include="Math\Vector2D.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h" />
     <ClInclude Include="Math\MyMath.h">
       <Filter>Math</Filter>
     </ClInclude>
