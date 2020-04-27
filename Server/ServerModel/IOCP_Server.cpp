@@ -1,5 +1,5 @@
 #include "IOCP_Server.h"
-#include"../Sock/SocketManager.h"
+#include "Sock/SocketManager.h"
 
 //Server::cIOCP_SERVER::cIOCP_SERVER()
 //{
@@ -45,6 +45,7 @@ bool Server::cIOCP_SERVER::IOCP_Process(LPVOID _iocp)
 
 bool Server::cIOCP_SERVER::Initialize_Server()
 {
+	mLog.Connect("SERVER.TXT");
 	if (!(Socket::st_cSockManager::GetInstance()->TCP_Listen_Sock(&mServer)))
 	{
 		return false;

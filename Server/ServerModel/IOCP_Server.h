@@ -1,9 +1,9 @@
 #pragma once
 #ifndef _IOCP_SERVER_H_
 #define _IOCP_SERVER_H_
-#include "../Client/Client.h"
-#include <Thread/Thread.h>
-#include <Log/Log.h>
+#include "Client/Client.h"
+#include "Thread/Thread.h"
+#include "Log/Log.h"
 
 
 #define IOCP_THREAD_COUNT 8

@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
-#include "../Sock/Sock.h"
+#include "Sock/Sock.h"
 
 namespace Server
 {

@@ -3,7 +3,10 @@
 #include <string.h>
 #include <cstdarg>
 #include <time.h>
+
+
 #include "Log.h"
+
 bool Utilities::cLog::Connect(const char* _name, const char* _path)
 {
 	//이름 길이 + 경로 길이 >= MAX_LEN
