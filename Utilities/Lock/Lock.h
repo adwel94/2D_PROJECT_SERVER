@@ -6,6 +6,10 @@ namespace Utilities
 {
 	namespace Lock
 	{
+
+
+		//임계영역 클래스
+
 		class cLock
 		{
 		protected:

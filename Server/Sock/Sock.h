@@ -1,13 +1,8 @@
 #pragma once
 #ifndef _SOCK_H_
 #define _SOCK_H_
+#include "Server.h"
 
-
-#pragma comment(lib,"msimg32")
-#pragma comment(lib,"ws2_32")
-#include <winsock2.h>
-#include <WS2tcpip.h>
-#include <stdio.h>
 
 namespace Server
 {
@@ -60,54 +55,24 @@ namespace Server
 			SOCKADDR_IN mAddr;
 
 		public:
-			cSock()
-			{
-				mSock = NULL; //소켓 초기화
-				ZeroMemory(&mAddr, sizeof(SOCKADDR_IN)); //주소 메모리 초기화
-			}
+			cSock();
+			cSock(SOCKET _sock, const SOCKADDR_IN& _addr);
+			cSock(IP_VER _af, SOCKTYPE _socktype, int _pro = 0, int _port = 9000, const char* _addr = "\0");
+			virtual ~cSock();
 
-			cSock(SOCKET _sock, const SOCKADDR_IN& _addr)
-			{
-				mSock = _sock;//소켓 대입
-				memcpy(&mAddr, &_addr, sizeof(SOCKADDR_IN)); //주소 복사
-			}
 
-			cSock(IP_VER _af, SOCKTYPE _socktype, int _pro = 0 , int _port = 9000, const char* _addr = "\0")
-			{
-				mSock = socket(_af, _socktype, _pro);
-				if (mSock == INVALID_SOCKET)
-				{
-					WSA_Err_display((TCHAR*)"Socket()");		
-				}
-
-				ZeroMemory(&mAddr, sizeof(mAddr));
-				mAddr.sin_family = _af; //ip 버젼
-
-				//주소를 따로 입력하지않으면 localhost
-				if (strlen(_addr) == 0)
-				{
-					mAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-				}
-				else
-				{
-					inet_pton(_af, _addr, &mAddr.sin_addr);
-				}
-				//포트 등록
-				mAddr.sin_port = htons(_port);
-
-				char addr[INET_ADDRSTRLEN];
-				inet_ntop(AF_INET, &mAddr.sin_addr, addr, sizeof(addr));
-				printf_s("Create Socket : IP : %s, PORT : %d \n", addr, ntohs(mAddr.sin_port));
-			}
-
-		
-			virtual ~cSock()
-			{
-				closesocket(mSock);
-			}
 
 			const SOCKET GetSock() { return mSock; }
 			const SOCKADDR_IN& GetAddr() { return mAddr; }
+
+
+			//send 함수
+			bool Send(BYTE* _buf, int _size, int _flag);
+			bool WSA_Send(LPWSABUF _wsabuf, DWORD _buffercount, LPDWORD _sendbyte, DWORD _flag, LPWSAOVERLAPPED _overlap, LPWSAOVERLAPPED_COMPLETION_ROUTINE _routine);
+			//recv 함수
+			bool Recv(BYTE* _buf, int _size, int _flag);
+			bool WSA_Recv(LPWSABUF _wsabuf, DWORD _buffercount, LPDWORD _recvbyte, LPDWORD _flag, LPWSAOVERLAPPED _overlap, LPWSAOVERLAPPED_COMPLETION_ROUTINE _routine);
+
 		};
 
 

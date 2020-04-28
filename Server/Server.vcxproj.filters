@@ -13,6 +13,10 @@
     <ClInclude Include="ServerModel\IOCP_Manager.h">
       <Filter>ServerModel</Filter>
     </ClInclude>
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="Packet\Packet.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sock\SocketManager.cpp">
@@ -20,6 +24,15 @@
     </ClCompile>
     <ClCompile Include="ServerModel\IOCP_Manager.cpp">
       <Filter>ServerModel</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Client.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Packet\Packet.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="Sock\Sock.cpp">
+      <Filter>Sock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +44,9 @@
     </Filter>
     <Filter Include="Client">
       <UniqueIdentifier>{45cb6d9c-aa59-40bc-badf-913dc06a2f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{969a0eb8-072a-4ea5-99eb-f66cc38d966f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

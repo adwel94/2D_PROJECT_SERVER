@@ -1,40 +1,38 @@
 #include "IOCP_Manager.h"
 
 
-
-bool Server::cIOCP_Manager::IOCP_Process(LPVOID _iocp)
+template <class T>
+bool Server::cIOCP_Manager<T>::IOCP_Process(LPVOID _iocp)
 {
 	cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
 	DWORD transferred; //전송량
-	cClient* client;//클라언트
-	LPOVERLAPPED overlap;//오버랩 받을 변수
-	BOOL retval = GetQueuedCompletionStatus(iocp->mPort, &transferred, (PULONG_PTR)&client, &overlap, INFINITE); //비동기 입출력이 완료되기를 기다림
-
-	if (iocp->mExit) 
+	T key;//클라언트
+	LPOVERLAPPED overlap;//오버랩 받을 변수	
+	while (true)
 	{
-		printf_s("recv exit overlap - Exit Process \n");
-		return false;
+		BOOL retval = GetQueuedCompletionStatus(iocp->mPort, &transferred, (PULONG_PTR)&key, &overlap, INFINITE); //비동기 입출력이 완료되기를 기다림
+		if (retval == FALSE) //클라이언트 강제 종료
+		{
+			iocp->ErrorProcess(key, overlap,transferred);
+			if (iocp->mExit)
+			{
+				printf_s("recv exit overlap - Exit Process \n");
+				return true;
+			}
+		}
+		else if (transferred == 0)
+		{
+			iocp->DisconnectProcess(key, overlap, transferred);
+		}
+
+		iocp->CompletionProcess(key, overlap, transferred);
 	}
-
-	if (retval == FALSE || transferred == 0) //클라이언트 강제 종료
-	{
-
-		//DWORD temp1, temp2;
-		//WSAGetOverlappedResult(client->GetSock(), overlap, &temp1, FALSE, &temp2);//무슨 에러인지 확인
-		//Server::WSA_Err_display((TCHAR*)"WSAGetOverlappedResult()");//에러 출력
-		return false;
-		///*server->DisconnectProcess(client);*/
-	}
-
-	//if (client->IsRecvOverLap(overlap)) RecvProcess(client, cbTransferred);
-	//if (client->IsSendOverLap(overlap)) SendProcess(client, cbTransferred);
-
 	return true;
 }
 
-Server::cIOCP_Manager::cIOCP_Manager(int _thread_count)
+template<class T>
+Server::cIOCP_Manager<T>::cIOCP_Manager(int _thread_count)
 {
-
 	mPort = NULL;
 	mExit = FALSE;
 	if (_thread_count < 0)
@@ -49,16 +47,19 @@ Server::cIOCP_Manager::cIOCP_Manager(int _thread_count)
 	{
 		mThread_count = _thread_count;
 	}
+
 	mProcess_thread = new Utilities::cThread[mThread_count];
 }
 
-Server::cIOCP_Manager::~cIOCP_Manager()
+template<class T>
+Server::cIOCP_Manager<T>::~cIOCP_Manager()
 {
 	mLog.Close();
 	delete[] mProcess_thread;
 }
 
-bool Server::cIOCP_Manager::Initialize_IOCP()
+template<class T>
+bool Server::cIOCP_Manager<T>::Initialize_IOCP()
 {
 	mLog.Connect("IOCP_MANAGER.TXT");
 
@@ -79,14 +80,20 @@ bool Server::cIOCP_Manager::Initialize_IOCP()
 
 }
 
-void Server::cIOCP_Manager::End_IOCP()
+template<class T>
+void Server::cIOCP_Manager<T>::Accpet_Port(SOCKET _sock, T _key)
+{
+	CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)_key, 0);//포트에 클라이언트 연결 컴플리션키는 클라이언트 객체로
+	AcceptProcess(T);
+}
+
+template<class T>
+void Server::cIOCP_Manager<T>::End_IOCP()
 {
 	mExit = TRUE;
 	PostQueuedCompletionStatus(mPort, 1, NULL, 0);
 	CloseHandle(mPort);
 	mPort = NULL;
-}
 
-void Server::cIOCP_Manager::AcceptProcess(Socket::cSock* _Server)
-{
+	mLog.Record("END IOCP -------------------");
 }

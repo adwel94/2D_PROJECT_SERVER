@@ -4,6 +4,9 @@
 
 namespace Utilities
 {
+
+	//ΩÃ±€≈Ê ∆–≈œ
+
 	template <class T>
 	class cSingleTon
 	{

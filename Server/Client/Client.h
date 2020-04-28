@@ -2,28 +2,32 @@
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
 #include "Sock/Sock.h"
+#include "Packet/Packet.h"
 
 namespace Server
 {
-	struct WSAoverlapEX
-	{
-		OVERLAPPED overlapped;
-		WSABUF wsabuf;
-	};
 
-	class cClient : public Socket::cSock
+	class cClient :public Server::Socket::cSock, public Server::cPacket
 	{
-		WSAoverlapEX mRecvOverlap;
-		WSAoverlapEX mSendOverlap;
+
+
 	protected:
 
 	public:
-		//cClient() {}
-		//~cClient() {}
-		//bool SendPacket();
-		//bool RecvPacket();
-		//bool WSArecvPacket();
-		//bool WSAsendPacket();
+
+		cClient() {}
+		~cClient() {}
+
+		bool Send_Packet();
+		bool WSA_Send_Packet();
+
+
+		bool Recv_Packet();
+		bool WSA_Recv_Packet();
+
+
+		virtual bool Recv_Process() = 0;
+		virtual bool Send_Process() = 0;
 	};
 
 }

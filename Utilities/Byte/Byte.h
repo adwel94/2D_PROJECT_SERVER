@@ -6,6 +6,7 @@
 
 
 //가변길이 BYTE 배열
+//template을 이용해 바이트 단위로 변환 가능
 
 
 namespace Utilities
@@ -29,20 +30,17 @@ namespace Utilities
 	{
 		sp_Byte mByte;//배열
 		int mSize;//배열크기
-		int mTrans;//전송량
 
 		sBuffer(int _size = 0)
 		{
 			mByte = CREATE_BUF(_size);
 			mSize = _size;
-			mTrans = 0;		
 		}
 
 		sBuffer(sBuffer& _buffer)
 		{
 			mByte = CREATE_BUF(_buffer.mSize);
 			mSize = _buffer.mSize;
-			mTrans = _buffer.mTrans;
 
 			memcpy_s(mByte.get(), mSize, _buffer.mByte.get(), mSize);
 			
@@ -54,18 +52,17 @@ namespace Utilities
 		}
 
 		//버퍼 초기화
-		void Reset(int _size = 0)
+		void Reset_Buffer(int _size = 0)
 		{
 			mByte = CREATE_BUF(_size);
 			mSize = _size;
-			mTrans = 0;
 		}
 
-		//앞부터 덮어쓰기
+		//덮어쓰기
 		template <class T>
 		void OverWrite(T* _data, int _datesize)
 		{
-			mByte = Reset(_datesize);
+			Reset_Buffer(_datesize);
 			memcpy_s(mByte.get(), mSize, _data, _datesize);		
 		}
 
@@ -77,7 +74,7 @@ namespace Utilities
 			sp_Byte empt = mByte;
 			int emptsize = mSize;
 			//새로운 크기 버퍼 생성
-			mByte = Reset(emptsize + _datesize);
+			Reset_Buffer(emptsize + _datesize);
 			//기존 버퍼 메모리를 복사
 			memcpy_s(mByte.get(), mSize, empt.get(), emptsize);
 			//기존버퍼 포인터만큼 포인터를 옴겨서 뒤에 붙임
@@ -98,7 +95,7 @@ namespace Utilities
 			int emptsize = mSize;
 
 			//사이즈 줄여서 초기화
-			Reset(emptsize - _datesize);
+			Reset_Buffer(emptsize - _datesize);
 
 			//기존 버퍼 메모리를 복사(앞으로 당기는 과정)
 			memcpy_s(mByte.get(), mSize, empt.get() + _datesize, emptsize - _datesize);

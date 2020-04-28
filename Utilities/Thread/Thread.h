@@ -9,34 +9,46 @@ namespace Utilities
 {
 	typedef bool (*ThreadProc)(LPVOID);
 
+
+	//스레드 
+
 	class cThread
 	{
 
 	public:
+		enum {
+			EXIT = TRUE,
+			ERROR_EXIT = FALSE
+		};
 
 	protected:
+
+		//스레드 아이디
 		unsigned int mThredID;
+		bool mRepeat;
+
+		//스레드 핸들, 함수, 데이타
 		HANDLE mthread;
 		ThreadProc mProc;
 		LPVOID mData;
+
+
+		//시작,정지,종료
 		HANDLE mRunEvt;
-		HANDLE mExitEvt;
 		HANDLE mFinishEvt;
 
+		//스레드 함수
 		static unsigned __stdcall Process(LPVOID _ptr)
 		{
 			cThread* thread = (cThread*)_ptr;
-			while (true)
+			//반복
+			do
 			{
-				WaitForSingleObject(thread->mRunEvt, INFINITE);
-				if (thread->mProc(thread->mData) == false) break; //비정상 종료 일경우 
-				if (WaitForSingleObject(thread->mExitEvt, 0) == WAIT_OBJECT_0)
-				{
-					//스레드 종료
-					break;
-				}
-			}
+				WaitForSingleObject(thread->mRunEvt, INFINITE);//시작 이벤트 기다림
+				if (thread->mProc(thread->mData) == ERROR_EXIT) break; //비정상 종료 일경우 
+			} while (thread->mRepeat);
 
+			//종료 on
 			SetEvent(thread->mFinishEvt);
 			return 1;
 		}
@@ -49,10 +61,10 @@ namespace Utilities
 			mthread = NULL;
 			mThredID = -1;
 			mRunEvt = NULL;
-			mExitEvt = NULL;
 			mFinishEvt = NULL;
 			mProc = NULL;
 			mData = NULL;
+			mRepeat = false;
 		}
 
 		~cThread()
@@ -70,9 +82,9 @@ namespace Utilities
 
 			//2- reset사용, 3-on/off 
 			mRunEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
-			mExitEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mFinishEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mthread = (HANDLE)_beginthreadex(NULL, 0, &Process, this, 0, &mThredID);
+			mRepeat = _repeat;
 
 			printf_s("Thread Create ID: %d \n", mThredID);
 
@@ -81,13 +93,6 @@ namespace Utilities
 			{
 				SetEvent(mRunEvt);
 			}
-
-			//반복을 안할경우 바로 exit on
-			if (!_repeat)
-			{
-				SetEvent(mExitEvt);
-			}	
-
 
 			return true;
 		}
@@ -108,14 +113,14 @@ namespace Utilities
 
 		bool Destroy()
 		{
+			//스레드 종료, 각종 이벤트 초기화
 			if (mthread == NULL) return false;
+			mRepeat = false;
 
-			SetEvent(mExitEvt);
 			SetEvent(mRunEvt);
 
 			WaitForSingleObject(mFinishEvt, INFINITE);
 
-			CloseHandle(mExitEvt);
 			CloseHandle(mRunEvt);
 			CloseHandle(mFinishEvt);
 
