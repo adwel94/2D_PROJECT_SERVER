@@ -17,6 +17,12 @@
     <ClInclude Include="Packet\Packet.h">
       <Filter>Packet</Filter>
     </ClInclude>
+    <ClInclude Include="User\User.h">
+      <Filter>User</Filter>
+    </ClInclude>
+    <ClInclude Include="User\UserManager.h">
+      <Filter>User</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sock\SocketManager.cpp">
@@ -34,6 +40,9 @@
     <ClCompile Include="Sock\Sock.cpp">
       <Filter>Sock</Filter>
     </ClCompile>
+    <ClCompile Include="User\UserManager.cpp">
+      <Filter>User</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sock">
@@ -47,6 +56,9 @@
     </Filter>
     <Filter Include="Packet">
       <UniqueIdentifier>{969a0eb8-072a-4ea5-99eb-f66cc38d966f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User">
+      <UniqueIdentifier>{4e581efe-0288-40e2-af94-fccb67ebbd1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

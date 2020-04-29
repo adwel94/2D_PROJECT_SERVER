@@ -40,6 +40,9 @@
     <Filter Include="Byte">
       <UniqueIdentifier>{46321345-c2b6-465f-8339-69591f6e9349}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Codemaker">
+      <UniqueIdentifier>{ce7b874c-e0c1-4757-b089-8a11c6954185}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DB\DB.h">
@@ -123,6 +126,9 @@
     <ClInclude Include="Byte\Byte.h">
       <Filter>Byte</Filter>
     </ClInclude>
+    <ClInclude Include="CodeMaker\CodeMaker.h">
+      <Filter>Codemaker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp">
@@ -151,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="Lock\Lock.cpp">
       <Filter>Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeMaker\CodeMaker.cpp">
+      <Filter>Codemaker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

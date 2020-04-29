@@ -157,6 +157,8 @@
     <ClInclude Include="ServerModel\IOCP_Manager.h" />
     <ClInclude Include="Sock\SocketManager.h" />
     <ClInclude Include="Sock\Sock.h" />
+    <ClInclude Include="User\User.h" />
+    <ClInclude Include="User\UserManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client\Client.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="ServerModel\IOCP_Manager.cpp" />
     <ClCompile Include="Sock\Sock.cpp" />
     <ClCompile Include="Sock\SocketManager.cpp" />
+    <ClCompile Include="User\UserManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

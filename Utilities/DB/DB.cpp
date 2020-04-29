@@ -1,4 +1,6 @@
 #include "DB.h"
+#include <cstdarg>
+#include <string.h>
 
 Utilities::DB::cDB_Result::cDB_Result()
 {
@@ -89,7 +91,20 @@ int Utilities::DB::cDB_Result::Column_Count()
 	return mSql_Result->field_count;
 }
 
-const char* Utilities::DB::cDB_Result::Flied_Name(unsigned int _index)
+bool Utilities::DB::cDB_Result::Column_Check(const char* _column)
+{
+	if (mSql_Result == nullptr) return false;
+	for (int i = 0; i < mSql_Result->field_count; i++)
+	{
+		if (!strcmp(mSql_Result->fields[i].name, _column))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+const char* Utilities::DB::cDB_Result::Column_Name(unsigned int _index)
 {
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
 	return mSql_Result->fields[_index].name;
@@ -106,7 +121,7 @@ Utilities::DB::cDatabase::cDatabase()
 
 Utilities::DB::cDatabase::~cDatabase()
 {
-	if (mConnection)
+	if (mConnection != NULL)
 	{
 		DB::cDatabase::Close();
 	}
@@ -126,8 +141,19 @@ bool Utilities::DB::cDatabase::Conncetion(const char* _HOST, const char* _USER, 
 	return true;
 }
 
-bool Utilities::DB::cDatabase::Run_SQL(const char* _query)
+bool Utilities::DB::cDatabase::Run_SQL(const char* _query, ...)
 {
+
+	char sql[512] = "\0";
+
+
+	va_list arg;
+	va_start(arg, _query);
+	vsprintf_s(sql, _query, arg);
+	va_end(arg);
+
+
+
 	//Äõ¸® Àû¿ë
 	int retval = mysql_query(mConnection, _query);
 	if (retval != 0)

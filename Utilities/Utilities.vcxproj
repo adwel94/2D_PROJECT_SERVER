@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Byte\Byte.h" />
+    <ClInclude Include="CodeMaker\CodeMaker.h" />
     <ClInclude Include="DB\DB.h" />
     <ClInclude Include="DB\include\errmsg.h" />
     <ClInclude Include="DB\include\field_types.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="XML\include\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CodeMaker\CodeMaker.cpp" />
     <ClCompile Include="DB\DB.cpp" />
     <ClCompile Include="DB\include\openssl\applink.c" />
     <ClCompile Include="Lock\Lock.cpp" />
