@@ -1,5 +1,10 @@
 #include "Client.h"
 
+const Server::cUser& Server::cClient::User()
+{
+	return mUser;
+}
+
 bool Server::cClient::Send_Packet()
 {	
 	sBuffer* sendBuf = mSendBuf.front();

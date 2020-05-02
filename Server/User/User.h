@@ -2,7 +2,7 @@
 #ifndef _USER_H_
 #define _USER_H_
 #include <string.h>
-
+#include <CodeMaker/CodeMaker.h>
 
 
 namespace Server
@@ -17,7 +17,7 @@ namespace Server
 		};
 	protected:
 
-		unsigned __int64 mCode;
+		Utilities::CODE mCode;
 		char mId[30];
 		char mPw[30];
 
@@ -30,7 +30,7 @@ namespace Server
 			mPw[0] = '\0';
 		}
 
-		cUser(const char* _id, const char* _pw, unsigned __int64 _code = 0)
+		cUser(const char* _id, const char* _pw, Utilities::CODE _code = 0)
 		{
 			mCode = _code;
 			strcpy_s(mId, ID_SIZE, _id);

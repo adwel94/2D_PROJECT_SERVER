@@ -6,6 +6,9 @@
 namespace Utilities
 {
 
+
+
+	typedef unsigned __int64 CODE;
 	//고유 코드를 생성 
 	//base(시간) + add
 	class cCodeMaker
@@ -23,7 +26,7 @@ namespace Utilities
 		cCodeMaker();
 		virtual ~cCodeMaker();
 
-		unsigned __int64 Get_Code();
+		CODE Get_Code();
 	};
 }
 

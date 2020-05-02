@@ -1,10 +1,9 @@
 #pragma once
 #ifndef _DB_H_
 #define _DB_H_
-#pragma comment(lib,"libmysql.lib") 
-#include <WinSock2.h>
 #include "include/mysql.h"
-#include <stdio.h>
+
+
 
 namespace Utilities
 {

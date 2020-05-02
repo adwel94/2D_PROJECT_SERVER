@@ -1,4 +1,5 @@
 #include "DB.h"
+#include <stdio.h>
 #include <cstdarg>
 #include <string.h>
 

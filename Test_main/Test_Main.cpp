@@ -1,9 +1,7 @@
 //#include "ServerModel/IOCP_Manager.h"
 //#include "Sock/SocketManager.h"
 //#include "Client/Client.h"
-#include <time.h>
-#include <iostream>
-#include <windows.h>
+#include "User/UserManager.h"
 //using namespace Server;
 
 
@@ -48,27 +46,27 @@ int main()
 {
 
 
-	time_t t = time(NULL);
-	tm m;
+	//time_t t = time(NULL);
+	//tm m;
 
 
 
 
-	time_t t2 = time(NULL);
-	localtime_s(&m, &t);
+	//time_t t2 = time(NULL);
+	//localtime_s(&m, &t);
 
 
-	//unsigned __int64 n1 =20042911040000;
-	unsigned short s1 = 0;
-	unsigned __int64 e = 1000000000000;
-	unsigned __int64 _n1 = ((__int64)m.tm_year - 100) * e;
-	_n1 += ((__int64)m.tm_mon + 1) * (e /=100);
-	_n1 += (m.tm_mday) * (e/=100);
-	_n1 += (m.tm_hour) * (e /= 100);
-	_n1 +=  (m.tm_min) * (e /= 100);
-	_n1 += (++s1);
+	////unsigned __int64 n1 =20042911040000;
+	//unsigned short s1 = 0;
+	//unsigned __int64 e = 1000000000000;
+	//unsigned __int64 _n1 = ((__int64)m.tm_year - 100) * e;
+	//_n1 += ((__int64)m.tm_mon + 1) * (e /=100);
+	//_n1 += (m.tm_mday) * (e/=100);
+	//_n1 += (m.tm_hour) * (e /= 100);
+	//_n1 +=  (m.tm_min) * (e /= 100);
+	//_n1 += (++s1);
 
-	std::cout << _n1 << std::endl;
+	
 
 
 

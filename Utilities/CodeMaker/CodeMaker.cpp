@@ -12,7 +12,7 @@ Utilities::cCodeMaker::~cCodeMaker()
 
 }
 
-unsigned __int64 Utilities::cCodeMaker::Get_Code()
+Utilities::CODE Utilities::cCodeMaker::Get_Code()
 {
 	time_t t = time(NULL);
 
