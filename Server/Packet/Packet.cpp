@@ -94,35 +94,50 @@ void Server::cPacket::Pack(const double& _double)
 void Server::cPacket::Pack(const char* _string)
 {
 	//문자길이 + 문자열
-	int len = strlen(_string);
+	int len = 0;
+	len = strlen(_string) + 1;
 	Write<int>(&len, (int)sizeof(int));
 	Write<const char>(_string, len);
 }
 
-void Server::cPacket::UnPack(bool& _bool)
+void Server::cPacket::Pack(const sBuffer& _buffer)
+{
+	int size = _buffer.mSize;
+	Write<int>(&size, (int)sizeof(int));
+	Write<const BYTE>(_buffer.mByte.get(), _buffer.mSize);
+}
+
+void Server::cPacket::UnPack(OUT bool& _bool)
 {
 	Read<bool>(&_bool, (int)sizeof(bool));
 }
 
-void Server::cPacket::UnPack(int& _int)
+void Server::cPacket::UnPack(OUT int& _int)
 {
 	Read<int>(&_int, (int)sizeof(int));
 }
 
-void Server::cPacket::UnPack(float& _float)
+void Server::cPacket::UnPack(OUT float& _float)
 {
 	Read<float>(&_float, (int)sizeof(float));
 }
 
-void Server::cPacket::UnPack(double& _double)
+void Server::cPacket::UnPack(OUT double& _double)
 {
 	Read<double>(&_double, (int)sizeof(double));
 }
 
-void Server::cPacket::UnPack(char* _string)
+void Server::cPacket::UnPack(OUT char* _string)
 {
 	int len = 0;
 	Read<int>(&len, (int)sizeof(int));
 	Read<char>(_string, len);
-	_string[len] = '\0';
+}
+
+void Server::cPacket::UnPack(OUT sBuffer& _buffer)
+{
+	int size = 0;
+	Read<int>(&size, (int)sizeof(int));
+	_buffer.Reset_Buffer(size);
+	Read<BYTE>(_buffer.mByte.get(), size);
 }

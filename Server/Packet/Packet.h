@@ -67,14 +67,15 @@ namespace Server
 		void Pack(const float& _float);
 		void Pack(const double& _double);
 		void Pack(const char* _string);
+		void Pack(const sBuffer& _buffer);
 
 		//패킷 분해
-		void UnPack(bool& _bool);
-		void UnPack(int& _int);
-		void UnPack(float& _float);
-		void UnPack(double& _double);
-		void UnPack(char* _string);
-
+		void UnPack(OUT bool& _bool);
+		void UnPack(OUT int& _int);
+		void UnPack(OUT float& _float);
+		void UnPack(OUT double& _double);
+		void UnPack(OUT char* _string);
+		void UnPack(OUT sBuffer& _buffer);
 	};
 
 }

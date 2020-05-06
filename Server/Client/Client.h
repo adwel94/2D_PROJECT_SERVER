@@ -13,9 +13,6 @@ namespace Server
 	protected:
 		cUser mUser;
 
-
-
-
 	public:
 
 		cClient() {}

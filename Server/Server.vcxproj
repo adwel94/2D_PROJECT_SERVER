@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Client\Client.h" />
     <ClInclude Include="Packet\Packet.h" />
+    <ClInclude Include="Protocol\Protocol.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerModel\IOCP_Manager.h" />
     <ClInclude Include="Sock\SocketManager.h" />

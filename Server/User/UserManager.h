@@ -2,11 +2,12 @@
 #ifndef _USER_MANAGER_H_
 #define _USER_MANAGER_H_
 #include "User.h"
+#include <Windows.h>
 #include "DB/DB.h"
-#include "CodeMaker/CodeMaker.h"
 
 namespace Server
 {
+
 	class cUserManager : public Utilities::DB::cDatabase
 	{
 	protected:

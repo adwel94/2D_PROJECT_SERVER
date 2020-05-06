@@ -23,6 +23,9 @@
     <ClInclude Include="User\UserManager.h">
       <Filter>User</Filter>
     </ClInclude>
+    <ClInclude Include="Protocol\Protocol.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sock\SocketManager.cpp">
@@ -59,6 +62,9 @@
     </Filter>
     <Filter Include="User">
       <UniqueIdentifier>{4e581efe-0288-40e2-af94-fccb67ebbd1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{9a098ba1-ddf7-41a1-92e1-8dd2d25056dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _DB_H_
 #define _DB_H_
+#include <WinSock2.h>
 #include "include/mysql.h"
 
 
