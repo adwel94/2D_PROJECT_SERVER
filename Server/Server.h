@@ -5,7 +5,7 @@
 #include <WS2tcpip.h>
 #include <stdio.h>
 
-#define PROTOCOL_SIZE 4
+
 
 
 

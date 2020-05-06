@@ -6,6 +6,7 @@
 
 namespace Server
 {
+	//소켓 에러 출력
 	inline void WSA_Err_display(const TCHAR* msg)
 	{
 		LPVOID lpMsgBuf;
@@ -34,19 +35,21 @@ namespace Server
 			return true;
 		}
 
+		//ip v4 ,v6
 		enum IP_VER
 		{
 			IPv4 = AF_INET,
 			IPv6 = AF_INET6
 		};
 
+		//소켓 타입
 		enum SOCKTYPE
 		{
 			TCP = SOCK_STREAM,
 			UDP = SOCK_DGRAM
 		};
 
-
+		//소켓 클래스
 		class cSock
 		{
 
@@ -60,11 +63,9 @@ namespace Server
 			cSock(IP_VER _af, SOCKTYPE _socktype, int _pro = 0, int _port = 9000, const char* _addr = "\0");
 			virtual ~cSock();
 
-
-
+			//Get
 			const SOCKET GetSock() { return mSock; }
 			const SOCKADDR_IN& GetAddr() { return mAddr; }
-
 
 			//send 함수
 			bool Send(BYTE* _buf, int _size, int _flag);

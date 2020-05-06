@@ -4,11 +4,12 @@
 #include"Byte/Byte.h"
 #include <queue>
 #include "Server.h"
+#include "Protocol/Protocol.h"
 
 
 namespace Server
 {
-
+	
 	//비동기 입출력 변수 모음
 	struct WSAoverlapEX
 	{
@@ -69,6 +70,7 @@ namespace Server
 		void Pack(const char* _string);
 		void Pack(const sBuffer& _buffer);
 
+
 		//패킷 분해
 		void UnPack(OUT bool& _bool);
 		void UnPack(OUT int& _int);
@@ -76,6 +78,7 @@ namespace Server
 		void UnPack(OUT double& _double);
 		void UnPack(OUT char* _string);
 		void UnPack(OUT sBuffer& _buffer);
+
 	};
 
 }

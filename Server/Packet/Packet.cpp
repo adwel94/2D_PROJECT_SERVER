@@ -93,7 +93,7 @@ void Server::cPacket::Pack(const double& _double)
 
 void Server::cPacket::Pack(const char* _string)
 {
-	//문자길이 + 문자열
+	//문자길이 + 문자열 + 널값까지
 	int len = 0;
 	len = strlen(_string) + 1;
 	Write<int>(&len, (int)sizeof(int));

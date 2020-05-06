@@ -10,15 +10,16 @@ namespace Server
 
 	class cClient :public Server::Socket::cSock, public Server::cPacket, public Server::cUser
 	{
+
 	protected:
-		cUser mUser;
+
+
 
 	public:
 
 		cClient() {}
 		~cClient() {}
 
-		const cUser& User();
 
 		bool Send_Packet();
 		bool WSA_Send_Packet();

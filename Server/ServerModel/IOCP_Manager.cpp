@@ -14,13 +14,14 @@ bool Server::cIOCP_Manager<T>::IOCP_Process(LPVOID _iocp)
 		if (retval == FALSE) //클라이언트 강제 종료
 		{
 			iocp->ErrorProcess(key, overlap,transferred);
+			//종료 on
 			if (iocp->mExit)
 			{
 				printf_s("recv exit overlap - Exit Process \n");
 				return true;
 			}
 		}
-		else if (transferred == 0)
+		else if (transferred == 0) //종료 패킷
 		{
 			iocp->DisconnectProcess(key, overlap, transferred);
 		}
@@ -84,7 +85,7 @@ template<class T>
 void Server::cIOCP_Manager<T>::Accpet_Port(SOCKET _sock, T _key)
 {
 	CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)_key, 0);//포트에 클라이언트 연결 컴플리션키는 클라이언트 객체로
-	AcceptProcess(T);
+	AcceptProcess(_key);
 }
 
 template<class T>

@@ -1,16 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="OUT_Game">
-      <UniqueIdentifier>{547f98e8-35c4-4186-b9f4-298c7244825c}</UniqueIdentifier>
+    <Filter Include="Login">
+      <UniqueIdentifier>{9ddce6e8-9967-49b7-a93f-66ee42df4959}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClient">
+      <UniqueIdentifier>{ce0bebaa-3ab5-490a-9f8b-23d8aa4486be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainManager">
+      <UniqueIdentifier>{1e596cc8-dcf9-4bed-9f96-dc2f7ea5fc2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LoginManager.h">
-      <Filter>OUT_Game</Filter>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Login\LoginManager.h">
+      <Filter>Login</Filter>
+    </ClInclude>
+    <ClInclude Include="MainManager\MainManager.h">
+      <Filter>MainManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClient\GameClient.h">
+      <Filter>GameClient</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClient\State.h">
+      <Filter>GameClient</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Login\LoginManager.cpp">
+      <Filter>Login</Filter>
+    </ClCompile>
+    <ClCompile Include="MainManager\MainManager.cpp">
+      <Filter>MainManager</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
