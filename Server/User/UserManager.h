@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #ifndef _USER_MANAGER_H_
 #define _USER_MANAGER_H_
 #include "User.h"

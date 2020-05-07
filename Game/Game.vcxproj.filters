@@ -25,6 +25,7 @@
     <ClInclude Include="GameClient\State.h">
       <Filter>GameClient</Filter>
     </ClInclude>
+    <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -33,6 +34,12 @@
     </ClCompile>
     <ClCompile Include="MainManager\MainManager.cpp">
       <Filter>MainManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClient\State.cpp">
+      <Filter>GameClient</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClient\GameClient.cpp">
+      <Filter>GameClient</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

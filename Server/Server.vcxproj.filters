@@ -28,9 +28,6 @@
     <ClCompile Include="Sock\SocketManager.cpp">
       <Filter>Sock</Filter>
     </ClCompile>
-    <ClCompile Include="ServerModel\IOCP_Manager.cpp">
-      <Filter>ServerModel</Filter>
-    </ClCompile>
     <ClCompile Include="Client\Client.cpp">
       <Filter>Client</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
     </ClCompile>
     <ClCompile Include="User\UserManager.cpp">
       <Filter>User</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerModel\IOCP_Manager.cpp">
+      <Filter>ServerModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

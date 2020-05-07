@@ -2,26 +2,43 @@
 #ifndef _GAMECLIENT_H_
 #define _GAMECLIENT__H_
 #include "Client/Client.h"
+#include "State.h"
 #include "User/User.h"
 
 
 namespace GAME
 {
-	class cState;
+	namespace STATE
+	{
+		class cState;
+		enum class E;
+	}
 
 
-	class cGameClinet : public Server::cClient
+	//게임 클라이언트
+	class cGameClient : public Server::cClient
 	{
 
 	private:
-
-		cState* mState;
+		//상태
+		STATE::cState* mState;
+		//ID,PW
 		Server::cUser mUser;
 
 	public:
 
+		//생성자
+		cGameClient(SOCKET _sock, const SOCKADDR_IN& _addr);
 
 
+		//상태 Set,Get
+		void Set_State(STATE::E _state);
+		STATE::cState* Get_State() { return mState; }
+
+
+		// cClient을(를) 통해 상속됨		
+		virtual bool Recv_Process() override;
+		virtual bool Send_Process() override;
 
 	};
 }

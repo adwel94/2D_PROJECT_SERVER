@@ -22,6 +22,15 @@ namespace Utilities
 
 		static T* mInstance;
 	public:
+		
+		static void Create()
+		{
+			if (mInstance == nullptr)
+			{
+				mInstance = new T();
+			}
+		}
+
 		static T* GetInstance()
 		{
 			if (mInstance == nullptr)
@@ -33,7 +42,11 @@ namespace Utilities
 
 		static void Destroy()
 		{
-			mInstance = nullptr;
+			if (mInstance != nullptr)
+			{
+				delete mInstance;
+				mInstance = nullptr;
+			}
 		}
 	};
 

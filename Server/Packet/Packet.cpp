@@ -8,32 +8,32 @@ Server::cPacket::cPacket()
 
 Server::cPacket::~cPacket()
 {	
-	while(mSendBuf.size() > 0)
+	while(mSendBuf.LockSize() > 0)
 	{
-		Utilities::sBuffer* empt = mSendBuf.front();
-		mSendBuf.pop();
+		Utilities::sBuffer* empt = mSendBuf.LockFront();
+		mSendBuf.LockPop();
 		delete empt;
 	}
 }
 
 bool Server::cPacket::IsPacking()
 {
-	return (mSendBuf.size() > 0);
+	return (mSendBuf.LockSize() > 0);
 }
 
 void Server::cPacket::Init_Recv_Overlap()
 {
 	ZeroMemory(&mRecvOverlap.overlapped, sizeof(mRecvOverlap.overlapped));
-	mRecvOverlap.wsabuf.buf = (char*)(mRecvBuf.mByte.get() + mRecvOverlap.trans);
-	mRecvOverlap.wsabuf.len = mRecvBuf.mSize - mRecvOverlap.trans;
+	mRecvOverlap.wsabuf.buf = (char*)(mRecvBuf.mByte + mRecvBuf.mTrans);
+	mRecvOverlap.wsabuf.len = mRecvBuf.mSize - mRecvBuf.mTrans;
 }
 
 void Server::cPacket::Init_Send_Overlap()
 {
-	sBuffer* sendBuf = mSendBuf.front();
+	Utilities::sBuffer* sendBuf = mSendBuf.LockFront();
 	ZeroMemory(&mSendOverlap.overlapped, sizeof(mSendOverlap.overlapped));
-	mSendOverlap.wsabuf.buf = (char*)(sendBuf->mByte.get() + mSendOverlap.trans);
-	mSendOverlap.wsabuf.len = sendBuf->mSize - mSendOverlap.trans;
+	mSendOverlap.wsabuf.buf = (char*)(sendBuf->mByte + sendBuf->mTrans);
+	mSendOverlap.wsabuf.len = sendBuf->mSize - sendBuf->mTrans;
 }
 
 bool Server::cPacket::Is_Recv_Overlap(LPOVERLAPPED _overlap)
@@ -48,8 +48,8 @@ bool Server::cPacket::Is_Send_Overlap(LPOVERLAPPED _overlap)
 
 bool Server::cPacket::Is_Recv_Success(DWORD _trans)
 {
-	mRecvOverlap.trans += _trans;
-	if (mRecvBuf.mSize == mRecvOverlap.trans)//현재 받은데이터와 총 받을 데이터가 같을시
+	mRecvBuf.mTrans += _trans;
+	if (mRecvBuf.mSize == mRecvBuf.mTrans)//현재 받은데이터와 총 받을 데이터가 같을시
 	{
 		return true;//데이터 수신 완료 리턴
 	}
@@ -58,12 +58,15 @@ bool Server::cPacket::Is_Recv_Success(DWORD _trans)
 
 bool Server::cPacket::Is_Send_Success(DWORD _trans)
 {
-	mSendOverlap.trans += _trans;
-	if (mSendBuf.front()->mSize == mSendOverlap.trans)//현재 받은데이터와 총 받을 데이터가 같을시
+	mSendBuf.LockFront()->mTrans += _trans;
+	if (mSendBuf.LockFront()->mSize == mSendBuf.LockFront()->mTrans)//현재 송신데이터와 총 데이터의 크기가 같을시
 	{
-		return true;//데이터 수신 완료 리턴
+		//큐에서 데이터를 뺌
+		Utilities::sBuffer* empt = mSendBuf.LockFront();
+		mSendBuf.LockPop();
+		return true;//데이터 송신 완료 리턴
 	}
-	return false;//데이터 수신 진행중 리턴
+	return false;//데이터 송신 진행중 리턴
 }
 
 void Server::cPacket::Set_Recv_Size(int _size)
@@ -71,73 +74,17 @@ void Server::cPacket::Set_Recv_Size(int _size)
 	mRecvBuf.Reset_Buffer(_size);
 }
 
-void Server::cPacket::Pack(const bool& _bool)
+int Server::cPacket::Get_Recv_Size()
 {
-	Write<const bool>(&_bool, (int)sizeof(bool));
+	return mRecvBuf.mSize;
 }
 
-void Server::cPacket::Pack(const int& _int)
+int Server::cPacket::Get_Recv_Trans()
 {
-	Write<const int>(&_int, (int)sizeof(int));
+	return mRecvBuf.mTrans;
 }
 
-void Server::cPacket::Pack(const float& _float)
+void Server::cPacket::Send_Packet_Push(Utilities::sBuffer* _buffer)
 {
-	Write<const float>(&_float, (int)sizeof(float));
-}
-
-void Server::cPacket::Pack(const double& _double)
-{
-	Write<const double>(&_double, (int)sizeof(double));
-}
-
-void Server::cPacket::Pack(const char* _string)
-{
-	//문자길이 + 문자열 + 널값까지
-	int len = 0;
-	len = strlen(_string) + 1;
-	Write<int>(&len, (int)sizeof(int));
-	Write<const char>(_string, len);
-}
-
-void Server::cPacket::Pack(const sBuffer& _buffer)
-{
-	int size = _buffer.mSize;
-	Write<int>(&size, (int)sizeof(int));
-	Write<const BYTE>(_buffer.mByte.get(), _buffer.mSize);
-}
-
-void Server::cPacket::UnPack(OUT bool& _bool)
-{
-	Read<bool>(&_bool, (int)sizeof(bool));
-}
-
-void Server::cPacket::UnPack(OUT int& _int)
-{
-	Read<int>(&_int, (int)sizeof(int));
-}
-
-void Server::cPacket::UnPack(OUT float& _float)
-{
-	Read<float>(&_float, (int)sizeof(float));
-}
-
-void Server::cPacket::UnPack(OUT double& _double)
-{
-	Read<double>(&_double, (int)sizeof(double));
-}
-
-void Server::cPacket::UnPack(OUT char* _string)
-{
-	int len = 0;
-	Read<int>(&len, (int)sizeof(int));
-	Read<char>(_string, len);
-}
-
-void Server::cPacket::UnPack(OUT sBuffer& _buffer)
-{
-	int size = 0;
-	Read<int>(&size, (int)sizeof(int));
-	_buffer.Reset_Buffer(size);
-	Read<BYTE>(_buffer.mByte.get(), size);
+	mSendBuf.LockPush(_buffer);
 }

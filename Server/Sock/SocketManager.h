@@ -28,7 +28,7 @@ namespace Server
 			//listen()
 			bool Listen_Socket(OUT cSock* _sock);
 			//accpet()
-			bool Accept_Socket(cSock* _server, OUT cSock* _accept);
+			bool Accept_Socket(cSock* _server, OUT SOCKET& _socket, OUT SOCKADDR_IN& addr);
 			//connect()
 			bool Connect_Socket(OUT cSock* _sock);
 			//reuseaddr -bind Àç»ç¿ë 

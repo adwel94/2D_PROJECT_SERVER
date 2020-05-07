@@ -146,8 +146,11 @@
     <ClInclude Include="Login\LoginManager.h" />
     <ClInclude Include="MainManager\MainManager.h" />
     <ClInclude Include="GameClient\State.h" />
+    <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameClient\GameClient.cpp" />
+    <ClCompile Include="GameClient\State.cpp" />
     <ClCompile Include="Login\LoginManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainManager\MainManager.cpp" />

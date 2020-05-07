@@ -1,22 +1,34 @@
 #pragma once
 #ifndef _MAINMANAGER_H_
 #define _MAINMANAGER_H_
-#include "ServerModel/IOCP_Manager.h"
-#include "Singleton/SingleTon.h"
 #include "Game.h"
+#include "Singleton/SingleTon.h"
+#include "ServerModel/IOCP_Manager.h"
+#include "GameClient/GameClient.h"
 
 namespace GAME
 {
-	class cMainManager 
+	class cMainManager : public Server::cIOCP_Manager<cGameClient*>
 	{
 	public:
 
+		cMainManager(int _count =-1);
+		~cMainManager();
+
+		void Run();
+
+		// cIOCP_Manager을(를) 통해 상속됨
+		virtual void AcceptProcess(cGameClient* _key) override;
+
+		virtual void CompletionProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
+
+		virtual void ErrorProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
+
+		virtual void DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
+
 	};
 
-
-	typedef Utilities::cSingleTon<cMainManager> st_cMainManger;
-
-
+	typedef Utilities::cSingleTon<cMainManager> st_cMainManager;
 }
 
 

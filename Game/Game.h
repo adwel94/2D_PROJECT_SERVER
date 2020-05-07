@@ -1,17 +1,17 @@
 #pragma once
 #ifndef _GAME_H_
+#define _GMAE_H_
 
-
-
-//byte
-#define PROTOCOL_SIZE 1
-
-enum PROTOCOL
+namespace GAME
 {
-	CLEINT_REQ_LOGIN,
+	enum
+	{
+		ID_SIZE = 30,
+		PW_SIZE = 30
+	};
 
-};
 
+}
 
 
 

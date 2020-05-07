@@ -43,6 +43,9 @@
     <Filter Include="Codemaker">
       <UniqueIdentifier>{ce7b874c-e0c1-4757-b089-8a11c6954185}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DS">
+      <UniqueIdentifier>{7be8baa2-80be-4daf-ae9a-91624e487ea6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DB\DB.h">
@@ -129,6 +132,12 @@
     <ClInclude Include="CodeMaker\CodeMaker.h">
       <Filter>Codemaker</Filter>
     </ClInclude>
+    <ClInclude Include="DS\LockQueue.h">
+      <Filter>DS</Filter>
+    </ClInclude>
+    <ClInclude Include="DS\LockList.h">
+      <Filter>DS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp">
@@ -160,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="CodeMaker\CodeMaker.cpp">
       <Filter>Codemaker</Filter>
+    </ClCompile>
+    <ClCompile Include="Byte\Byte.cpp">
+      <Filter>Byte</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

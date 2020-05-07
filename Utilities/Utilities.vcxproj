@@ -166,6 +166,8 @@
     <ClInclude Include="DB\include\my_command.h" />
     <ClInclude Include="DB\include\my_compress.h" />
     <ClInclude Include="DB\include\my_list.h" />
+    <ClInclude Include="DS\LockList.h" />
+    <ClInclude Include="DS\LockQueue.h" />
     <ClInclude Include="Lock\Lock.h" />
     <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Math\MyMath.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="XML\include\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Byte\Byte.cpp" />
     <ClCompile Include="CodeMaker\CodeMaker.cpp" />
     <ClCompile Include="DB\DB.cpp" />
     <ClCompile Include="DB\include\openssl\applink.c" />

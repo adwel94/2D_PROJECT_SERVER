@@ -1,10 +1,10 @@
 #pragma once
 #ifndef _PACKET_H_
 #define _PACKET_H_
-#include"Byte/Byte.h"
-#include <queue>
 #include "Server.h"
 #include "Protocol/Protocol.h"
+#include"Byte/Byte.h"
+#include "DS/LockQueue.h"
 
 
 namespace Server
@@ -15,7 +15,6 @@ namespace Server
 	{
 		OVERLAPPED overlapped;
 		WSABUF wsabuf;
-		DWORD trans;
 
 		WSAoverlapEX()
 		{
@@ -25,23 +24,24 @@ namespace Server
 		void Reset()
 		{
 			ZeroMemory(&overlapped, sizeof(overlapped));
-			trans = 0;
 		}
 	};
 
-	//패킷 클래스
-	class cPacket : public Utilities::sBuffer
+	//패킷 클래스 recv버퍼와 send버퍼
+	class cPacket 
 	{
 	protected:
 		Utilities::sBuffer mRecvBuf;//send버퍼 배열
-		std::queue<Utilities::sBuffer*> mSendBuf;//send버퍼 배열
+		Utilities::DS::cLockQueue<Utilities::sBuffer*> mSendBuf;//send버퍼 배열
 		WSAoverlapEX mRecvOverlap;
 		WSAoverlapEX mSendOverlap;
 	public:
 		cPacket();
 		virtual ~cPacket();
 
-		//패킹된 데이터가 있는지 확인
+		Utilities::sBuffer& RecvBuf() { return mRecvBuf; }
+
+		//패킹된 send 데이터가 있는지 확인
 		bool IsPacking();
 
 		//오버랩 준비
@@ -61,24 +61,12 @@ namespace Server
 
 		//recv 사이즈 설정
 		void Set_Recv_Size(int _size);
+		int Get_Recv_Size();
+		int Get_Recv_Trans();
+		
 
-		//패킷 결합
-		void Pack(const bool& _bool);
-		void Pack(const int& _int);
-		void Pack(const float& _float);
-		void Pack(const double& _double);
-		void Pack(const char* _string);
-		void Pack(const sBuffer& _buffer);
-
-
-		//패킷 분해
-		void UnPack(OUT bool& _bool);
-		void UnPack(OUT int& _int);
-		void UnPack(OUT float& _float);
-		void UnPack(OUT double& _double);
-		void UnPack(OUT char* _string);
-		void UnPack(OUT sBuffer& _buffer);
-
+		//send 큐에 버퍼 삽입
+		void Send_Packet_Push(Utilities::sBuffer* _buffer);
 	};
 
 }

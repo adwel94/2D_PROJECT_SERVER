@@ -66,18 +66,16 @@ bool Server::Socket::cSockManager::Listen_Socket(OUT cSock* _sock)
 }
 
 //accept 해서 받은 소켓을 반환
-bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT cSock* _accept)
+bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT SOCKET& _socket, OUT SOCKADDR_IN& addr)
 {
-	SOCKADDR_IN clientaddr;
-	int addrlen = sizeof(clientaddr);
-	ZeroMemory(&clientaddr, sizeof(clientaddr));
-	SOCKET socket = accept(_server->GetSock(), (SOCKADDR*)&clientaddr, &addrlen);//클라접속 요청 받음 클라 소켓과 주소를 외부로 전달
-	if (socket == INVALID_SOCKET)//소캣 생성 실패시
+	int addrlen = sizeof(addr);
+	ZeroMemory(&addr, sizeof(addr));
+	_socket = accept(_server->GetSock(), (SOCKADDR*)&addr, &addrlen);//클라접속 요청 받음 클라 소켓과 주소를 외부로 전달
+	if (_socket == INVALID_SOCKET)//소캣 생성 실패시
 	{
 		WSA_Err_display((TCHAR*)"accept()");// 에러메세지 출력
 		return false; //실패 반환
 	}
-	_accept = new cSock(socket,clientaddr); //성공 반환
 	return true;
 }
 
