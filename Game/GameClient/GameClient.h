@@ -2,9 +2,8 @@
 #ifndef _GAMECLIENT_H_
 #define _GAMECLIENT__H_
 #include "Client/Client.h"
-#include "State.h"
 #include "User/User.h"
-
+#include "State.h"
 
 namespace GAME
 {
@@ -28,8 +27,11 @@ namespace GAME
 	public:
 
 		//생성자
+		cGameClient() {}
 		cGameClient(SOCKET _sock, const SOCKADDR_IN& _addr);
 
+		//유저
+		Server::cUser& User() { return mUser; }
 
 		//상태 Set,Get
 		void Set_State(STATE::E _state);

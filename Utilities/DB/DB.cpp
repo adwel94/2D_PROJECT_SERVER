@@ -1,7 +1,7 @@
-#include "DB.h"
 #include <stdio.h>
 #include <cstdarg>
 #include <string.h>
+#include "DB.h"
 
 Utilities::DB::cDB_Result::cDB_Result()
 {
@@ -20,7 +20,7 @@ Utilities::DB::cDB_Result::~cDB_Result()
 
 bool Utilities::DB::cDB_Result::Move_Row(unsigned int _index)
 {
-	mysql_data_seek(mSql_Result, _index - 1);
+	mysql_data_seek(mSql_Result, _index);
 	if (mysql_fetch_row(mSql_Result) == NULL)
 	{
 		return false;
@@ -41,8 +41,10 @@ bool Utilities::DB::cDB_Result::Next_Row()
 
 void Utilities::DB::cDB_Result::Set_Result(MYSQL_RES* _result)
 {
-	mCurrent_Row = 0;
+	mCurrent_Row = -1;
 	mSql_Result = _result;
+	//0부터 시작
+	Next_Row();
 }
 
 int Utilities::DB::cDB_Result::Current_Row_Index()
@@ -131,7 +133,7 @@ Utilities::DB::cDatabase::~cDatabase()
 bool Utilities::DB::cDatabase::Conncetion(const char* _HOST, const char* _USER, const char* _PASS, const char* _NAME, unsigned int _PORT, const char* _UNIX_SOCK, unsigned long _CLIENT_FLAG)
 {
 	//DB접속 
-	if (mysql_real_connect(mConnection, _HOST, _USER, _PASS, _NAME, _PORT, (char*)NULL, 0) == NULL)
+	if (mysql_real_connect(mConnection, _HOST, _USER, _PASS, _NAME, _PORT, (char*)_UNIX_SOCK, _CLIENT_FLAG) == NULL)
 	{
 		//실패시 에러 출력
 		fprintf_s(stderr, "Mysql connection error : %s \n", mysql_error(mConnection));
@@ -144,6 +146,7 @@ bool Utilities::DB::cDatabase::Conncetion(const char* _HOST, const char* _USER, 
 
 bool Utilities::DB::cDatabase::Run_SQL(const char* _query, ...)
 {
+	if (mConnection == NULL) return false;
 
 	char sql[512] = "\0";
 
@@ -156,7 +159,7 @@ bool Utilities::DB::cDatabase::Run_SQL(const char* _query, ...)
 
 
 	//쿼리 적용
-	int retval = mysql_query(mConnection, _query);
+	int retval = mysql_query(mConnection, sql);
 	if (retval != 0)
 	{
 		//실패시 에러 출력
@@ -184,5 +187,9 @@ bool Utilities::DB::cDatabase::Get_Result(OUT cDB_Result& _result)
 void Utilities::DB::cDatabase::Close()
 {
 	//DB 연결해제
-	mysql_close(mConnection);
+	if (mConnection)
+	{
+		mysql_close(mConnection);
+	}
+
 }

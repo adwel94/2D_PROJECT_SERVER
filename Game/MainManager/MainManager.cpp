@@ -4,7 +4,7 @@
 
 using namespace Server::Socket;
 
-GAME::cMainManager::cMainManager(int _count = -1) : Server::cIOCP_Manager<cGameClient*>(_count)
+GAME::cMainManager::cMainManager(int _count) : Server::cIOCP_Manager<cGameClient*>(_count)
 {
 	//소켓 매니저 상용
 	st_cSockManager::Create();
@@ -28,14 +28,20 @@ void GAME::cMainManager::Run()
 	SOCKADDR_IN client_addr;
 
 	//클라이언트 accept
-	while (st_cSockManager::GetInstance()->Accept_Socket(&server, client_socket, client_addr))
+	while (true)
 	{
-		//클라이언트 생성
-		cGameClient* client = new cGameClient(client_socket, client_addr);
-		
-		//포트 등록, 초기작업
-		Accpet_Port(client_socket, client);
-		AcceptProcess(client);
+		if (st_cSockManager::GetInstance()->Accept_Socket(&server, client_socket, client_addr))
+		{
+
+			//클라이언트 생성
+			cGameClient* client = new cGameClient(client_socket, client_addr);
+
+			//포트 등록, 초기작업
+			Accpet_Port(client_socket, client);
+			AcceptProcess(client);
+
+		}
+
 	}
 
 }

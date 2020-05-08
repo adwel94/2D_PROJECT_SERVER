@@ -2,8 +2,19 @@
 #ifndef _GAME_H_
 #define _GMAE_H_
 
+
+#define DB_HOST "localhost"
+#define DB_ID "root"
+#define DB_PW "root"
+#define DB_PORT 3306
+#define DB_NAME "TEST_DB"
+#define DB_TABLE_LOGIN "test_table"
+
+
 namespace GAME
 {
+
+
 	enum
 	{
 		ID_SIZE = 30,

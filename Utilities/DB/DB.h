@@ -56,7 +56,7 @@ namespace Utilities
 			virtual ~cDatabase();
 
 			//DB접속 
-			bool Conncetion(const char* _HOST, const char* _USER, const char* _PASS, const char* _DB_NAME, unsigned int _PORT, const char* _UNIX_SOCK, unsigned  long _CLIENT_FLAG);
+			bool Conncetion(const char* _HOST, const char* _USER, const char* _PASS, const char* _DB_NAME, unsigned int _PORT, const char* _UNIX_SOCK = NULL, unsigned  long _CLIENT_FLAG = NULL);
 			//쿼리 적용
 			bool Run_SQL(const char* _query, ...);
 			//결과값 반환

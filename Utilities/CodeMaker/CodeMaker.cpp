@@ -17,7 +17,7 @@ Utilities::CODE Utilities::cCodeMaker::Get_Code()
 	time_t t = time(NULL);
 
 	//INTERVAL 초가 지났을 경우
-	if (t - mTime >= INTERVAL)
+	if (t - mTime >= INTERVAL || mAddCode >= 10000)
 	{
 		mTime = t;
 		localtime_s(&mBase, &mTime);
@@ -26,6 +26,8 @@ Utilities::CODE Utilities::cCodeMaker::Get_Code()
 
 	unsigned __int64 e = 1000000000000;
 
+
+	//ex 202005080818(시간값) + 0000(mAddCode)
 	unsigned __int64 code = ((__int64)mBase.tm_year - 100) * e;
 	code += ((__int64)mBase.tm_mon + 1) * (e /= 100);
 	code += (mBase.tm_mday) * (e /= 100);

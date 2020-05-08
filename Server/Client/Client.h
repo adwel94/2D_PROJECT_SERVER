@@ -3,12 +3,12 @@
 #define _CLIENT_H_
 #include "Sock/Sock.h"
 #include "Packet/Packet.h"
-#include "User/User.h"
+
 
 namespace Server
 {
 
-	class cClient :public Server::Socket::cSock, public Server::cPacket, public Server::cUser
+	class cClient :public Server::Socket::cSock, public Server::cPacket
 	{
 
 	protected:

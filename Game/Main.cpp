@@ -1,5 +1,6 @@
-#include "MainManager/MainManager.h"
+#include <iostream>
 
+using namespace std;
 
 int main()
 {

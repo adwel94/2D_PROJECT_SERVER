@@ -26,14 +26,17 @@ void GAME::STATE::cState::Destroy()
 void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 {
 	//프로토콜을 확인
-	PROTOCOL protocol;
+	PROTOCOL::P protocol;
 	_client->RecvBuf().Read(protocol);
 	
 	//프로토콜에 따른 작업 실행
 	switch (protocol)
 	{
-	case PROTOCOL_TYPE::CLEINT_REQ_LOGIN:
+	case PROTOCOL::CLEINT_REQ_LOGIN:
 		Login::st_cLoginManger::GetInstance()->Req_Login(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_JOIN:
+		Login::st_cLoginManger::GetInstance()->Req_Join(_client);
 		break;
 	default:
 		break;
