@@ -13,6 +13,7 @@ using namespace std;
 using namespace Server;
 using namespace Utilities::DB;
 
+int* p = new int(4);
 int main()
 {
 
@@ -30,22 +31,12 @@ int main()
 	//result.Move_Row(0);
 	//cout << result.Current_Row(0) << endl;
 
-	time_t t = time(NULL);
-	tm mBase;
-	//INTERVAL 초가 지났을 경우
-	localtime_s(&mBase, &t);
 
-	unsigned __int64 e = 1000000000000;
-	unsigned short mAddCode = 5000;
+	int* a;
 
-	//ex 202005080818(시간값) + 0000(mAddCode)
-	unsigned __int64 code = ((__int64)mBase.tm_year - 100) * e;
-	code += ((__int64)mBase.tm_mon + 1) * (e /= 100);
-	code += (mBase.tm_mday) * (e /= 100);
-	code += (mBase.tm_hour) * (e /= 100);
-	code += (mBase.tm_min) * (e /= 100);
-	code += (mAddCode++);
+	a = p;
 
-	cout << code << endl;
+	cout << *a << endl;
+	
 
 }

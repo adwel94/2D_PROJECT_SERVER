@@ -56,6 +56,7 @@ namespace Server
 		protected:
 			SOCKET mSock;
 			SOCKADDR_IN mAddr;
+			char mIp[INET_ADDRSTRLEN];
 
 		public:
 			cSock();
@@ -64,6 +65,7 @@ namespace Server
 			virtual ~cSock();
 
 			//Get
+			const char* Get_IP();
 			const SOCKET GetSock() { return mSock; }
 			const SOCKADDR_IN& GetAddr() { return mAddr; }
 

@@ -18,9 +18,7 @@ bool Server::Socket::cSockManager::TCP_Listen_Sock(OUT cSock* _sock)
 {
 	if (!Bind_Socket(_sock)) return false;
 	if (!Listen_Socket(_sock)) return false;
-	char addr[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &_sock->GetAddr().sin_addr, addr, sizeof(addr));
-	printf_s("Create Listen Socket : IP : %s, PORT : %d \n", addr, ntohs(_sock->GetAddr().sin_port));
+	printf_s("Create Listen Socket : IP : %s, PORT : %d \n", _sock->Get_IP(), ntohs(_sock->GetAddr().sin_port));
 	return true;
 }
  
@@ -50,6 +48,8 @@ bool Server::Socket::cSockManager::Bind_Socket(OUT cSock* _sock)
 		WSA_Err_display((TCHAR*)"Bind()");
 		return false;
 	}
+
+	mLog.Record("Socket Bind : IP : %s, PORT : %d", _sock->Get_IP(), ntohs(_sock->GetAddr().sin_port));
 	return true;
 }
 
@@ -62,20 +62,29 @@ bool Server::Socket::cSockManager::Listen_Socket(OUT cSock* _sock)
 		WSA_Err_display((TCHAR*)"listen()");
 		return false;
 	}
+
+	mLog.Record("Socket Listen : IP : %s, PORT : %d", _sock->Get_IP(), ntohs(_sock->GetAddr().sin_port));
 	return true;
 }
 
 //accept 해서 받은 소켓을 반환
-bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT SOCKET& _socket, OUT SOCKADDR_IN& addr)
+bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT SOCKET& _socket, OUT SOCKADDR_IN& _addr)
 {
-	int addrlen = sizeof(addr);
-	ZeroMemory(&addr, sizeof(addr));
-	_socket = accept(_server->GetSock(), (SOCKADDR*)&addr, &addrlen);//클라접속 요청 받음 클라 소켓과 주소를 외부로 전달
+	int addrlen = sizeof(_addr);
+	ZeroMemory(&_addr, sizeof(_addr));
+	_socket = accept(_server->GetSock(), (SOCKADDR*)&_addr, &addrlen);//클라접속 요청 받음 클라 소켓과 주소를 외부로 전달
 	if (_socket == INVALID_SOCKET)//소캣 생성 실패시
 	{
 		WSA_Err_display((TCHAR*)"accept()");// 에러메세지 출력
 		return false; //실패 반환
 	}
+
+	char addr[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &_addr.sin_addr, addr, sizeof(addr));
+
+	printf_s("Socket Accept : IP : %s, PORT : %d", addr, ntohs(_addr.sin_port));
+	mLog.Record("Socket Accept : IP : %s, PORT : %d", addr, ntohs(_addr.sin_port));
+
 	return true;
 }
 

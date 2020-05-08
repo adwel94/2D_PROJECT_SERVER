@@ -63,6 +63,8 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 	_client->RecvBuf().Read(id);
 	_client->RecvBuf().Read(pw);
 
+	printf_s("IP: %s Req_Join (%s,%s) \n", _client->Get_IP(), id, pw);
+
 	bool result = true;
 	cDB_Result db_result;
 

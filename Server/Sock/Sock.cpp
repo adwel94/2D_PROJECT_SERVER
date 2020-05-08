@@ -5,17 +5,23 @@ Server::Socket::cSock::cSock()
 {
 	mSock = NULL; //소켓 초기화
 	ZeroMemory(&mAddr, sizeof(SOCKADDR_IN)); //주소 메모리 초기화
+	mIp[0] = '\0';
 }
 
 Server::Socket::cSock::cSock(SOCKET _sock, const SOCKADDR_IN& _addr)
 {
 	mSock = _sock;//소켓 대입
 	memcpy(&mAddr, &_addr, sizeof(SOCKADDR_IN)); //주소 복사
+
+	//결과 메세지
+	inet_ntop(AF_INET, &mAddr.sin_addr, mIp, sizeof(mIp));
+	printf_s("Create Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
 }
 
 Server::Socket::cSock::cSock(IP_VER _af, SOCKTYPE _socktype, int _pro, int _port, const char* _addr)
 {
 	mSock = socket(_af, _socktype, _pro);
+
 	if (mSock == INVALID_SOCKET)
 	{
 		WSA_Err_display((TCHAR*)"Socket()");
@@ -36,14 +42,19 @@ Server::Socket::cSock::cSock(IP_VER _af, SOCKTYPE _socktype, int _pro, int _port
 	//포트 등록
 	mAddr.sin_port = htons(_port);
 
-	char addr[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &mAddr.sin_addr, addr, sizeof(addr));
-	printf_s("Create Socket : IP : %s, PORT : %d \n", addr, ntohs(mAddr.sin_port));
+	//결과 메세지
+	inet_ntop(AF_INET, &mAddr.sin_addr, mIp, sizeof(mIp));
+	printf_s("Create Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
 }
 
 Server::Socket::cSock::~cSock()
 {
 	closesocket(mSock);
+}
+
+const char* Server::Socket::cSock::Get_IP()
+{
+	return mIp;
 }
 
 bool Server::Socket::cSock::Send(BYTE* _buf, int _size, int _flag)

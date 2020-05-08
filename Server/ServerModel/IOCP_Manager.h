@@ -79,6 +79,7 @@ namespace Server
 	inline Server::cIOCP_Manager<T>::~cIOCP_Manager()
 	{
 		mLog.Close();
+		delete[] mProcess_thread;
 
 	}
 
@@ -94,9 +95,11 @@ namespace Server
 		// i 개의 작업자 스레드 생성
 		for (int i = 0; i < mThread_count; i++)
 		{
+			//바로시작 on
 			mProcess_thread[i].Create(IOCP_Process, this, true, false);
 		}
 
+		printf_s("CREATE IOCP PORT THREAD : %d\n", mThread_count);
 		mLog.Record("CREATE IOCP PORT THREAD : %d", mThread_count);
 
 		return true;

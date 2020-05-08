@@ -1,23 +1,15 @@
 #pragma once
 #ifndef _GAMECLIENT_H_
 #define _GAMECLIENT__H_
-#include "Client/Client.h"
 #include "User/User.h"
 #include "State.h"
-
+#include "Client/Client.h"
 namespace GAME
 {
-	namespace STATE
-	{
-		class cState;
-		enum class E;
-	}
-
-
 	//게임 클라이언트
 	class cGameClient : public Server::cClient
 	{
-
+		static unsigned int ClientCount;
 	private:
 		//상태
 		STATE::cState* mState;
@@ -29,6 +21,7 @@ namespace GAME
 		//생성자
 		cGameClient() {}
 		cGameClient(SOCKET _sock, const SOCKADDR_IN& _addr);
+		~cGameClient();
 
 		//유저
 		Server::cUser& User() { return mUser; }

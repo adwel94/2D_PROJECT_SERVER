@@ -17,15 +17,19 @@ GAME::cMainManager::~cMainManager()
 
 void GAME::cMainManager::Run()
 {
+
+	Sock_Start();
 	//소켓
-	cSock server;
+	cSock server(IPv4, TCP);
 
 	//서버 소켓으로 설정
-	st_cSockManager::GetInstance()->TCP_Listen_Sock(&server);
+	if(!st_cSockManager::GetInstance()->TCP_Listen_Sock(&server)) return;
 
 	//accept 받을 변수
 	SOCKET client_socket = NULL;
 	SOCKADDR_IN client_addr;
+
+	if (!Initialize_IOCP()) return;
 
 	//클라이언트 accept
 	while (true)

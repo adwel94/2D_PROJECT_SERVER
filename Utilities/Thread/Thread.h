@@ -73,6 +73,7 @@ namespace Utilities
 			CloseHandle(mthread);
 		}
 
+		//생성 (함수,데이터,바로시작,반복)
 		bool Create(ThreadProc _proc, LPVOID _ptr,bool _start = false, bool _repeat = false)
 		{
 			if (mthread != NULL) return false;

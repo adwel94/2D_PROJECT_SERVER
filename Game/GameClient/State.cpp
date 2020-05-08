@@ -1,7 +1,23 @@
 #include "State.h"
 #include "PROTOCOL.h"
 #include "Login/LoginManager.h"
+#include "GameClient/GameClient.h"
 
+GAME::STATE::cState* GAME::STATE::cState::All_State[] = {};
+
+void GAME::STATE::cState::Create()
+{
+	All_State[E::LOG_IN] = new cLogin_State();
+	All_State[0];
+}
+
+void GAME::STATE::cState::Destroy()
+{
+	for (int i = 0; i < E::STATE_COUNT; i++)
+	{
+		delete All_State[i];
+	}
+}
 
 void GAME::STATE::cState::SendProc(cGameClient* _client)
 {
@@ -12,14 +28,15 @@ void GAME::STATE::cState::SendProc(cGameClient* _client)
 	}
 }
 
-void GAME::STATE::cState::Create()
-{
-	
-}
 
-void GAME::STATE::cState::Destroy()
-{
-}
+//void GAME::STATE::cState::Create(cState** _state)
+//{
+//	
+//}
+//
+//void GAME::STATE::cState::Destroy(cState** _state)
+//{
+//}
 
 //----------------------------------LOGIN--------------------------------//
 
@@ -42,3 +59,4 @@ void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 		break;
 	}
 }
+
