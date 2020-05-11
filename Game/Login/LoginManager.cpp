@@ -22,8 +22,10 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 	char id[ID_SIZE];
 	char pw[PW_SIZE];
 
-	_client->RecvBuf().Read(id);
-	_client->RecvBuf().Read(pw);
+	_client->RecvPacket().Read(id);
+	_client->RecvPacket().Read(pw);
+
+	printf_s("IP: %s Req_Login (%s,%s) \n", _client->Get_IP(), id, pw);
 
 	bool result = false;
 	cDB_Result db_result;
@@ -45,13 +47,17 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 	}
 
 	//결과 패킷 생성
-	Utilities::sBuffer* buffer = new Utilities::sBuffer();
-	buffer->Write(PROTOCOL::SERVER_RE_LOGIN);
-	buffer->Write(result);
+	Utilities::sBuffer buffer;
+	buffer.Write(PROTOCOL::SERVER_RE_LOGIN);
+	buffer.Write(result);
+
 
 	//결과 전송
+	if (result) printf_s("IP: %s Login_Success (%s,%s) \n", _client->Get_IP(), id, pw);
 	_client->Send_Packet_Push(buffer);
+	_client->WSA_Send_Packet();
 
+	
 	return result;
 }
 
@@ -60,8 +66,8 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 	char id[ID_SIZE];
 	char pw[PW_SIZE];
 
-	_client->RecvBuf().Read(id);
-	_client->RecvBuf().Read(pw);
+	_client->RecvPacket().Read(id);
+	_client->RecvPacket().Read(pw);
 
 	printf_s("IP: %s Req_Join (%s,%s) \n", _client->Get_IP(), id, pw);
 
@@ -82,9 +88,9 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 	}
 
 	//결과 패킷 생성
-	Utilities::sBuffer* buffer = new Utilities::sBuffer();
-	buffer->Write(PROTOCOL::SERVER_RE_JOIN);
-	buffer->Write(result);
+	Utilities::sBuffer buffer;
+	buffer.Write(PROTOCOL::SERVER_RE_JOIN);
+	buffer.Write(result);
 
 	//결과 전송
 	_client->Send_Packet_Push(buffer);

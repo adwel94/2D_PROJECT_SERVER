@@ -82,7 +82,7 @@ bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT SOCKET& _so
 	char addr[INET_ADDRSTRLEN];
 	inet_ntop(AF_INET, &_addr.sin_addr, addr, sizeof(addr));
 
-	printf_s("Socket Accept : IP : %s, PORT : %d", addr, ntohs(_addr.sin_port));
+	printf_s("Socket Accept : IP : %s, PORT : %d \n", addr, ntohs(_addr.sin_port));
 	mLog.Record("Socket Accept : IP : %s, PORT : %d", addr, ntohs(_addr.sin_port));
 
 	return true;

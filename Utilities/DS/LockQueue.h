@@ -12,12 +12,16 @@ namespace Utilities
 
 		//크리티컬섹션 큐
 		template <class T>
-		class cLockQueue
+		class cLockQueue 
 		{
 			Utilities::Lock::cLock mLock;
 			std::queue<T> mQueue;
 		public:
 
+			Utilities::Lock::cLock& Lock()
+			{
+				return mLock;
+			}
 
 			T LockFront()
 			{
@@ -31,10 +35,18 @@ namespace Utilities
 				mQueue.push(_data);
 			}
 
-			void LockPop()
+			//void LockPop()
+			//{
+			//	Utilities::Lock::cAutoUnLock alock(&mLock);
+			//	mQueue.pop();
+			//}
+
+			T LockPop()
 			{
 				Utilities::Lock::cAutoUnLock alock(&mLock);
+				T data = mQueue.front();
 				mQueue.pop();
+				return data;
 			}
 
 			size_t LockSize()

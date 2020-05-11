@@ -40,6 +40,8 @@ bool GAME::cGameClient::Recv_Process()
 	else
 	{
 		mState->RecvProc(this);
+		Set_Recv_Size(sizeof(int));
+		if (!WSA_Recv_Packet()) return false;
 	}
 
 	return true;
@@ -47,6 +49,10 @@ bool GAME::cGameClient::Recv_Process()
 
 bool GAME::cGameClient::Send_Process()
 {
-	
+	Send_Packet_Pop();
+	if (IsPacking())
+	{
+		WSA_Send_Packet();
+	}
 	return false;
 }

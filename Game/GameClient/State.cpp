@@ -44,8 +44,8 @@ void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 {
 	//프로토콜을 확인
 	PROTOCOL::P protocol;
-	_client->RecvBuf().Read(protocol);
-	
+	_client->RecvPacket().Read(protocol);
+	printf_s("%d \n", protocol);
 	//프로토콜에 따른 작업 실행
 	switch (protocol)
 	{

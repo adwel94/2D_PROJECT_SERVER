@@ -13,7 +13,7 @@ namespace Server
 
 	protected:
 
-
+		Utilities::Lock::cLock mSendLock;
 
 	public:
 

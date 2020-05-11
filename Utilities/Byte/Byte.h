@@ -14,7 +14,7 @@ namespace Utilities
 		DWORD  mTrans;//데이터 포인터
 
 		//생성자
-		sBuffer(DWORD _size = 0);
+		sBuffer();
 		//복사 생성자
 		sBuffer(sBuffer& _buffer);
 		//소멸자
@@ -31,9 +31,12 @@ namespace Utilities
 			BYTE* empt = mByte;
 			int emptsize = mSize;
 
-			//새로운 크기 버퍼 생성
-			mByte = new BYTE[emptsize + _datesize];
-			mSize = emptsize + _datesize;
+			if (mSize < emptsize + _datesize)
+			{
+				//새로운 크기 버퍼 생성
+				mByte = new BYTE[emptsize + _datesize];
+				mSize = emptsize + _datesize;
+			}
 
 			//기존 버퍼 메모리를 복사
 			memcpy_s(mByte, mSize, empt, emptsize);
@@ -89,7 +92,7 @@ namespace Utilities
 		void Write(const double& _double);
 		void Write(const char* _string);
 		void Write(BYTE* _byte, int _size);
-		void Write(const sBuffer& _buffer);
+		
 
 
 		//데이터 분해
@@ -99,8 +102,8 @@ namespace Utilities
 		bool Read(OUT float& _float);
 		bool Read(OUT double& _double);
 		bool Read(OUT char* _string);
-		bool Read(OUT BYTE* _byte, int _size);
-		bool Read(OUT sBuffer& _buffer);
+		bool Read(OUT BYTE* _byte);
+
 
 
 

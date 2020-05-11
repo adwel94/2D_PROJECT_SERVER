@@ -1,10 +1,10 @@
 #include "Byte.h"
 
 
-Utilities::sBuffer::sBuffer(DWORD _size)
+Utilities::sBuffer::sBuffer()
 {
-	mByte = new BYTE[_size];
-	mSize = _size;
+	mByte = new BYTE[0];
+	mSize = 0;
 	mTrans = 0;
 }
 
@@ -57,9 +57,8 @@ void Utilities::sBuffer::Write(const double& _double)
 
 void Utilities::sBuffer::Write(const char* _string)
 {
-	//문자길이 + 문자열 + 널값까지
-	int len = 0;
-	len = strlen(_string) + 1;
+	//문자길이 + 문자열, 널값제외
+	int len = strlen(_string);
 	Write<int>(&len, (int)sizeof(int));
 	Write<const char>(_string, len);
 }
@@ -70,12 +69,6 @@ void Utilities::sBuffer::Write(BYTE* _byte, int _size)
 	Write<BYTE>(_byte, _size);
 }
 
-void Utilities::sBuffer::Write(const Utilities::sBuffer& _buffer)
-{
-	int size = _buffer.mSize;
-	Write<int>(&size, (int)sizeof(int));
-	Write<const BYTE>(_buffer.mByte, _buffer.mSize);
-}
 
 bool Utilities::sBuffer::Read(OUT bool& _bool)
 {
@@ -107,21 +100,15 @@ bool Utilities::sBuffer::Read(OUT char* _string)
 	int len = 0;
 	if(!Read<int>(&len, (int)sizeof(int))) return false;
 	if(!Read<char>(_string, len)) return false;
+	_string[len] = '\0';
 	return true;
 }
 
-bool Utilities::sBuffer::Read(OUT BYTE* _byte, int _size)
-{
-	return Read<BYTE>(_byte, _size);
-}
-
-bool Utilities::sBuffer::Read(OUT sBuffer& _buffer)
+bool Utilities::sBuffer::Read(OUT BYTE* _byte)
 {
 	int size = 0;
-	if(!Read<int>(&size, (int)sizeof(int))) return false;
-	_buffer.Reset_Buffer(size);
-	if(!Read<BYTE>(_buffer.mByte, size)) return false;
-
+	if (!Read<int>(&size, (int)sizeof(int))) return false;
+	if (!Read<BYTE>(_byte, size)) return false;
 	return true;
 }
 

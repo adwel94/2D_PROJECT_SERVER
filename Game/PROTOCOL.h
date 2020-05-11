@@ -8,8 +8,11 @@ namespace GAME
 	{
 		typedef int P;
 
+
+		 
 		enum TYPE
 		{
+			NONE = -1,
 			//클라이언트 로그인 요청 (string,string)
 			CLEINT_REQ_LOGIN,
 			//서버 로그 결과 (bool)

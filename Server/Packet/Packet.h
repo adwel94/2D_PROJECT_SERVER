@@ -31,7 +31,7 @@ namespace Server
 	class cPacket 
 	{
 	protected:
-		Utilities::sBuffer mRecvBuf;//send버퍼 배열
+		Utilities::sBuffer mRecvBuf;//send버퍼 배열	
 		Utilities::DS::cLockQueue<Utilities::sBuffer*> mSendBuf;//send버퍼 배열
 		WSAoverlapEX mRecvOverlap;
 		WSAoverlapEX mSendOverlap;
@@ -39,14 +39,14 @@ namespace Server
 		cPacket();
 		virtual ~cPacket();
 
-		Utilities::sBuffer& RecvBuf() { return mRecvBuf; }
+		Utilities::sBuffer& RecvPacket() { return mRecvBuf; }
 
 		//패킹된 send 데이터가 있는지 확인
 		bool IsPacking();
 
 		//오버랩 준비
-		void Init_Recv_Overlap();
-		void Init_Send_Overlap();
+		void Init_Recv_Overlap(CHAR* _byte, ULONG _len);
+		void Init_Send_Overlap(CHAR* _byte, ULONG _len);
 
 		//오버랩 확인
 		WSAoverlapEX& Recv_Overlap() { return mRecvOverlap; }
@@ -65,8 +65,9 @@ namespace Server
 		int Get_Recv_Trans();
 		
 
-		//send 큐에 버퍼 삽입
-		void Send_Packet_Push(Utilities::sBuffer* _buffer);
+		//send 큐에 버퍼 삽입,삭제
+		void Send_Packet_Push(Utilities::sBuffer& _buffer);
+		void Send_Packet_Pop();
 	};
 
 }

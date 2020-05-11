@@ -7,8 +7,7 @@
 
 
 
-
-
+#define SENDBUF_COUNT 10
 
 
 #endif // !_SERVER_H_
