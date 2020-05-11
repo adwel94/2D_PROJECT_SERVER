@@ -124,8 +124,8 @@ namespace Server
 	template<class T>
 	inline void Server::cIOCP_Manager<T>::Accpet_Port(SOCKET _sock, T _key)
 	{
-		//포트 등록
-		CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)_key, 0);//포트에 클라이언트 연결 컴플리션키는 클라이언트 객체로
+		//포트에 클라이언트 연결 컴플리션키는 클라이언트 객체로
+		CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)_key, 0);
 	}
 
 
@@ -142,7 +142,7 @@ namespace Server
 		{
 			//wsa완료 대기
 			BOOL retval = GetQueuedCompletionStatus(iocp->mPort, &transferred, (PULONG_PTR)&key, &overlap, INFINITE); 
-			if (retval == FALSE) //클라이언트 강제 종료
+			if (retval == FALSE) //클라이언트 에러
 			{
 				//에러 처리
 				iocp->ErrorProcess(key, overlap, transferred);
@@ -153,8 +153,15 @@ namespace Server
 					printf_s("recv exit overlap - Exit Process \n");
 					return true;
 				}
+				//비정상 종료 패킷
+				if (transferred == 0) 
+				{
+					//종료 처리
+					iocp->DisconnectProcess(key, overlap, transferred);
+				}
 			}
-			else if (transferred == 0) //종료 패킷
+			//정상 종료 패킷
+			else if (transferred == 0)
 			{
 				//종료 처리
 				iocp->DisconnectProcess(key, overlap, transferred);
