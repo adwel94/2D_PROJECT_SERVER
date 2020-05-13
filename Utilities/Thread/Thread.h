@@ -35,6 +35,7 @@ namespace Utilities
 
 		//시작,정지,종료
 		HANDLE mRunEvt;
+		HANDLE mExitEvt;
 		HANDLE mFinishEvt;
 
 		//스레드 함수
@@ -45,8 +46,21 @@ namespace Utilities
 			do
 			{
 				WaitForSingleObject(thread->mRunEvt, INFINITE);//시작 이벤트 기다림
-				if (thread->mProc(thread->mData) == ERROR_EXIT) break; //비정상 종료 일경우 
-			} while (thread->mRepeat);
+				if (WaitForSingleObject(thread->mExitEvt, 0) == WAIT_OBJECT_0)
+				{
+					//종료 on
+					SetEvent(thread->mFinishEvt);
+					return 1;
+				}
+
+				if (thread->mProc(thread->mData) == ERROR_EXIT)
+				{
+					//에러종료
+					SetEvent(thread->mFinishEvt);
+					return 0;
+				}
+
+			}while (thread->mRepeat == true);
 
 			//종료 on
 			SetEvent(thread->mFinishEvt);
@@ -61,16 +75,18 @@ namespace Utilities
 			mthread = NULL;
 			mThredID = -1;
 			mRunEvt = NULL;
+			mExitEvt = NULL;
 			mFinishEvt = NULL;
 			mProc = NULL;
 			mData = NULL;
 			mRepeat = false;
+
 		}
 
 		~cThread()
 		{
 			Destroy();
-			CloseHandle(mthread);
+
 		}
 
 		//생성 (함수,데이터,바로시작,반복)
@@ -84,6 +100,7 @@ namespace Utilities
 			//2- reset사용, 3-on/off 
 			mRunEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mFinishEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
+			mExitEvt = CreateEvent(NULL, TRUE, FALSE, NULL);
 			mthread = (HANDLE)_beginthreadex(NULL, 0, &Process, this, 0, &mThredID);
 			mRepeat = _repeat;
 
@@ -112,20 +129,36 @@ namespace Utilities
 			return true;
 		}
 
+		void Join()
+		{
+			WaitForSingleObject(mFinishEvt, INFINITE);
+		}
+
 		bool Destroy()
 		{
 			//스레드 종료, 각종 이벤트 초기화
 			if (mthread == NULL) return false;
 			mRepeat = false;
 
+			SetEvent(mExitEvt);
 			SetEvent(mRunEvt);
 
-			WaitForSingleObject(mFinishEvt, INFINITE);
+			Join();
 
 			CloseHandle(mRunEvt);
 			CloseHandle(mFinishEvt);
+			CloseHandle(mExitEvt);
+			CloseHandle(mthread);
 
 			printf_s("Thread Destroy ID: %d \n",mThredID);
+
+			mthread = NULL;
+			mThredID = -1;
+			mRunEvt = NULL;
+			mExitEvt = NULL;
+			mFinishEvt = NULL;
+			mProc = NULL;
+			mData = NULL;
 
 			return true;
 		}

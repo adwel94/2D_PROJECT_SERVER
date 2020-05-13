@@ -23,15 +23,20 @@ namespace Server
 	namespace Socket
 	{
 
+		static bool socket_start = false;
+
 		//소켓 사용시 최초 호출
 		inline bool Sock_Start()
 		{
+			if (socket_start == true) return true;
+
 			WSADATA wsa;
 			//윈도우 dll 초기화 윈속 할당
 			if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 			{
 				return false;
 			}
+			socket_start = true;
 			return true;
 		}
 
@@ -61,13 +66,15 @@ namespace Server
 		public:
 			cSock();
 			cSock(SOCKET _sock, const SOCKADDR_IN& _addr);
-			cSock(IP_VER _af, SOCKTYPE _socktype, int _pro = 0, int _port = 9000, const char* _addr = "\0");
 			virtual ~cSock();
 
 			//Get
 			const char* Get_IP();
 			const SOCKET GetSock() { return mSock; }
 			const SOCKADDR_IN& GetAddr() { return mAddr; }
+
+			bool Start(IP_VER _af = IPv4, SOCKTYPE _socktype = TCP, int _pro = 0, int _port = 9000, const char* _addr = "\0");
+			void End();
 
 			//send 함수
 			bool Send(BYTE* _buf, int _size, int _flag);

@@ -18,8 +18,25 @@ Server::Socket::cSock::cSock(SOCKET _sock, const SOCKADDR_IN& _addr)
 	printf_s("Create Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
 }
 
-Server::Socket::cSock::cSock(IP_VER _af, SOCKTYPE _socktype, int _pro, int _port, const char* _addr)
+Server::Socket::cSock::~cSock()
 {
+	if (mSock != NULL)closesocket(mSock);
+	
+}
+
+const char* Server::Socket::cSock::Get_IP()
+{
+	return mIp;
+}
+
+bool Server::Socket::cSock::Start(IP_VER _af, SOCKTYPE _socktype, int _pro, int _port , const char* _addr)
+{
+	if (mSock != NULL)
+	{
+		printf_s("Socket already create()\n");
+		return false;
+	}
+
 	mSock = socket(_af, _socktype, _pro);
 
 	if (mSock == INVALID_SOCKET)
@@ -47,14 +64,13 @@ Server::Socket::cSock::cSock(IP_VER _af, SOCKTYPE _socktype, int _pro, int _port
 	printf_s("Create Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
 }
 
-Server::Socket::cSock::~cSock()
+void Server::Socket::cSock::End()
 {
 	closesocket(mSock);
-}
+	mSock = NULL;
 
-const char* Server::Socket::cSock::Get_IP()
-{
-	return mIp;
+	printf_s("Close Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
+	
 }
 
 bool Server::Socket::cSock::Send(BYTE* _buf, int _size, int _flag)

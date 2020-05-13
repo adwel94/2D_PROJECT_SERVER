@@ -4,7 +4,7 @@
 
 using namespace Server::Socket;
 
-GAME::cMainManager::cMainManager(int _count) : Server::cIOCP_Manager<cGameClient*>(_count)
+GAME::cMainManager::cMainManager() : Server::cIOCP_Manager<cGameClient*>()
 {
 	//소켓 매니저 상용
 	st_cSockManager::Create();
@@ -18,40 +18,32 @@ GAME::cMainManager::~cMainManager()
 void GAME::cMainManager::Run()
 {
 
-	Sock_Start();
-	//소켓
-	cSock server(IPv4, TCP);
+	Initialize_IOCP();
 
-	//서버 소켓으로 설정
-	if(!st_cSockManager::GetInstance()->TCP_Listen_Sock(&server)) return;
-
-	//accept 받을 변수
-	SOCKET client_socket = NULL;
-	SOCKADDR_IN client_addr;
-
-	if (!Initialize_IOCP()) return;
-
-	//클라이언트 accept
+	int num;
 	while (true)
 	{
-		if (st_cSockManager::GetInstance()->Accept_Socket(&server, client_socket, client_addr))
+		scanf_s("%d", &num);
+
+		if (num == 1)
 		{
-
-			//클라이언트 생성
-			cGameClient* client = new cGameClient(client_socket, client_addr);
-
-			//포트 등록, 초기작업
-			Accpet_Port(client_socket, client);
-			AcceptProcess(client);
-
+			Run_IOCP();
 		}
 
+		if (num == 2)
+		{
+			End_IOCP();
+		}
 	}
 
 }
 
-//초기 작업
-void GAME::cMainManager::AcceptProcess(cGameClient* _key)
+GAME::cGameClient* GAME::cMainManager::CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr)
+{
+	return new cGameClient(_sock,_addr);
+}
+
+void GAME::cMainManager::AcceptProcess(cGameClient* _key, SOCKET _sock, const SOCKADDR_IN& _addr)
 {
 	_key->Set_State(GAME::STATE::E::LOG_IN);
 	_key->Set_Recv_Size(sizeof(int));
@@ -93,6 +85,8 @@ void GAME::cMainManager::CompletionProcess(cGameClient* _key, LPOVERLAPPED _over
 
 void GAME::cMainManager::ErrorProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)
 {
+
+
 }
 
 void GAME::cMainManager::DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)

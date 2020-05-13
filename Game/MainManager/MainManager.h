@@ -12,13 +12,15 @@ namespace GAME
 	{
 	public:
 
-		cMainManager(int _count =-1);
+		cMainManager();
 		~cMainManager();
 
 		void Run();
 
 		// cIOCP_Manager을(를) 통해 상속됨
-		virtual void AcceptProcess(cGameClient* _key) override;
+		virtual cGameClient* CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr);
+		
+		virtual void AcceptProcess(cGameClient* _key, SOCKET _sock, const SOCKADDR_IN& _addr) override;
 
 		virtual void CompletionProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
 
