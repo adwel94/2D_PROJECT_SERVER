@@ -7,15 +7,17 @@
 namespace Server
 {
 	//소켓 에러 출력
-	inline void WSA_Err_display(const TCHAR* msg)
+	inline void WSA_Err_display(const char* _msg)
 	{
+
 		LPVOID lpMsgBuf;
 		FormatMessage(
 			FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 			NULL, WSAGetLastError(),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 			(LPTSTR)&lpMsgBuf, 0, NULL);
-		MessageBox(NULL, (LPCTSTR)lpMsgBuf, msg, MB_ICONERROR);
+		printf_s("GET_LAST_ERROR MSG : %S IN %s ", (LPTSTR)lpMsgBuf, _msg);
+		//MessageBox(NULL, (LPCTSTR)lpMsgBuf, msg, MB_ICONERROR);
 		LocalFree(lpMsgBuf);
 	}
 

@@ -18,7 +18,7 @@ namespace GAME
 		void Run();
 
 		// cIOCP_Manager을(를) 통해 상속됨
-		virtual cGameClient* CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr);
+		virtual cGameClient* CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr) override;
 		
 		virtual void AcceptProcess(cGameClient* _key, SOCKET _sock, const SOCKADDR_IN& _addr) override;
 
@@ -27,6 +27,9 @@ namespace GAME
 		virtual void ErrorProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
 
 		virtual void DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
+
+
+
 
 	};
 

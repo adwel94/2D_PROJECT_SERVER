@@ -19,23 +19,18 @@ void GAME::cMainManager::Run()
 {
 
 	Initialize_IOCP();
+	Run_IOCP();
 
 	int num;
 	while (true)
 	{
 		scanf_s("%d", &num);
 
-		if (num == 1)
-		{
-			Run_IOCP();
-		}
-
-		if (num == 2)
+		if (num == 0)
 		{
 			End_IOCP();
 		}
 	}
-
 }
 
 GAME::cGameClient* GAME::cMainManager::CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr)
@@ -92,4 +87,5 @@ void GAME::cMainManager::ErrorProcess(cGameClient* _key, LPOVERLAPPED _overlap, 
 void GAME::cMainManager::DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)
 {
 }
+
 

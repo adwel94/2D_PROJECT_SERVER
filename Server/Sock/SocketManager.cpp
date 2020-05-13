@@ -45,7 +45,7 @@ bool Server::Socket::cSockManager::Bind_Socket(OUT cSock* _sock)
 	int retval = bind(_sock->GetSock(), (SOCKADDR*)&_sock->GetAddr(), sizeof(SOCKADDR_IN));
 	if (retval == SOCKET_ERROR)
 	{
-		WSA_Err_display((TCHAR*)"Bind()");
+		WSA_Err_display("Bind()");
 		return false;
 	}
 
@@ -59,7 +59,7 @@ bool Server::Socket::cSockManager::Listen_Socket(OUT cSock* _sock)
 	int retval = listen(_sock->GetSock(), SOMAXCONN);
 	if (retval == SOCKET_ERROR)
 	{
-		WSA_Err_display((TCHAR*)"listen()");
+		WSA_Err_display("listen()");
 		return false;
 	}
 
@@ -75,7 +75,7 @@ bool Server::Socket::cSockManager::Accept_Socket(cSock* _server, OUT SOCKET& _so
 	_socket = accept(_server->GetSock(), (SOCKADDR*)&_addr, &addrlen);//클라접속 요청 받음 클라 소켓과 주소를 외부로 전달
 	if (_socket == INVALID_SOCKET)//소캣 생성 실패시
 	{
-		WSA_Err_display((TCHAR*)"accept()");// 에러메세지 출력
+		WSA_Err_display("accept()");// 에러메세지 출력
 		return false; //실패 반환
 	}
 
@@ -93,7 +93,7 @@ bool Server::Socket::cSockManager::Connect_Socket(OUT cSock* _sock)
 	int retval = connect(_sock->GetSock(), (SOCKADDR*)&_sock->GetAddr(), sizeof(SOCKADDR_IN));
 	if (retval == SOCKET_ERROR)
 	{
-		WSA_Err_display((TCHAR*)"connect()");
+		WSA_Err_display("connect()");
 		return false;
 	}
 	return true;
@@ -106,7 +106,7 @@ bool Server::Socket::cSockManager::Reuse_Socket(OUT cSock* _sock)
 		SO_REUSEADDR, (char*)&optval, sizeof(optval));
 	if (retval == SOCKET_ERROR)
 	{
-		WSA_Err_display((TCHAR*)"reuse()");
+		WSA_Err_display("reuse()");
 		return false;
 	}
 	return true;

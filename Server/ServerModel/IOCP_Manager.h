@@ -49,7 +49,7 @@ namespace Server
 	protected:
 
 		//GetQueuedCompletionStatus 작동후 작동할 함수
-		virtual T CreateKey(SOCKET _sock, SOCKADDR_IN& _addr);
+		virtual T CreateKey(SOCKET _sock, const SOCKADDR_IN& _addr) = 0;
 		virtual void AcceptProcess(T _key, SOCKET _sock = NULL, const SOCKADDR_IN& _addr = NULL) = 0;
 		virtual void CompletionProcess(T _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) = 0;
 		virtual void ErrorProcess(T _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) = 0;
@@ -88,7 +88,12 @@ namespace Server
 		if (Socket::Sock_Start() == false) return false;
 
 		//소켓생성
-		if (mServer.Start() == false) return false;
+		if (mServer.Start() == false)
+		{
+			printf_s("Create IOCP_SERVER Error  \n");
+			return false;
+
+		}
 
 		//tcp listen 소켓으로 변경
 		if (Socket::st_cSockManager::GetInstance()->TCP_Listen_Sock(&mServer) == false) return false;
@@ -150,11 +155,6 @@ namespace Server
 	template<class T>
 	inline void cIOCP_Manager<T>::End_IOCP()
 	{
-		////포트 해제 
-		//mExit = TRUE;
-
-		////포트에 큐 넣기
-		//PostQueuedCompletionStatus(mPort, 1, NULL, 0);
 		mServer.End();
 		CloseHandle(mPort);
 		mPort = NULL;
@@ -169,14 +169,8 @@ namespace Server
 
 		mAccept_thread.Join();
 
-		mLog.Record("END IOCP -------------------");
-	}
-
-	template<class T>
-	inline T cIOCP_Manager<T>::CreateKey(SOCKET _sock, SOCKADDR_IN& _addr)
-	{
-		return NULL;
-	}
+		mLog.Record("------------------- END IOCP -------------------");
+	}	
 
 
 	template<class T>
@@ -191,7 +185,7 @@ namespace Server
 	inline bool cIOCP_Manager<T>::Accept_Process_thread(LPVOID _iocp)
 	{
 		cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
-		if (!iocp->mPort == NULL)
+		if (iocp->mPort == NULL)
 		{
 			printf_s("PORT Not Create \n");
 			return false;
@@ -227,19 +221,21 @@ namespace Server
 			BOOL retval = GetQueuedCompletionStatus(iocp->mPort, &transferred, (PULONG_PTR)&key, &overlap, INFINITE); 
 			if (retval == FALSE) //클라이언트 에러
 			{
-				//에러 처리
-				iocp->ErrorProcess(key, overlap, transferred);
 
-				//비정상 종료 패킷
+				//클라이언트 비정상 종료
 				if (transferred == 0)
 				{
 					//종료 처리
 					iocp->DisconnectProcess(key, overlap, transferred);
+					return true;
+				}	
+				else 
+				{
+					//에러 처리
+					iocp->ErrorProcess(key, overlap, transferred);
+					WSA_Err_display("IOCP_Process_thread");
+					return false;
 				}
-
-				printf_s("trans : %d \n", transferred);
-				return false;
-
 			}
 			//정상 종료 패킷
 			else if (transferred == 0)

@@ -41,7 +41,7 @@ bool Server::Socket::cSock::Start(IP_VER _af, SOCKTYPE _socktype, int _pro, int 
 
 	if (mSock == INVALID_SOCKET)
 	{
-		WSA_Err_display((TCHAR*)"Socket()");
+		WSA_Err_display("Socket()");
 	}
 
 	ZeroMemory(&mAddr, sizeof(mAddr));
@@ -62,6 +62,8 @@ bool Server::Socket::cSock::Start(IP_VER _af, SOCKTYPE _socktype, int _pro, int 
 	//결과 메세지
 	inet_ntop(AF_INET, &mAddr.sin_addr, mIp, sizeof(mIp));
 	printf_s("Create Socket : IP : %s, PORT : %d \n", mIp, ntohs(mAddr.sin_port));
+
+	return true;
 }
 
 void Server::Socket::cSock::End()
@@ -83,7 +85,7 @@ bool Server::Socket::cSock::Send(BYTE* _buf, int _size, int _flag)
 		sendbyte = send(mSock, ptr, left, _flag);//send
 		if (sendbyte == SOCKET_ERROR)//에러체크
 		{
-			WSA_Err_display((TCHAR*)"send()");
+			WSA_Err_display("send()");
 			return false;//에러반환
 		}
 		else if (sendbyte == 0)
@@ -104,7 +106,7 @@ bool Server::Socket::cSock::WSA_Send(LPWSABUF _wsabuf, DWORD _buffercount, LPDWO
 	int retval = WSASend(mSock, _wsabuf, _buffercount, _sendbyte, _flag, _overlap, _routine);
 	if (retval == SOCKET_ERROR) {
 		if (WSAGetLastError() != WSA_IO_PENDING) {
-			WSA_Err_display((TCHAR*)"WSA_Send() WSA_IO_PENDING");
+			WSA_Err_display("WSA_Send() WSA_IO_PENDING");
 		}
 		return false;
 	}
@@ -121,7 +123,7 @@ bool Server::Socket::cSock::Recv(BYTE* _buf, int _size, int _flag)
 		received = recv(mSock, ptr, left, _flag);//데이터를 수신버퍼에서 가져옴
 		if (received == SOCKET_ERROR)//에러체크
 		{
-			WSA_Err_display((TCHAR*)"recv()");
+			WSA_Err_display("recv()");
 			return false;//에러반환
 		}			
 		else if (received == 0)//종료체크
@@ -142,7 +144,7 @@ bool Server::Socket::cSock::WSA_Recv(LPWSABUF _wsabuf, DWORD _buffercount, LPDWO
 	int retval = WSARecv(mSock, _wsabuf, _buffercount, _recvbyte, _flag, _overlap, NULL);
 	if (retval == SOCKET_ERROR) {
 		if (WSAGetLastError() != WSA_IO_PENDING) {
-			WSA_Err_display((TCHAR*)"WSA_Recv() WSA_IO_PENDING");
+			WSA_Err_display("WSA_Recv() WSA_IO_PENDING");
 		}
 		return false;
 	}
