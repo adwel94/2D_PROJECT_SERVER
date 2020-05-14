@@ -13,7 +13,6 @@ GAME::Login::cLoginManger::cLoginManger()
 
 GAME::Login::cLoginManger::~cLoginManger()
 {
-	Close();
 	mLog.Close();
 }
 
@@ -32,41 +31,41 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 	cDB_Result db_result;
 
 	//DB 확인
-	if (!Run_SQL("select * from %s where mId = '%s' and mPw = '%s'", DB_TABLE_LOGIN, id, pw)) return false;
-	//결과값 저장
-	Get_Result(db_result);
-
-	//결과값이 있다면
-	if (db_result.Row_Count() > 0)
+	if (Run_SQL("select * from %s where mId = '%s' and mPw = '%s'", DB_TABLE_LOGIN, id, pw))
 	{
-
-		bool overlap = false;//로그인중복
-
+		//결과값 저장
+		Get_Result(db_result);
+		//결과값이 있다면
+		if (db_result.Row_Count() > 0)
 		{
-			//이미 로그인 상태인지 확인
-			Utilities::DS::cLockIterator<__int64> iter(&mLoginList);
-			while (iter.HasNext())
+			db_result.MoveNext();
+			bool overlap = false;//로그인중복
+
 			{
-
-				if (iter.Next() == atoll(db_result.Current_Row("mCode")))
+				//이미 로그인 상태인지 확인
+				Utilities::DS::cLockIterator<__int64> iter(&mLoginList);
+				while (iter.HasNext())
 				{
-					overlap = true;
-					break;
+
+					if (iter.Next() == atoll(db_result.Now("mCode")))
+					{
+						overlap = true;
+						break;
+					}
 				}
+			}//lock을위한 괄호
+
+			//로그인된 내역이 없다면
+			if (overlap == false)
+			{
+				result = true;
+
+				//유저 등록(id,pw,code)
+				mLoginList.LockAdd(atoll(db_result.Now("mCode")));
+				_client->User() = Server::cUser(id, pw, (atoll(db_result.Now("mCode"))));
 			}
-		}//lock을위한 괄호
-
-		//로그인된 내역이 없다면
-		if (overlap == false)
-		{
-			result = true;
-
-			//유저 등록(id,pw,code)
-			mLoginList.LockAdd(atoll(db_result.Current_Row("mCode")));
-			_client->User() = Server::cUser(id, pw, (atoll(db_result.Current_Row("mCode"))));
 		}
 	}
-	
 
 
 	//결과 패킷 생성
@@ -76,7 +75,6 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 
 
 	//결과 전송
-
 	printf_s("IP: %s Login_Result (%s,%s) %s \n", _client->Get_IP(), id, pw,(result ? "Success" : "Fail"));
 	mLog.Record("IP: %s Login_Result (%s,%s) %s ", _client->Get_IP(), id, pw, (result ? "Success" : "Fail"));
 

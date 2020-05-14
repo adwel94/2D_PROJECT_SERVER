@@ -141,14 +141,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Charactor\Charactor.h" />
+    <ClInclude Include="Charactor\CharactorManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameClient\GameClient.h" />
     <ClInclude Include="Login\LoginManager.h" />
     <ClInclude Include="MainManager\MainManager.h" />
     <ClInclude Include="GameClient\State.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Party\Party.h" />
     <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Charactor\CharactorManager.cpp" />
     <ClCompile Include="GameClient\GameClient.cpp" />
     <ClCompile Include="GameClient\State.cpp" />
     <ClCompile Include="Login\LoginManager.cpp" />

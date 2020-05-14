@@ -4,6 +4,9 @@
 #include "User/User.h"
 #include "State.h"
 #include "Client/Client.h"
+#include "Charactor/Charactor.h"
+
+
 namespace GAME
 {
 	//게임 클라이언트
@@ -15,11 +18,12 @@ namespace GAME
 		STATE::cState* mState;
 		//ID,PW
 		Server::cUser mUser;
+		//캐릭터
+		Charactor::cCharactor* mChar;
 
 	public:
 
 		//생성자
-		cGameClient() {}
 		cGameClient(SOCKET _sock, const SOCKADDR_IN& _addr);
 		~cGameClient();
 

@@ -5,7 +5,6 @@
 
 Utilities::DB::cDB_Result::cDB_Result()
 {
-	mCurrent_Row = -1;
 	mSql_Result = nullptr;
 }
 
@@ -18,41 +17,17 @@ Utilities::DB::cDB_Result::~cDB_Result()
 	}
 }
 
-bool Utilities::DB::cDB_Result::Move_Row(unsigned int _index)
+void Utilities::DB::cDB_Result::Move_Row(unsigned int _index)
 {
 	mysql_data_seek(mSql_Result, _index);
-	if (mysql_fetch_row(mSql_Result) == NULL)
-	{
-		return false;
-	}
-	mCurrent_Row = _index;
-	return true;
 }
 
-bool Utilities::DB::cDB_Result::Next_Row()
+bool Utilities::DB::cDB_Result::MoveNext()
 {
-	if (mysql_fetch_row(mSql_Result) == NULL)
-	{
-		return false;
-	}
-	mCurrent_Row++;
-	return true;
+	return (mysql_fetch_row(mSql_Result) != NULL);
 }
 
-void Utilities::DB::cDB_Result::Set_Result(MYSQL_RES* _result)
-{
-	mCurrent_Row = -1;
-	mSql_Result = _result;
-	//0부터 시작
-	Next_Row();
-}
-
-int Utilities::DB::cDB_Result::Current_Row_Index()
-{
-	return mCurrent_Row;
-}
-
-const char* Utilities::DB::cDB_Result::Current_Row(int _index)
+const char* Utilities::DB::cDB_Result::Now(int _index)
 {
 	//index 범위 검사
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
@@ -60,26 +35,23 @@ const char* Utilities::DB::cDB_Result::Current_Row(int _index)
 	return mSql_Result->current_row[_index];
 }
 
-const char* Utilities::DB::cDB_Result::operator[](unsigned int _index)
-{
-	//index 범위 검사
-	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
-
-	return mSql_Result->current_row[_index];
-}
-
-const char* Utilities::DB::cDB_Result::Current_Row(const char* _filed)
+const char* Utilities::DB::cDB_Result::Now(const char* _field)
 {
 	//열 갯수 만큼 검사
 	for (int i = 0; i < (mSql_Result->field_count); i++)
 	{
 		//일치시 해당 필드값 반환
-		if (!strcmp(_filed, mSql_Result->fields[i].name))
+		if (!strcmp(_field, mSql_Result->fields[i].name))
 		{
 			return mSql_Result->current_row[i];
 		}
 	}
 	return nullptr;
+}
+
+void Utilities::DB::cDB_Result::Set_Result(MYSQL_RES* _result)
+{
+	mSql_Result = _result;
 }
 
 int Utilities::DB::cDB_Result::Row_Count()
@@ -110,6 +82,7 @@ bool Utilities::DB::cDB_Result::Column_Check(const char* _column)
 const char* Utilities::DB::cDB_Result::Column_Name(unsigned int _index)
 {
 	if (mSql_Result == nullptr || mSql_Result->field_count <= _index) return nullptr;
+
 	return mSql_Result->fields[_index].name;
 }
 
@@ -163,7 +136,7 @@ bool Utilities::DB::cDatabase::Run_SQL(const char* _query, ...)
 	if (retval != 0)
 	{
 		//실패시 에러 출력
-		fprintf(stderr, "Mysql query error : %s", mysql_error(mConnection));
+		fprintf(stderr, "Mysql query error : %s -- %d \n", mysql_error(mConnection),retval);
 		return false;
 	}
 
@@ -189,6 +162,7 @@ void Utilities::DB::cDatabase::Close()
 	//DB 연결해제
 	if (mConnection)
 	{
+		printf_s("Mysql connection Close DB NAME : %s \n", mConnection->db);
 		mysql_close(mConnection);
 	}
 

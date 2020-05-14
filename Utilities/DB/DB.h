@@ -13,26 +13,20 @@ namespace Utilities
 		//쿼리의 결과 값을 저장
 		class cDB_Result
 		{
-			int mCurrent_Row; //현재 행
 			MYSQL_RES* mSql_Result; //쿼리의 결과를 가져올 포인터
 		public:
 			cDB_Result();
 			virtual ~cDB_Result();
 
-			//해당 인덱스로 열 이동
-			bool Move_Row(unsigned int _index);
-			//다음 열로 이동
-			bool Next_Row();
 			//쿼리 결과값 저장
 			void Set_Result(MYSQL_RES* _result);
-			//현재 행 인덱스
-			int Current_Row_Index();
-			//현재행의 _index열 데이터 반환
-			const char* Current_Row(int _index);
-			//현재행의 _index열 데이터 반환
-			const char* operator [] (unsigned int _index);
-			//현재행의 열 이름으로 데이터 반환
-			const char* Current_Row(const char* _filed);
+			//해당 인덱스로 열 이동
+			void Move_Row(unsigned int _index);
+			//다음 열로 이동
+			bool MoveNext();
+			//열 데이터값
+			const char* Now(int _index);
+			const char* Now(const char* _field);
 			//총 행 갯수
 			int Row_Count();
 			//총 열 갯수

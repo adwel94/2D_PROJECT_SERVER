@@ -1,6 +1,7 @@
 #include "MainManager.h"
 #include "Sock/SocketManager.h"
-#include <iterator>
+#include "Login/LoginManager.h"
+#include "Charactor/CharactorManager.h"
 
 using namespace Server::Socket;
 
@@ -8,6 +9,8 @@ GAME::cMainManager::cMainManager() : Server::cIOCP_Manager<cGameClient*>()
 {
 	//소켓 매니저 상용
 	st_cSockManager::Create();
+	Login::st_cLoginManger::Create();
+	Charactor::st_cCharactorManager::Create();
 }
 
 GAME::cMainManager::~cMainManager()
@@ -18,6 +21,8 @@ GAME::cMainManager::~cMainManager()
 	}
 
 	st_cSockManager::Destroy();
+	Login::st_cLoginManger::Destroy();
+	Charactor::st_cCharactorManager::Destroy();
 }
 
 void GAME::cMainManager::Run()

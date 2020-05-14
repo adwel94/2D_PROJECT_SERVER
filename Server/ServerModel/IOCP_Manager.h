@@ -65,6 +65,7 @@ namespace Server
 	template<class T>
 	inline Server::cIOCP_Manager<T>::cIOCP_Manager()
 	{
+		mThread_count = -1;
 		mLog.Connect("IOCP_MANAGER.txt");
 		mPort = NULL;
 		mExit = FALSE;

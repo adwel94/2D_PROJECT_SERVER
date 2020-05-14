@@ -24,7 +24,15 @@ namespace GAME
 			//클라이언트 로그아웃 요청
 			CLIENT_REQ_LOGOUT,
 			//서버 로그아웃 요청 결과(bool)
-			SERVER_REQ_LOGOUT
+			SERVER_RE_LOGOUT,
+			//클라이언트 캐릭터 정보 요청
+			CLIENT_REQ_CHAR_INFO,
+			//서버 클라이언트 캐릭터 정보 결과 (int 캐릭터수 ,(int 직업코드, string 닉네임)...)
+			SERVER_RE_CHAR_INFO,
+			//클라이언트 캐릭터 생성 요청 (int 직업코드, string 닉네임)
+			CLIENT_REQ_CREATE_CHAR,
+			//서버 캐릭터 생성요청 결과 (bool)
+			SERVER_RE_CREATE_CHAR,
 		};
 	}
 	//byte

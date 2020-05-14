@@ -10,6 +10,15 @@
     <Filter Include="MainManager">
       <UniqueIdentifier>{1e596cc8-dcf9-4bed-9f96-dc2f7ea5fc2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chractor">
+      <UniqueIdentifier>{d09809f9-e169-41c6-b120-65f18814e13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{6c480c44-cc4e-4986-b8f1-ea30b6ca8205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Party">
+      <UniqueIdentifier>{7cc761df-2a12-4897-83bd-63469dcd30c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -26,6 +35,18 @@
       <Filter>GameClient</Filter>
     </ClInclude>
     <ClInclude Include="PROTOCOL.h" />
+    <ClInclude Include="Charactor\Charactor.h">
+      <Filter>Chractor</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Party\Party.h">
+      <Filter>Party</Filter>
+    </ClInclude>
+    <ClInclude Include="Charactor\CharactorManager.h">
+      <Filter>Chractor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -40,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="GameClient\GameClient.cpp">
       <Filter>GameClient</Filter>
+    </ClCompile>
+    <ClCompile Include="Charactor\CharactorManager.cpp">
+      <Filter>Chractor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

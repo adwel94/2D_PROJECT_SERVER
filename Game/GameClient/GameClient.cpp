@@ -10,6 +10,9 @@ GAME::cGameClient::cGameClient(SOCKET _sock, const SOCKADDR_IN& _addr) : cClient
 		GAME::STATE::cState::Create();
 	}
 	ClientCount++;
+
+	mState = nullptr;
+	mChar = nullptr;
 }
 
 GAME::cGameClient::~cGameClient()
@@ -53,6 +56,7 @@ bool GAME::cGameClient::Recv_Process()
 bool GAME::cGameClient::Send_Process()
 {
 	Send_Packet_Pop();
+	//큐에 send할 데이터가 남아있다면 send
 	if (IsPacking())
 	{
 		WSA_Send_Packet();

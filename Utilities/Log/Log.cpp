@@ -28,7 +28,7 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 
 	//파일 이름+
 	strcat_s(mMsg, _name);	
-
+	strcpy_s(mName, _name);
 	//파일 이어 쓰기로 연결
 	if (fopen_s(&mFp, mMsg, "a") != 0)
 	{
@@ -83,5 +83,6 @@ bool Utilities::cLog::Record(const char* _msg, ...)
 bool Utilities::cLog::Close()
 {
 	//파일 닫기
+	printf_s("Log Connect Close Name : %s \n", mName);
 	return (fclose(mFp) == 0) ? true : false;
 }

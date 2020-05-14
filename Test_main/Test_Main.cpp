@@ -4,12 +4,12 @@
 #include <time.h>
 #include <list>
 #include <iterator>
-//#define DB_HOST "localhost"
-//#define DB_ID "root"
-//#define DB_PW "root"
-//#define DB_PORT 3306
-//#define DB_NAME "TEST_DB"
-//#define DB_TABLE_LOGIN "test_table"
+#define DB_HOST "localhost"
+#define DB_ID "root"
+#define DB_PW "root"
+#define DB_PORT 3306
+#define DB_NAME "GAME_DB"
+#define DB_TABLE_LOGIN "test_table"
 
 using namespace std;
 using namespace Server;
@@ -37,17 +37,19 @@ struct test
 
 int main()
 {
-	for (int i = 0; i < 10; i++)
-	{
-		a.push_back(i);
-	}
-	test a;
 
-	while (a.HasNext())
-	{
-		cout << a.Next() << endl;
-	}
+	cDatabase a;
+	a.Conncetion(DB_HOST, DB_ID, DB_PW, DB_NAME, DB_PORT);
 
 	
+	a.Run_SQL("select * from charactor_table where mUser_Code = %lld ", 1235);
+	cDB_Result result;
+
+	a.Get_Result(result);
+	cout << result.Row_Count() << endl;
+
+
+
+
 
 }
