@@ -3,7 +3,7 @@
 
 Server::cPacket::cPacket()
 {
-
+	mSizeOn = true;
 }
 
 Server::cPacket::~cPacket()

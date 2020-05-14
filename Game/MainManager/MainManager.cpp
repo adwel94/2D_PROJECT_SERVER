@@ -1,6 +1,6 @@
 #include "MainManager.h"
 #include "Sock/SocketManager.h"
-
+#include <iterator>
 
 using namespace Server::Socket;
 
@@ -12,6 +12,11 @@ GAME::cMainManager::cMainManager() : Server::cIOCP_Manager<cGameClient*>()
 
 GAME::cMainManager::~cMainManager()
 {
+	for (std::list<cGameClient*>::iterator iter = mKey_List.mList.begin(); iter != mKey_List.mList.end(); iter++)
+	{
+		delete (*iter);
+	}
+
 	st_cSockManager::Destroy();
 }
 
@@ -29,6 +34,7 @@ void GAME::cMainManager::Run()
 		if (num == 0)
 		{
 			End_IOCP();
+			break;
 		}
 	}
 }
@@ -43,6 +49,7 @@ void GAME::cMainManager::AcceptProcess(cGameClient* _key, SOCKET _sock, const SO
 	_key->Set_State(GAME::STATE::E::LOG_IN);
 	_key->Set_Recv_Size(sizeof(int));
 	_key->WSA_Recv_Packet();
+
 }
 
 void GAME::cMainManager::CompletionProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)
@@ -80,12 +87,16 @@ void GAME::cMainManager::CompletionProcess(cGameClient* _key, LPOVERLAPPED _over
 
 void GAME::cMainManager::ErrorProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)
 {
-
-
+	//save
 }
 
 void GAME::cMainManager::DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap, DWORD _trans)
 {
+	char ip[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &(_key->GetAddr().sin_addr), ip, sizeof(ip));
+	printf_s("IOCP Disconnect Client IP : %s PORT : %d \n", ip, _key->GetAddr().sin_port);
+	mLog.Record("IOCP Disconnect Client IP : %s PORT : %d", ip, _key->GetAddr().sin_port);
+	delete _key;
 }
 
 

@@ -19,7 +19,7 @@ namespace Server
 
 		cClient(SOCKET _sock, const SOCKADDR_IN& _addr) : cSock(_sock, _addr) {}
 		cClient() {}
-		~cClient() {}
+		virtual ~cClient() {}
 
 		//send
 		bool Send_Packet();

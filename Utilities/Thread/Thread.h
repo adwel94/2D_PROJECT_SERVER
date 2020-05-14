@@ -7,8 +7,8 @@
 
 namespace Utilities
 {
-	typedef bool (*ThreadProc)(LPVOID);
 
+	typedef bool (*ThreadProc)(LPVOID);
 
 	//스레드 
 
@@ -16,9 +16,9 @@ namespace Utilities
 	{
 
 	public:
-		enum {
-			EXIT = TRUE,
-			ERROR_EXIT = FALSE
+		enum T_retval{
+			EXIT = true,
+			ERROR_EXIT = false
 		};
 
 	protected:
@@ -49,11 +49,10 @@ namespace Utilities
 				if (WaitForSingleObject(thread->mExitEvt, 0) == WAIT_OBJECT_0)
 				{
 					//종료 on
-					SetEvent(thread->mFinishEvt);
-					return 1;
+					break;
 				}
 
-				if (thread->mProc(thread->mData) == ERROR_EXIT)
+				if ((thread->mProc(thread->mData)) == T_retval::ERROR_EXIT)
 				{
 					//에러종료
 					SetEvent(thread->mFinishEvt);

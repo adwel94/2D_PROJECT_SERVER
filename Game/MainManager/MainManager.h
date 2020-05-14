@@ -13,7 +13,7 @@ namespace GAME
 	public:
 
 		cMainManager();
-		~cMainManager();
+		virtual ~cMainManager();
 
 		void Run();
 

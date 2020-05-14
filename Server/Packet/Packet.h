@@ -31,6 +31,7 @@ namespace Server
 	class cPacket 
 	{
 	protected:
+		bool mSizeOn;
 		Utilities::sBuffer mRecvBuf;//send버퍼 배열	
 		Utilities::DS::cLockQueue<Utilities::sBuffer*> mSendBuf;//send버퍼 배열
 		WSAoverlapEX mRecvOverlap;
@@ -42,6 +43,7 @@ namespace Server
 		Utilities::sBuffer& RecvPacket() { return mRecvBuf; }
 
 		//패킹된 send 데이터가 있는지 확인
+
 		bool IsPacking();
 
 		//오버랩 준비

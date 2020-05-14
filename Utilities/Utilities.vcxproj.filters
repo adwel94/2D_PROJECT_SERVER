@@ -138,6 +138,9 @@
     <ClInclude Include="DS\LockList.h">
       <Filter>DS</Filter>
     </ClInclude>
+    <ClInclude Include="LockIterator.h">
+      <Filter>DS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DB\DB.cpp">

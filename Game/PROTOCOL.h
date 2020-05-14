@@ -6,11 +6,11 @@ namespace GAME
 {
 	namespace PROTOCOL
 	{
-		typedef int P;
+		typedef int Protocol;
 
 
 		 
-		enum TYPE
+		enum
 		{
 			NONE = -1,
 			//클라이언트 로그인 요청 (string,string)
@@ -20,7 +20,11 @@ namespace GAME
 			//클라리언트 회원가입 요청(string,string)
 			CLIENT_REQ_JOIN,
 			//서버 회원가입 결과(bool)
-			SERVER_RE_JOIN
+			SERVER_RE_JOIN,
+			//클라이언트 로그아웃 요청
+			CLIENT_REQ_LOGOUT,
+			//서버 로그아웃 요청 결과(bool)
+			SERVER_REQ_LOGOUT
 		};
 	}
 	//byte

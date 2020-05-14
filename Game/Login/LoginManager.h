@@ -6,6 +6,7 @@
 #include "Log/Log.h"
 #include "DB/DB.h"
 #include "GameClient/GameClient.h"
+#include "DS/LockList.h"
 
 
 
@@ -19,7 +20,7 @@ namespace GAME
 			Utilities::cCodeMaker mMaker;
 			Utilities::Lock::cLock mLcok;
 			Utilities::cLog mLog;
-
+			Utilities::DS::cLockList<__int64> mLoginList;
 		public:
 			cLoginManger();
 			~cLoginManger();

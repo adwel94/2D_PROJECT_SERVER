@@ -2,6 +2,8 @@
 #include "DB/DB.h"
 #include <iostream>
 #include <time.h>
+#include <list>
+#include <iterator>
 //#define DB_HOST "localhost"
 //#define DB_ID "root"
 //#define DB_PW "root"
@@ -13,30 +15,39 @@ using namespace std;
 using namespace Server;
 using namespace Utilities::DB;
 
-int* p = new int(4);
+
+list<int> a;
+
+struct test
+{
+	list<int>::iterator iter = a.begin();
+	int index = 0;
+
+	bool HasNext()
+	{
+		return ((index) != a.size());
+	}
+
+	int Next()
+	{
+		index++;
+		return *(iter++);
+	}
+};
+
 int main()
 {
+	for (int i = 0; i < 10; i++)
+	{
+		a.push_back(i);
+	}
+	test a;
 
-	//cDB_Result result;
-	//cDatabase database;
-	//database.Conncetion(DB_HOST, DB_ID, DB_PW, DB_NAME, DB_PORT);
-	//
-	//database.Run_SQL("select * from %s where id = '%s' and pw = '%s'", DB_TABLE_LOGIN, "aa", "bb");
+	while (a.HasNext())
+	{
+		cout << a.Next() << endl;
+	}
 
-	//database.Get_Result(result);
-
-
-	//cout << result.Row_Count() << "," << result.Column_Count() <<"," << result.Column_Name(1) << endl;
-	//cout << result.Current_Row_Index() << endl;
-	//result.Move_Row(0);
-	//cout << result.Current_Row(0) << endl;
-
-
-	int* a;
-
-	a = p;
-
-	cout << *a << endl;
 	
 
 }

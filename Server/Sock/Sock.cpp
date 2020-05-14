@@ -20,7 +20,7 @@ Server::Socket::cSock::cSock(SOCKET _sock, const SOCKADDR_IN& _addr)
 
 Server::Socket::cSock::~cSock()
 {
-	if (mSock != NULL)closesocket(mSock);
+	End();
 	
 }
 
@@ -68,6 +68,8 @@ bool Server::Socket::cSock::Start(IP_VER _af, SOCKTYPE _socktype, int _pro, int 
 
 void Server::Socket::cSock::End()
 {
+	if (mSock == NULL) return;
+
 	closesocket(mSock);
 	mSock = NULL;
 

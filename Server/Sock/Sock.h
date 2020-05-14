@@ -16,7 +16,7 @@ namespace Server
 			NULL, WSAGetLastError(),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 			(LPTSTR)&lpMsgBuf, 0, NULL);
-		printf_s("GET_LAST_ERROR MSG : %S IN %s ", (LPTSTR)lpMsgBuf, _msg);
+		printf_s("GET_LAST_ERROR MSG : %S IN %s \n", (LPTSTR)lpMsgBuf, _msg);
 		//MessageBox(NULL, (LPCTSTR)lpMsgBuf, msg, MB_ICONERROR);
 		LocalFree(lpMsgBuf);
 	}

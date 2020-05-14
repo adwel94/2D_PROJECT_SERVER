@@ -14,14 +14,10 @@ namespace Utilities
 		template <class T>
 		class cLockQueue 
 		{
-			Utilities::Lock::cLock mLock;
 			std::queue<T> mQueue;
 		public:
 
-			Utilities::Lock::cLock& Lock()
-			{
-				return mLock;
-			}
+			Utilities::Lock::cLock mLock;
 
 			T LockFront()
 			{

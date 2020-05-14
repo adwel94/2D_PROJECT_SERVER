@@ -39,7 +39,7 @@ namespace Server
 
 		//미 입력시 cpu 갯수에 맞게 설정
 		cIOCP_Manager();
-		~cIOCP_Manager();
+		virtual ~cIOCP_Manager();
 
 		//시작,종료 함수
 		bool Initialize_IOCP(const char* _addr = "\0", int _port = 9000, int _thread_count = -1);
@@ -74,7 +74,7 @@ namespace Server
 	inline Server::cIOCP_Manager<T>::~cIOCP_Manager()
 	{
 		mLog.Close();
-
+		mServer.End();
 
 		//스레드 삭제
 		delete[] mProcess_thread;
@@ -90,7 +90,7 @@ namespace Server
 		//소켓생성
 		if (mServer.Start() == false)
 		{
-			printf_s("Create IOCP_SERVER Error  \n");
+			printf_s("IOCP Create Server Error  \n");
 			return false;
 
 		}
@@ -128,8 +128,8 @@ namespace Server
 		//acppet 스레드 할당
 		mAccept_thread.Create(Accept_Process_thread, this, false, true);
 
-		printf_s("CREATE IOCP PORT THREAD : %d\n", mThread_count);
-		mLog.Record("CREATE IOCP PORT THREAD : %d", mThread_count);
+		printf_s("IOCP CREATE PORT THREAD : %d\n", mThread_count);
+		mLog.Record("IOCP CREATE PORT THREAD : %d", mThread_count);
 
 		return true;
 	}
@@ -146,8 +146,8 @@ namespace Server
 
 		mAccept_thread.Run();
 
-		printf_s("CREATE IOCP RUN IP : %s PORT : %d \n", mServer.Get_IP(), mServer.GetAddr().sin_port);
-		mLog.Record("CREATE IOCP RUN IP : %s PORT : %d",mServer.Get_IP(),mServer.GetAddr().sin_port);
+		printf_s("IOCP RUN Server IP : %s PORT : %d \n", mServer.Get_IP(), mServer.GetAddr().sin_port);
+		mLog.Record("IOCP RUN Server IP : %s PORT : %d",mServer.Get_IP(),mServer.GetAddr().sin_port);
 
 		return false;
 	}
@@ -160,10 +160,9 @@ namespace Server
 		mPort = NULL;
 
 
-		// i 개의 작업자 스레드 생성
+		// 스레드 join
 		for (int i = 0; i < mThread_count; i++)
 		{
-			//바로시작 on
 			mProcess_thread[i].Join();
 		}
 
@@ -176,9 +175,19 @@ namespace Server
 	template<class T>
 	inline void cIOCP_Manager<T>::AcceptProcess_IN(SOCKET _sock, SOCKADDR_IN& _addr)
 	{
+		//key 생성
 		T key = CreateKey(_sock, _addr);
+		mKey_List.LockAdd(key);
+		//포트 연결
 		CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)key, 0);
+		//accpet후 작업
 		AcceptProcess(key, _sock, _addr);
+
+
+		char ip[INET_ADDRSTRLEN];
+		inet_ntop(AF_INET, &_addr.sin_addr, ip, sizeof(ip));
+		printf_s("IOCP Connect Client IP : %s PORT : %d \n", ip, _addr.sin_port);
+		mLog.Record("IOCP Connect Client IP : %s PORT : %d", ip, _addr.sin_port);
 	}
 
 	template<class T>
@@ -222,12 +231,14 @@ namespace Server
 			if (retval == FALSE) //클라이언트 에러
 			{
 
+
 				//클라이언트 비정상 종료
 				if (transferred == 0)
 				{
 					//종료 처리
+					iocp->mKey_List.LockRemove(key);
 					iocp->DisconnectProcess(key, overlap, transferred);
-					return true;
+
 				}	
 				else 
 				{
@@ -236,14 +247,16 @@ namespace Server
 					WSA_Err_display("IOCP_Process_thread");
 					return false;
 				}
+				return false;
 			}
 			//정상 종료 패킷
 			else if (transferred == 0)
 			{
 				//종료 처리
+				iocp->mKey_List.LockRemove(key);
 				iocp->DisconnectProcess(key, overlap, transferred);
-			}
 
+			}
 			//정상 처리
 			iocp->CompletionProcess(key, overlap, transferred);
 		}

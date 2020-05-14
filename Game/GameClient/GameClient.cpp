@@ -28,19 +28,22 @@ void GAME::cGameClient::Set_State(STATE::E _state)
 
 bool GAME::cGameClient::Recv_Process()
 {
-	//sizeof(int) == 패킷의 크기일 경우 
-	if (mRecvBuf.mSize == sizeof(int))
+	//mSizeOn = 패킷의 크기를 받는중일경우
+	if (mSizeOn == true)
 	{
 		//크기만큼 다시 읽는다
 		int size = 0;
 		if(!mRecvBuf.Read(size)) return false;
 		Set_Recv_Size(size);
+		mSizeOn = false;
 		if(!WSA_Recv_Packet()) return false;
+
 	}
 	else
 	{
 		mState->RecvProc(this);
 		Set_Recv_Size(sizeof(int));
+		mSizeOn = true;
 		if (!WSA_Recv_Packet()) return false;
 	}
 

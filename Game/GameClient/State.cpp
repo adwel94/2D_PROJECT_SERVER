@@ -29,23 +29,13 @@ void GAME::STATE::cState::SendProc(cGameClient* _client)
 }
 
 
-//void GAME::STATE::cState::Create(cState** _state)
-//{
-//	
-//}
-//
-//void GAME::STATE::cState::Destroy(cState** _state)
-//{
-//}
-
 //----------------------------------LOGIN--------------------------------//
 
 void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 {
 	//프로토콜을 확인
-	PROTOCOL::P protocol;
+	PROTOCOL::Protocol protocol;
 	_client->RecvPacket().Read(protocol);
-	printf_s("%d \n", protocol);
 	//프로토콜에 따른 작업 실행
 	switch (protocol)
 	{
@@ -53,6 +43,9 @@ void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 		Login::st_cLoginManger::GetInstance()->Req_Login(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_JOIN:
+		Login::st_cLoginManger::GetInstance()->Req_Join(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_LOGOUT:
 		Login::st_cLoginManger::GetInstance()->Req_Join(_client);
 		break;
 	default:
