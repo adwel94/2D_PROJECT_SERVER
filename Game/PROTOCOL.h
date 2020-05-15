@@ -33,6 +33,15 @@ namespace GAME
 			CLIENT_REQ_CREATE_CHAR,
 			//서버 캐릭터 생성요청 결과 (bool)
 			SERVER_RE_CREATE_CHAR,
+			//클리아언트 캐릭터 선택(string)
+			CLIENT_REQ_SELECT_CHAR,
+			//서버 캐릭터 선택 결과 (bool, int 직업코드, string 닉네임)
+			SERVER_RE_SELECT_CHAR,
+			//클라이언트 캐릭터 삭제(string)
+			CLIENT_REQ_DELETE_CHAR,
+			//서버 캐릭터 삭제 결과(bool)
+			SERVER_RE_DELETE_CHAR,
+
 		};
 	}
 	//byte

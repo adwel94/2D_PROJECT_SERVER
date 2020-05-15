@@ -24,6 +24,15 @@ namespace GAME
 	};
 
 
+	enum JOB
+	{
+		WARRIOR = 101,
+		ARCHER,
+		MAGICIAN
+	};
+
+
+
 }
 
 

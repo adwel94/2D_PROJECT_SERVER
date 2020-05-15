@@ -8,8 +8,6 @@ using namespace std;
 int main()
 {
 
-	GAME::Charactor::cCharactor a;
-
 	GAME::st_cMainManager::GetInstance()->Run();
 	GAME::st_cMainManager::Destroy();
 }

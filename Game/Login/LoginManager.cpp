@@ -63,6 +63,7 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 				//유저 등록(id,pw,code)
 				mLoginList.LockAdd(atoll(db_result.Now("mCode")));
 				_client->User() = Server::cUser(id, pw, (atoll(db_result.Now("mCode"))));
+				mLog.Record("IP: %s Login (%s,%s)", _client->Get_IP(), id, pw);
 			}
 		}
 	}
@@ -76,7 +77,7 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 
 	//결과 전송
 	printf_s("IP: %s Login_Result (%s,%s) %s \n", _client->Get_IP(), id, pw,(result ? "Success" : "Fail"));
-	mLog.Record("IP: %s Login_Result (%s,%s) %s ", _client->Get_IP(), id, pw, (result ? "Success" : "Fail"));
+
 
 	_client->Send_Packet_Push(buffer);
 	_client->WSA_Send_Packet();
@@ -95,17 +96,18 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 
 	printf_s("IP: %s Req_Join (%s,%s) \n", _client->Get_IP(), id, pw);
 
-	bool result = true;
+	bool result = false;
 	cDB_Result db_result;
 
 	//쿼리에 등록 중복되면 false
-	if (!Run_SQL("insert into %s values('%s','%s',%lld)", DB_TABLE_LOGIN, id, pw, mMaker.Get_Code())) 
+	if (Run_SQL("insert into %s values('%s','%s',%lld)", DB_TABLE_LOGIN, id, pw, mMaker.Get_Code())) 
 	{
-		result = false;
+		result = true;
+		mLog.Record("IP: %s Join (%s,%s)", _client->Get_IP(), id, pw);
 	}
 
 	printf_s("IP: %s Join_Result (%s,%s) %s \n", _client->Get_IP(), id, pw, (result ? "Success" : "Fail"));
-	mLog.Record("IP: %s Join_Result (%s,%s) %s", _client->Get_IP(), id, pw, (result ? "Success" : "Fail"));
+
 
 	//결과 패킷 생성
 	Utilities::sBuffer buffer;
@@ -123,6 +125,7 @@ bool GAME::Login::cLoginManger::Req_LogOut(cGameClient* _client)
 {
 	if (_client->User().Code() == 0) return true;
 
+	mLog.Record("IP: %s LogOut (%s,%s)", _client->Get_IP(), _client->User().Id(), _client->User().Pw());
 	//로그인 내역 삭제
 	mLoginList.LockRemove(_client->User().Code());
 	//user 초기화
