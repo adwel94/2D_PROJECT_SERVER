@@ -36,6 +36,7 @@ namespace Server
 		Utilities::DS::cLockQueue<Utilities::sBuffer*> mSendBuf;//send버퍼 배열
 		WSAoverlapEX mRecvOverlap;
 		WSAoverlapEX mSendOverlap;
+
 	public:
 		cPacket();
 		virtual ~cPacket();

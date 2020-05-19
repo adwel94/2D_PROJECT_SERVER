@@ -35,6 +35,8 @@ namespace GAME
 			void Req_Out_Charactor(GAME::cGameClient* _client);
 
 
+			void Exit_Charactor(cCharactor* _char);
+
 
 
 		};

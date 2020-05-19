@@ -9,6 +9,7 @@ Server::cPacket::cPacket()
 Server::cPacket::~cPacket()
 {	
 
+
 }
 
 bool Server::cPacket::IsPacking()

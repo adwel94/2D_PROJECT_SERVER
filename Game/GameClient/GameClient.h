@@ -31,8 +31,12 @@ namespace GAME
 		Server::cUser& User() { return mUser; }
 
 		//상태 Set,Get
-		void Set_State(STATE::E _state);
+		void Set_State(STATE::E _state) { mState = STATE::cState::All_State[_state]; }
 		STATE::cState* Get_State() { return mState; }
+
+		//캐릭터 Set,Get
+		void Set_Charactor(Charactor::cCharactor* _char) { mChar = _char; }
+		Charactor::cCharactor* Get_Charactor() { return mChar; }
 
 
 		// cClient을(를) 통해 상속됨		

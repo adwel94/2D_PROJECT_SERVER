@@ -109,6 +109,7 @@ void GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 
 		cCharactor* charactor = nullptr;
 
+		//코드에 따라 캐릭터 생성
 		switch (atoi(db_result.Now("mJob")))
 		{
 		case GAME::WARRIOR:
@@ -121,12 +122,12 @@ void GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 			charactor = new cMagician(_client, atoll(db_result.Now("mCode")), nickname);
 			break;
 		}
-
-
+		
+		_client->Set_Charactor(charactor);
 		result = true;
 	}
 
-
+	//결과 패킹
 	Utilities::sBuffer buffer;
 	buffer.Write(PROTOCOL::SERVER_RE_SELECT_CHAR);
 	buffer.Write(result);
@@ -172,6 +173,13 @@ void GAME::Charactor::cCharactorManager::Req_Delete_Charactor(GAME::cGameClient*
 }
 
 void GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _client)
+{
+	//세이브
+	//파티 out
+	//맵 out
+}
+
+void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 {
 }
 

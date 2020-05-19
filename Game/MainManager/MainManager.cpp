@@ -62,31 +62,12 @@ void GAME::cMainManager::CompletionProcess(cGameClient* _key, LPOVERLAPPED _over
 	//recv 일 경우
 	if (_key->Is_Recv_Overlap(_overlap))
 	{
-		//전부 받았는지 확인
-		if (_key->Is_Recv_Success(_trans))
-		{
-			_key->Recv_Process();
-		}
-		else
-		{
-			//아닐 경우 계속 받음
-			_key->WSA_Recv_Packet();
-		}
-
+		_key->WSA_Recv_CallBack(_trans);
 	}
 	//Send일 경우
 	else if (_key->Is_Send_Overlap(_overlap))
 	{
-		//send 완료 일 경우
-		if (_key->Is_Send_Success(_trans))
-		{
-			_key->Send_Process();
-		}
-		else
-		{
-			//아닐 경우 계속 받음
-			_key->WSA_Send_Packet();
-		}
+		_key->WSA_Send_CallBack(_trans);
 	}
 }
 
