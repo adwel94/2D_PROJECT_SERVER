@@ -58,8 +58,8 @@ namespace Server
 		//accept 후
 		virtual void AcceptProcess_IN(SOCKET _sock,SOCKADDR_IN& _addr);
 		//스레드
-		static bool Accept_Process_thread(LPVOID _iocp);
-		static bool IOCP_Process_thread(LPVOID _iocp);
+		static Utilities::cThread::T_retval Accept_Process_thread(LPVOID _iocp);
+		static Utilities::cThread::T_retval IOCP_Process_thread(LPVOID _iocp);
 	};
 
 	template<class T>
@@ -123,11 +123,11 @@ namespace Server
 		mProcess_thread = new Utilities::cThread[mThread_count];
 		for (int i = 0; i < mThread_count; i++)
 		{
-			mProcess_thread[i].Create(IOCP_Process_thread, this, false, false);
+			mProcess_thread[i].Create(IOCP_Process_thread, this);
 		}
 
 		//acppet 스레드 할당
-		mAccept_thread.Create(Accept_Process_thread, this, false, true);
+		mAccept_thread.Create(Accept_Process_thread, this);
 
 		printf_s("IOCP CREATE PORT THREAD : %d\n", mThread_count);
 		mLog.Record("IOCP CREATE PORT THREAD : %d", mThread_count);
@@ -192,13 +192,13 @@ namespace Server
 	}
 
 	template<class T>
-	inline bool cIOCP_Manager<T>::Accept_Process_thread(LPVOID _iocp)
+	inline Utilities::cThread::T_retval cIOCP_Manager<T>::Accept_Process_thread(LPVOID _iocp)
 	{
 		cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
 		if (iocp->mPort == NULL)
 		{
 			printf_s("PORT Not Create \n");
-			return false;
+			return Utilities::cThread::T_retval::ERROR_EXIT;
 		}
 
 		//accept 받을 변수
@@ -206,39 +206,37 @@ namespace Server
 		SOCKADDR_IN client_addr;
 
 		//클라이언트 accept
-		if (Socket::st_cSockManager::GetInstance()->Accept_Socket(&(iocp->mServer), client_socket, client_addr))
+		while (true)
 		{
-			iocp->AcceptProcess_IN(client_socket, client_addr);
+			if (Socket::st_cSockManager::GetInstance()->Accept_Socket(&(iocp->mServer), client_socket, client_addr))
+			{
+				iocp->AcceptProcess_IN(client_socket, client_addr);
+			}
 		}
-		else
-		{
-			return false;
-		}
-
-		return true;
+		return Utilities::cThread::T_retval::EXIT;
 	}
 
 	template<class T>
-	inline bool cIOCP_Manager<T>::IOCP_Process_thread(LPVOID _iocp)
+	inline Utilities::cThread::T_retval cIOCP_Manager<T>::IOCP_Process_thread(LPVOID _iocp)
 	{
 		cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
 		DWORD transferred; //전송량
 		T key;//클라언트
 		LPOVERLAPPED overlap;//오버랩 받을 변수	
+
 		while (true)
 		{
 			//wsa완료 대기
 			BOOL retval = GetQueuedCompletionStatus(iocp->mPort, &transferred, (PULONG_PTR)&key, &overlap, INFINITE); 
 			if (retval == FALSE) //클라이언트 에러
 			{
-
-
 				//클라이언트 비정상 종료
 				if (transferred == 0)
 				{
 					//종료 처리
 					iocp->mKey_List.LockRemove(key);
 					iocp->DisconnectProcess(key, overlap, transferred);
+					continue;
 
 				}	
 				else 
@@ -246,9 +244,9 @@ namespace Server
 					//에러 처리
 					iocp->ErrorProcess(key, overlap, transferred);
 					WSA_Err_display("IOCP_Process_thread");
-					return false;
+					return Utilities::cThread::T_retval::ERROR_EXIT;
+
 				}
-				return false;
 			}
 			//정상 종료 패킷
 			else if (transferred == 0)
@@ -256,13 +254,14 @@ namespace Server
 				//종료 처리
 				iocp->mKey_List.LockRemove(key);
 				iocp->DisconnectProcess(key, overlap, transferred);
+				continue;
 
 			}
 			//정상 처리
 			iocp->CompletionProcess(key, overlap, transferred);
 		}
 
-		return true;
+		return Utilities::cThread::T_retval::EXIT;
 
 	}
 

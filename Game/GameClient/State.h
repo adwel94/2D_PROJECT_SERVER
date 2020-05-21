@@ -16,6 +16,8 @@ namespace GAME
 		{
 			NONE = -1,
 			LOG_IN,
+			CHARACTOR,
+			TOWN,
 
 
 			STATE_COUNT
@@ -44,6 +46,23 @@ namespace GAME
 		public:
 			// cState을(를) 통해 상속됨
 			virtual void RecvProc(cGameClient* _client) override;
+		};
+
+		//캐릭터 페이지 상태
+		class cCharactor_State : public cState
+		{
+		public:
+			// cState을(를) 통해 상속됨
+			virtual void RecvProc(cGameClient* _client) override;
+		};
+
+		//마을에 있는 상태
+		class cTown_State : public cState
+		{
+		public:
+			// cState을(를) 통해 상속됨
+			virtual void RecvProc(cGameClient* _client) override;
+
 		};
 
 

@@ -8,7 +8,7 @@
 namespace Utilities
 {
 
-	typedef bool (*ThreadProc)(LPVOID);
+
 
 	//스레드 
 
@@ -17,10 +17,12 @@ namespace Utilities
 
 	public:
 		enum T_retval{
-			EXIT = true,
-			ERROR_EXIT = false
+			PROGRESS,//진행
+			ERROR_PROGRESS,//에러발생 - 진행
+			EXIT,//종료
+			ERROR_EXIT//에러 발생 종료
 		};
-
+		typedef  T_retval (*ThreadProc)(LPVOID);
 	protected:
 
 		//스레드 아이디
@@ -51,8 +53,8 @@ namespace Utilities
 					//종료 on
 					break;
 				}
-
-				if ((thread->mProc(thread->mData)) == T_retval::ERROR_EXIT)
+				T_retval retval = thread->mProc(thread->mData);
+				if (retval == T_retval::ERROR_EXIT || retval == T_retval::EXIT)
 				{
 					//에러종료
 					SetEvent(thread->mFinishEvt);

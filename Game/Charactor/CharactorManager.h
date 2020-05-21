@@ -24,15 +24,15 @@ namespace GAME
 			~cCharactorManager();
 
 			//캐릭터 정보 요청(선택창에서)
-			void Req_Charactor_Info(GAME::cGameClient* _client);
+			bool Req_Charactor_Info(GAME::cGameClient* _client);
 			//캐릭터 생성
-			void Req_Create_Charactor(GAME::cGameClient* _client);
+			bool Req_Create_Charactor(GAME::cGameClient* _client);
 			//캐릭터 선택
-			void Req_Select_Charactor(GAME::cGameClient* _client);
+			bool Req_Select_Charactor(GAME::cGameClient* _client);
 			//캐릭터 삭제
-			void Req_Delete_Charactor(GAME::cGameClient* _client);
+			bool Req_Delete_Charactor(GAME::cGameClient* _client);
 			//캐릭터 로그아웃
-			void Req_Out_Charactor(GAME::cGameClient* _client);
+			bool Req_Out_Charactor(GAME::cGameClient* _client);
 
 
 			void Exit_Charactor(cCharactor* _char);

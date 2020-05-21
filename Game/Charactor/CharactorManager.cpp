@@ -15,7 +15,7 @@ GAME::Charactor::cCharactorManager::~cCharactorManager()
 	mLog.Close();
 }
 
-void GAME::Charactor::cCharactorManager::Req_Charactor_Info(GAME::cGameClient* _client)
+bool GAME::Charactor::cCharactorManager::Req_Charactor_Info(GAME::cGameClient* _client)
 {
 
 	printf_s("IP: %s Req_Charactor_Info User_Code : %lld \n", _client->Get_IP(), _client->User().Code());
@@ -35,16 +35,22 @@ void GAME::Charactor::cCharactorManager::Req_Charactor_Info(GAME::cGameClient* _
 		while (db_result.MoveNext())
 		{
 			//직업코드, 닉네임
-			buffer.Write(atoi(db_result.Now("mJob")));
 			buffer.Write(db_result.Now("mName"));
+			buffer.Write(atoi(db_result.Now("mJob")));
 		}		
+	}
+	else
+	{
+		return false;
 	}
 
 	_client->Send_Packet_Push(buffer);
 	_client->WSA_Send_Packet();
+
+	return true;
 }
 
-void GAME::Charactor::cCharactorManager::Req_Create_Charactor(GAME::cGameClient* _client)
+bool GAME::Charactor::cCharactorManager::Req_Create_Charactor(GAME::cGameClient* _client)
 {
 
 	printf_s("IP: %s Req_Create_Charactor User_Code : %lld \n", _client->Get_IP(), _client->User().Code());
@@ -69,6 +75,7 @@ void GAME::Charactor::cCharactorManager::Req_Create_Charactor(GAME::cGameClient*
 		result = true;
 	}
 
+
 	//결과 패킷 생성
 	Utilities::sBuffer buffer;
 	buffer.Write(PROTOCOL::SERVER_RE_CREATE_CHAR);
@@ -77,9 +84,10 @@ void GAME::Charactor::cCharactorManager::Req_Create_Charactor(GAME::cGameClient*
 	_client->Send_Packet_Push(buffer);
 	_client->WSA_Send_Packet();
 
+	return result;
 }
 
-void GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient* _client)
+bool GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient* _client)
 {
 
 	printf_s("IP: %s Req_Select_Charactor User_Code : %lld \n", _client->Get_IP(), _client->User().Code());
@@ -89,8 +97,6 @@ void GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 	_client->RecvPacket().Read(nickname);
 
 	bool result = false;
-
-
 
 
 	//db조회
@@ -134,16 +140,17 @@ void GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 	if (result)
 	{
 		buffer.Write(atoi(db_result.Now("mJob")));
-		buffer.Write(nickname);
 	}
 
 	//send
 	_client->Send_Packet_Push(buffer);
 	_client->WSA_Send_Packet();
 
+
+	return result;
 }
 
-void GAME::Charactor::cCharactorManager::Req_Delete_Charactor(GAME::cGameClient* _client)
+bool GAME::Charactor::cCharactorManager::Req_Delete_Charactor(GAME::cGameClient* _client)
 {
 
 	printf_s("IP: %s Req_Delete_Charactor User_Code : %lld \n", _client->Get_IP(), _client->User().Code());
@@ -165,18 +172,23 @@ void GAME::Charactor::cCharactorManager::Req_Delete_Charactor(GAME::cGameClient*
 	buffer.Write(PROTOCOL::SERVER_RE_DELETE_CHAR);
 	buffer.Write(result);
 
+
 	//send
 	_client->Send_Packet_Push(buffer);
 	_client->WSA_Send_Packet();
 
+	return result;
+
 
 }
 
-void GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _client)
+bool GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _client)
 {
 	//세이브
 	//파티 out
 	//맵 out
+
+	return true;
 }
 
 void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)

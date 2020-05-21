@@ -1,5 +1,6 @@
 #include "GameClient.h"
 #include "State.h"
+#include "Login/LoginManager.h"
 #include "Charactor/CharactorManager.h"
 
 unsigned int GAME::cGameClient::ClientCount = 0;
@@ -23,6 +24,8 @@ GAME::cGameClient::~cGameClient()
 	{
 		GAME::STATE::cState::Destroy();
 	}
+
+	Login::st_cLoginManger::GetInstance()->LogOut(this);
 
 	if (mChar != nullptr)
 	{

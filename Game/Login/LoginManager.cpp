@@ -100,7 +100,7 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 	cDB_Result db_result;
 
 	//쿼리에 등록 중복되면 false
-	if (Run_SQL("insert into %s values('%s','%s',%lld)", DB_TABLE_LOGIN, id, pw, mMaker.Get_Code())) 
+	if (Run_SQL("insert into %s values(%lld,'%s','%s')", DB_TABLE_LOGIN, mMaker.Get_Code(),id, pw))
 	{
 		result = true;
 		mLog.Record("IP: %s Join (%s,%s)", _client->Get_IP(), id, pw);
@@ -123,13 +123,17 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 
 bool GAME::Login::cLoginManger::Req_LogOut(cGameClient* _client)
 {
-	if (_client->User().Code() == 0) return true;
+	LogOut(_client);
+	return true;
+}
+
+void GAME::Login::cLoginManger::LogOut(cGameClient* _client)
+{
+	if (_client->User().Code() == 0) return;
 
 	mLog.Record("IP: %s LogOut (%s,%s)", _client->Get_IP(), _client->User().Id(), _client->User().Pw());
 	//로그인 내역 삭제
 	mLoginList.LockRemove(_client->User().Code());
 	//user 초기화
 	_client->User() = Server::cUser();
-
-	return true;
 }

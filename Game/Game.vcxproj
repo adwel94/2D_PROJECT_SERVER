@@ -150,6 +150,7 @@
     <ClInclude Include="GameClient\State.h" />
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Party\Party.h" />
+    <ClInclude Include="Party\PartyManager.h" />
     <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>

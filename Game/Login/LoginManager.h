@@ -29,6 +29,7 @@ namespace GAME
 			bool Req_Join(cGameClient* _client);
 			bool Req_LogOut(cGameClient* _client);
 
+			void LogOut(cGameClient* _client);
 
 		};
 

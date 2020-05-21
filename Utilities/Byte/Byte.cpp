@@ -45,6 +45,11 @@ void Utilities::sBuffer::Write(const int& _int)
 	Write<const int>(&_int, (int)sizeof(int));
 }
 
+void Utilities::sBuffer::Write(const __int64 _long)
+{
+	Write<const __int64>(&_long, (int)sizeof(__int64));
+}
+
 void Utilities::sBuffer::Write(const float& _float)
 {
 	Write<const float>(&_float, (int)sizeof(float));
@@ -78,6 +83,11 @@ bool Utilities::sBuffer::Read(OUT bool& _bool)
 bool Utilities::sBuffer::Read(OUT int& _int)
 {
 	return Read<int>(&_int, (int)sizeof(int));
+}
+
+bool Utilities::sBuffer::Read(OUT __int64& _long)
+{
+	return Read<__int64>(&_long, (int)sizeof(__int64));
 }
 
 bool Utilities::sBuffer::Read(OUT char& _char)

@@ -24,28 +24,34 @@ insert into test_table values(3,5,7);
 create table user_table
 (
 mCode bigint,
-mId char(30), 
+mId char(30) unique, 
 mPw char(30),
 
-primary key(mCode,mId)
+primary key(mCode)
 );
+
+drop table user_table;
+
+drop table charactor_table;
 
 select* from user_table;
 
-insert into user_table values(1,'aa','bb');
+insert into user_table values(1,'ss','bb');
 
 create table charactor_table
 (
 mCode bigint,
 mUser_Code bigint,
-mName char(30), 
+mName char(30) unique, 
 mJob int,
 
 primary key(mCode,mName),
 foreign key(mUser_Code) references user_table(mCode) on delete cascade
 );
 
-insert into charactor_table values(3,1,'nick',100);
+insert into charactor_table values(1,1,'nick1',100);
+insert into charactor_table values(2,1,'nick2',100);
+insert into charactor_table values(3,1,'nick3',100);
 
 select* from charactor_table;
 

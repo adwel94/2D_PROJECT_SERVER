@@ -21,6 +21,7 @@ namespace GAME
 			char mNickName[NICK_NAME_SIZE];
 			cGameClient* mClient;
 			Map::cMap* mMap;	
+			Party::cParty* mParty;
 
 		public:
 

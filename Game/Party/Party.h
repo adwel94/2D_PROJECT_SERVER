@@ -11,10 +11,15 @@ namespace GAME
 
 	namespace Charactor { class cCharactor; }
 
-	class cParty
+	namespace Party
 	{
-		Utilities::DS::cLockList<Charactor::cCharactor*> mChar_List;
-	};
+		class cParty
+		{
+			Utilities::DS::cLockList<Charactor::cCharactor*> mChar_List;
+		};
+	}
+
+
 
 
 }
