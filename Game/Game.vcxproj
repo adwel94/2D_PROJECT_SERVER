@@ -143,23 +143,32 @@
   <ItemGroup>
     <ClInclude Include="Charactor\Charactor.h" />
     <ClInclude Include="Charactor\CharactorManager.h" />
+    <ClInclude Include="Charactor\CharactorState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameClient\GameClient.h" />
     <ClInclude Include="Login\LoginManager.h" />
     <ClInclude Include="MainManager\MainManager.h" />
     <ClInclude Include="GameClient\State.h" />
+    <ClInclude Include="Map\Dungeon.h" />
     <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Map\MapManager.h" />
+    <ClInclude Include="Map\Town.h" />
     <ClInclude Include="Party\Party.h" />
     <ClInclude Include="Party\PartyManager.h" />
     <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Charactor\Charactor.cpp" />
     <ClCompile Include="Charactor\CharactorManager.cpp" />
+    <ClCompile Include="Charactor\CharactorState.cpp" />
     <ClCompile Include="GameClient\GameClient.cpp" />
     <ClCompile Include="GameClient\State.cpp" />
     <ClCompile Include="Login\LoginManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainManager\MainManager.cpp" />
+    <ClCompile Include="Map\Dungeon.cpp" />
+    <ClCompile Include="Map\MapManager.cpp" />
+    <ClCompile Include="Map\Town.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

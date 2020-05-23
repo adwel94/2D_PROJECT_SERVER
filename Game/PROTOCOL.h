@@ -41,6 +41,26 @@ namespace GAME
 			CLIENT_REQ_DELETE_CHAR,
 			//서버 캐릭터 삭제 결과(bool)
 			SERVER_RE_DELETE_CHAR,
+			//클라이언트 맵 접속 요청 (int 맵코드)
+			CLIENT_REQ_MAP_ENTER,
+			//서버 맵 접속 요청 결과 (int 캐릭터수, 캐릭터코드,이름,직업,좌표... int 몬스터수...)
+			SERVER_RE_MAP_ENTER,
+			//맵에 새로운 유저 로그인 (ulong string int)
+			SERVER_PLAYER_ENTER,
+			//맵에 유저가 나감 (ulong)
+			SERVER_PLAYER_OUT,
+			//클라이언트->서버 채팅
+			CLIENT_SEND_CHAT,
+			//서버->클라이언트 채팅
+			SERVER_SEND_CHAT,
+			//클라이언트 캐릭터 이동 데이터 (float x,float y,bool way)
+			CLIENT_SEND_MOVE_DATA,
+			//서버 캐릭터 이동 데이터 (float x,float y,bool way)
+			SERVER_SEND_MOVE_DATA,
+			//클라이언트 캐릭터 점프
+			CLIENT_SEND_JUMP_DATA,
+			//서버 캐릭터 점프
+			SERVER_SEND_JUMP_DATA, 
 
 		};
 	}

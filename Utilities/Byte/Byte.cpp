@@ -50,6 +50,11 @@ void Utilities::sBuffer::Write(const __int64 _long)
 	Write<const __int64>(&_long, (int)sizeof(__int64));
 }
 
+void Utilities::sBuffer::Write(const unsigned __int64 _ulong)
+{
+	Write<const unsigned __int64>(&_ulong, (int)sizeof(unsigned __int64));
+}
+
 void Utilities::sBuffer::Write(const float& _float)
 {
 	Write<const float>(&_float, (int)sizeof(float));
@@ -88,6 +93,11 @@ bool Utilities::sBuffer::Read(OUT int& _int)
 bool Utilities::sBuffer::Read(OUT __int64& _long)
 {
 	return Read<__int64>(&_long, (int)sizeof(__int64));
+}
+
+bool Utilities::sBuffer::Read(OUT unsigned __int64& _ulong)
+{
+	return Read<unsigned __int64>(&_ulong, (int)sizeof(unsigned __int64));
 }
 
 bool Utilities::sBuffer::Read(OUT char& _char)

@@ -23,7 +23,7 @@ insert into test_table values(3,5,7);
 
 create table user_table
 (
-mCode bigint,
+mCode bigint unsigned,
 mId char(30) unique, 
 mPw char(30),
 
@@ -36,16 +36,16 @@ drop table charactor_table;
 
 select* from user_table;
 
-insert into user_table values(1,'ss','bb');
+insert into user_table values(10,'ss','bb');
 
 create table charactor_table
 (
-mCode bigint,
-mUser_Code bigint,
+mCode bigint unsigned,
+mUser_Code bigint unsigned,
 mName char(30) unique, 
 mJob int,
 
-primary key(mCode,mName),
+primary key(mCode),
 foreign key(mUser_Code) references user_table(mCode) on delete cascade
 );
 

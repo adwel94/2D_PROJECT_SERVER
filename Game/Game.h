@@ -20,8 +20,31 @@ namespace GAME
 	{
 		ID_SIZE = 30,
 		PW_SIZE = 30,
-		NICK_NAME_SIZE = 30
+		NICK_NAME_SIZE = 30,
+		
+		
+		//게임 프레임
+		GAME_FRAME = 25,
+		
 	};
+
+	enum WAY : bool
+	{
+		LEFT = true,
+		RIGHT = false,
+	};
+
+	namespace CODE
+	{
+
+	}
+
+	enum MAPCODE
+	{
+		TOWN = 1000,
+	};
+
+
 
 
 	enum JOB

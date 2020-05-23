@@ -43,11 +43,11 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 
 			{
 				//이미 로그인 상태인지 확인
-				Utilities::DS::cLockIterator<__int64> iter(&mLoginList);
+				Utilities::DS::cLockIterator<Utilities::CODE> iter(&mLoginList);
 				while (iter.HasNext())
 				{
 
-					if (iter.Next() == atoll(db_result.Now("mCode")))
+					if (iter.Next() == strtoull(db_result.Now("mCode"),NULL,0))
 					{
 						overlap = true;
 						break;
@@ -61,8 +61,8 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 				result = true;
 
 				//유저 등록(id,pw,code)
-				mLoginList.LockAdd(atoll(db_result.Now("mCode")));
-				_client->User() = Server::cUser(id, pw, (atoll(db_result.Now("mCode"))));
+				mLoginList.LockAdd(strtoull(db_result.Now("mCode"), NULL, 0));
+				_client->User() = Server::cUser(id, pw, (strtoull(db_result.Now("mCode"), NULL, 0)));
 				mLog.Record("IP: %s Login (%s,%s)", _client->Get_IP(), id, pw);
 			}
 		}
@@ -100,7 +100,7 @@ bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 	cDB_Result db_result;
 
 	//쿼리에 등록 중복되면 false
-	if (Run_SQL("insert into %s values(%lld,'%s','%s')", DB_TABLE_LOGIN, mMaker.Get_Code(),id, pw))
+	if (Run_SQL("insert into %s values(%llu,'%s','%s')", DB_TABLE_LOGIN, mMaker.Get_Code(),id, pw))
 	{
 		result = true;
 		mLog.Record("IP: %s Join (%s,%s)", _client->Get_IP(), id, pw);
@@ -131,6 +131,7 @@ void GAME::Login::cLoginManger::LogOut(cGameClient* _client)
 {
 	if (_client->User().Code() == 0) return;
 
+	printf_s("IP: %s LogOut (%s,%s)\n", _client->Get_IP(), _client->User().Id(), _client->User().Pw());
 	mLog.Record("IP: %s LogOut (%s,%s)", _client->Get_IP(), _client->User().Id(), _client->User().Pw());
 	//로그인 내역 삭제
 	mLoginList.LockRemove(_client->User().Code());

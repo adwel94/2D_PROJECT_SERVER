@@ -18,35 +18,29 @@ using namespace Utilities::DB;
 
 list<int> a;
 
-struct test
-{
-	list<int>::iterator iter = a.begin();
-	int index = 0;
 
-	bool HasNext()
-	{
-		return ((index) != a.size());
-	}
-
-	int Next()
-	{
-		index++;
-		return *(iter++);
-	}
-};
 
 int main()
 {
+	int frame = 25;
+	float deltaTime = 1.0f / frame;
 
-	cDatabase a;
-	a.Conncetion(DB_HOST, DB_ID, DB_PW, DB_NAME, DB_PORT);
 
-	
-	a.Run_SQL("select * from charactor_table where mUser_Code = %lld ", 1235);
-	cDB_Result result;
+	while (true)
+	{
+		int fps = 0;
+		clock_t start = clock();
+		while (fps < frame)
+		{
+			clock_t frame_t = clock();
+			float latency = deltaTime - ((float)(clock() - frame_t) / CLOCKS_PER_SEC);
+			if (latency > 0.0f) Sleep(latency * CLOCKS_PER_SEC);
+			fps +=1;
+		}
+		deltaTime = ((float)(clock() - start) / CLOCKS_PER_SEC) / frame;
+		printf_s("%f \n", deltaTime);
+	}
 
-	a.Get_Result(result);
-	cout << result.Row_Count() << endl;
 
 
 

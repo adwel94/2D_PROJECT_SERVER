@@ -20,7 +20,7 @@ namespace GAME
 			Utilities::cCodeMaker mMaker;
 			Utilities::Lock::cLock mLcok;
 			Utilities::cLog mLog;
-			Utilities::DS::cLockList<__int64> mLoginList;
+			Utilities::DS::cLockList<Utilities::CODE> mLoginList;
 		public:
 			cLoginManger();
 			~cLoginManger();

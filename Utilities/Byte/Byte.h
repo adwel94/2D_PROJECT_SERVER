@@ -89,6 +89,7 @@ namespace Utilities
 		void Write(const char& _char);
 		void Write(const int& _int);
 		void Write(const __int64 _long);
+		void Write(const unsigned __int64 _ulong);
 		void Write(const float& _float);
 		void Write(const double& _double);
 		void Write(const char* _string);
@@ -100,6 +101,7 @@ namespace Utilities
 		bool Read(OUT bool& _bool);
 		bool Read(OUT int& _int);
 		bool Read(OUT __int64& _long);
+		bool Read(OUT unsigned __int64& _ulong);
 		bool Read(OUT char& _char);
 		bool Read(OUT float& _float);
 		bool Read(OUT double& _double);

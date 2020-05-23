@@ -3,6 +3,7 @@
 #include "Login/LoginManager.h"
 #include "Charactor/CharactorManager.h"
 #include "GameClient/GameClient.h"
+#include "Map/MapManager.h"
 
 GAME::STATE::cState* GAME::STATE::cState::All_State[] = {};
 
@@ -10,6 +11,7 @@ void GAME::STATE::cState::Create()
 {
 	All_State[E::LOG_IN] = new cLogin_State();
 	All_State[E::CHARACTOR] = new cCharactor_State();
+	All_State[E::TOWN] = new cTown_State();
 }
 
 void GAME::STATE::cState::Destroy()
@@ -74,7 +76,10 @@ void GAME::STATE::cCharactor_State::RecvProc(cGameClient* _client)
 		Charactor::st_cCharactorManager::GetInstance()->Req_Create_Charactor(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_SELECT_CHAR:
-		Charactor::st_cCharactorManager::GetInstance()->Req_Select_Charactor(_client);
+		if (Charactor::st_cCharactorManager::GetInstance()->Req_Select_Charactor(_client))
+		{
+			_client->Set_State(E::TOWN);
+		}
 		break;
 	case PROTOCOL::CLIENT_REQ_DELETE_CHAR:
 		Charactor::st_cCharactorManager::GetInstance()->Req_Delete_Charactor(_client);
@@ -86,4 +91,25 @@ void GAME::STATE::cCharactor_State::RecvProc(cGameClient* _client)
 
 void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 {
+	//프로토콜을 확인
+	PROTOCOL::Protocol protocol;
+	_client->RecvPacket().Read(protocol);
+	//프로토콜에 따른 작업 실행
+	switch (protocol)
+	{
+	case PROTOCOL::CLIENT_SEND_CHAT:
+		Map::st_MapManager::GetInstance()->Send_Chat_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_MOVE_DATA:
+		Map::st_MapManager::GetInstance()->Send_Move_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_MAP_ENTER:
+		Map::st_MapManager::GetInstance()->Req_Enter_Map(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
+		Map::st_MapManager::GetInstance()->Send_Jump_Data(_client);
+		break;
+	default:
+		break;
+	}
 }
