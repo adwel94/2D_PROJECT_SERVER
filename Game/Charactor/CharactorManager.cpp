@@ -3,6 +3,7 @@
 #include "PROTOCOL.h"
 #include"Map/Town.h"
 #include "Map/MapManager.h"
+#include "Party/PartyManager.h"
 
 using namespace Utilities::DB;
 
@@ -197,9 +198,13 @@ bool GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _c
 
 void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 {
+	//자신이 있던 파티에서 나옴
+	Party::st_cPartyManager::GetInstance()->Exit_Charactor(_char);
 	//자신이있던 맵에서 나옴
-	printf_s("IP: %s Exit_Charactor_Code : %llu \n", _char->GetClient()->Get_IP(), _char->Code());
 	Map::st_MapManager::GetInstance()->Exit_Charactor(_char);
 
+
+
+	printf_s("IP: %s Exit_Charactor Code : %llu \n", _char->GetClient()->Get_IP(), _char->Code());
 }
 

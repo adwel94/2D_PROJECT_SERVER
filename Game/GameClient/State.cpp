@@ -4,6 +4,7 @@
 #include "Charactor/CharactorManager.h"
 #include "GameClient/GameClient.h"
 #include "Map/MapManager.h"
+#include "Party/PartyManager.h"
 
 GAME::STATE::cState* GAME::STATE::cState::All_State[] = {};
 
@@ -108,6 +109,18 @@ void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 		break;
 	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
 		Map::st_MapManager::GetInstance()->Send_Jump_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_PARTY_INVITE:
+		Party::st_cPartyManager::GetInstance()->Req_Party_Invite(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_CREATE_PARTY:
+		Party::st_cPartyManager::GetInstance()->Req_Create_Party(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_PARTY_INFO:
+		Party::st_cPartyManager::GetInstance()->Req_Party_Info(_client);
+		break;
+	case PROTOCOL::CLIENT_PARTY_INVITE_MSG:
+		Party::st_cPartyManager::GetInstance()->Party_Invite_Msg(_client);
 		break;
 	default:
 		break;

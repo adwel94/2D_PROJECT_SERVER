@@ -167,8 +167,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainManager\MainManager.cpp" />
     <ClCompile Include="Map\Dungeon.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Map\MapManager.cpp" />
     <ClCompile Include="Map\Town.cpp" />
+    <ClCompile Include="Party\Party.cpp" />
+    <ClCompile Include="Party\PartyManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

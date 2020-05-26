@@ -24,33 +24,20 @@ namespace GAME
 
 		public:
 			
-			cMap(Utilities::CODE _code)
-			{
-				mCode = _code;
-			}
+			cMap(Utilities::CODE _code);
 
-			virtual ~cMap() {}
+			virtual ~cMap();
+
+			Utilities::CODE Code() { return mCode; }
 
 			//캐릭터 리스트
-			Utilities::DS::cLockList<Charactor::cCharactor*>& CharList()
-			{
-				return mChar_List;
-			}
+			Utilities::DS::cLockList<Charactor::cCharactor*>& CharList() { return mChar_List; }
 
 
 			//캐릭터 in
-			virtual bool In_Charactor(Charactor::cCharactor* _char)
-			{
-				mChar_List.LockAdd(_char);
-				return true;
-			}
-
+			virtual bool In_Charactor(Charactor::cCharactor* _char);
 			//캐릭터 out
-			virtual bool Out_Charactor(Charactor::cCharactor* _char)
-			{
-				mChar_List.LockRemove(_char);
-				return true;
-			}
+			virtual bool Out_Charactor(Charactor::cCharactor* _char);
 		};
 	}
 }

@@ -54,6 +54,11 @@ namespace GAME
 
 			virtual int JobCode() =0;
 
+			cGameClient* GetClient()
+			{
+				return mClient;
+			}
+
 			const char* NickName()
 			{
 				return mNickName;
@@ -69,10 +74,14 @@ namespace GAME
 				return mMap;
 			}
 
-			cGameClient* GetClient()
+			void SetParty(Party::cParty* _party)
 			{
-				return mClient;
+				mParty = _party;
 			}
+
+			Party::cParty* GetParty() 
+			{ return mParty; }
+
 
 			virtual void Update() = 0;
 		};

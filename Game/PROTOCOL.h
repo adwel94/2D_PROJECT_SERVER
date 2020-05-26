@@ -59,8 +59,26 @@ namespace GAME
 			SERVER_SEND_MOVE_DATA,
 			//클라이언트 캐릭터 점프
 			CLIENT_SEND_JUMP_DATA,
-			//서버 캐릭터 점프
+			//서버 캐릭터 점프 (ulong 
 			SERVER_SEND_JUMP_DATA, 
+			//클라이언트 파티 생성요청
+			CLIENT_REQ_CREATE_PARTY,
+			//서버 파티 생성 요청 결과
+			SERVER_RE_CREATE_PARTY,
+			//클라이언트 파티 정보 요청
+			CLIENT_REQ_PARTY_INFO,
+			//서버 파티 정보 요청 결과
+			SERVER_RE_PARTY_INFO,
+			//서버 파티 탈퇴 (ulong
+			SERVER_PARTY_OUT,
+			//클라이언트 파티 초대 (ulong 
+			CLIENT_REQ_PARTY_INVITE,
+			//서버 파치 초대 메세지 (string id
+			SERVER_PARTY_INVITE_MSG,
+			//클라이언트 파티 초대 메세지 (bool , string id, 
+			CLIENT_PARTY_INVITE_MSG,
+			//파티 멤버 정보 (int , code, 
+			SERVER_PARTY_MEMBER_DATA
 
 		};
 	}

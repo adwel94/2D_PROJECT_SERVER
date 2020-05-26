@@ -21,7 +21,6 @@ bool GAME::Map::cMapManager::Req_Enter_Map(cGameClient* _client)
 	{
 	case MAPCODE::TOWN:
 		st_cTown::GetInstance()->In_Charactor(_client->Get_Charactor());
-		_client->Get_Charactor()->SetMap(st_cTown::GetInstance());
 		break;
 	default:
 		break;
@@ -177,6 +176,7 @@ void GAME::Map::cMapManager::Exit_Charactor(Charactor::cCharactor* _char)
 	Map::cMap* map = _char->GetMap();
 	if (map != nullptr)
 	{
+		printf_s("IP: %s Exit_Map Charactor Code : %llu  Map Code : %llu \n", _char->GetClient()->Get_IP(), _char->Code(), map->Code());
 		Utilities::sBuffer buffer;
 		buffer.Write(PROTOCOL::SERVER_PLAYER_OUT);
 		buffer.Write(_char->Code());

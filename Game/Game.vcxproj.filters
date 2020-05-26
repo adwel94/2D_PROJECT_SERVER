@@ -86,8 +86,21 @@
     <ClCompile Include="Map\Town.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Charactor\Charactor.cpp" />
-    <ClCompile Include="Charactor\CharactorState.cpp" />
-    <ClCompile Include="Map\Dungeon.cpp" />
+    <ClCompile Include="Party\PartyManager.cpp">
+      <Filter>Party</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Dungeon.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Charactor\Charactor.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Charactor\CharactorState.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Party\Party.cpp">
+      <Filter>Party</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map.cpp" />
   </ItemGroup>
 </Project>
