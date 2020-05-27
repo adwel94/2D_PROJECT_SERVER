@@ -2,23 +2,30 @@
 #ifndef _DUNGEON_H_
 #define _DUNGEON_H_
 #include "Map.h"
-
-
+#include <Thread\Thread.h>
 
 
 
 namespace GAME
 {
 
+	namespace Monster { struct sMobStat; class cMonster; }
+		
+
+
 	namespace Map
 	{
 		class cDungeon : public cMap
 		{
 			Utilities::cThread mThread;
+
+			Utilities::DS::cLockList<Monster::cMonster*> mMob_List;
+
+
+
 			//delta 타임
 			float mDeltaTime;
 			//스레드 1초에 GAME_FRAME만큼 실행
-
 			static Utilities::cThread::T_retval FrameThread(LPVOID _map)
 			{
 				cDungeon* map = (cDungeon*)_map;
@@ -43,6 +50,15 @@ namespace GAME
 
 		public:
 			cDungeon(Utilities::CODE _code);
+
+			float DeltaTime() { return mDeltaTime; }
+
+			//몬스터 리스트
+			Utilities::DS::cLockList<Monster::cMonster*>& MobList() { return mMob_List; }
+
+			void Add_Monster(Monster::cMonster* _mob);
+
+			void Start();
 
 
 		};

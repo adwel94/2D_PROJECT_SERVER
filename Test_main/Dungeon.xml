@@ -1,0 +1,16 @@
+
+<Dungeon>
+
+ <!--    몬스터 코드, 스폰위치, 최대 체력     -->
+
+<Mob mobcode="202" location_x="9" location_y="1.5" Max_Left_x="8" Max_Right_x="17"/>
+<Mob mobcode="202" location_x="26" location_y="1.5" Max_Left_x="18" Max_Right_x="23"/>
+<Mob mobcode="202" location_x="45" location_y="-1.5" Max_Left_x="43" Max_Right_x="63"/>
+<Mob mobcode="202" location_x="60" location_y="-1.5" Max_Left_x="43" Max_Right_x="63"/>
+<Mob mobcode="201" location_x="81" location_y="-4.5" Max_Left_x="77" Max_Right_x="94"/>
+<Mob mobcode="201" location_x="93" location_y="-4.5" Max_Left_x="77" Max_Right_x="94"/>
+<Mob mobcode="201" location_x="110" location_y="-4.5" Max_Left_x="105" Max_Right_x="128"/>
+<Mob mobcode="201" location_x="120" location_y="-4.5" Max_Left_x="105" Max_Right_x="128"/>
+
+
+</Dungeon>

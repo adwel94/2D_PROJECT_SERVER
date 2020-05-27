@@ -18,6 +18,7 @@ namespace GAME
 			LOG_IN,
 			CHARACTOR,
 			TOWN,
+			DUNGEON,
 
 
 			STATE_COUNT
@@ -63,6 +64,13 @@ namespace GAME
 			// cState을(를) 통해 상속됨
 			virtual void RecvProc(cGameClient* _client) override;
 
+		};
+
+		class cDungeon_State : public cState
+		{
+		public:
+			// cState을(를) 통해 상속됨
+			virtual void RecvProc(cGameClient* _client) override;
 		};
 
 

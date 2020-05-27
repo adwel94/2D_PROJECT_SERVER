@@ -28,6 +28,7 @@ namespace GAME
 			Utilities::CODE Code() { return mCode; }
 			//캐릭터 리스트
 			Utilities::DS::cLockList<Charactor::cCharactor*>& CharList() { return mChar_List; }
+			Charactor::cCharactor* Host() { return mChar_List.LockFront(); }
 
 
 			//캐릭터 in

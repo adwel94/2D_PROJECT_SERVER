@@ -4,6 +4,8 @@
 #include <time.h>
 #include <list>
 #include <iterator>
+#include <XML\include\tinyxml.h>
+
 #define DB_HOST "localhost"
 #define DB_ID "root"
 #define DB_PW "root"
@@ -16,30 +18,46 @@ using namespace Server;
 using namespace Utilities::DB;
 
 
-list<int> a;
+struct sMobStat
+{
+	int Atk;
+	float Speed;
+	int MaxHp;
+	int NowHp;
 
+	//어그로, 공격 범위
+	float Uggro_Range;
+	float Attack_Rnage;
+
+
+
+};
 
 
 int main()
 {
-	int frame = 25;
-	float deltaTime = 1.0f / frame;
+	//int frame = 25;
+	//float deltaTime = 1.0f / frame;
 
 
-	while (true)
-	{
-		int fps = 0;
-		clock_t start = clock();
-		while (fps < frame)
-		{
-			clock_t frame_t = clock();
-			float latency = deltaTime - ((float)(clock() - frame_t) / CLOCKS_PER_SEC);
-			if (latency > 0.0f) Sleep(latency * CLOCKS_PER_SEC);
-			fps +=1;
-		}
-		deltaTime = ((float)(clock() - start) / CLOCKS_PER_SEC) / frame;
-		printf_s("%f \n", deltaTime);
-	}
+	//while (true)
+	//{
+	//	int fps = 0;
+	//	clock_t start = clock();
+	//	while (fps < frame)
+	//	{
+	//		clock_t frame_t = clock();
+	//		float latency = deltaTime - ((float)(clock() - frame_t) / CLOCKS_PER_SEC);
+	//		if (latency > 0.0f) Sleep(latency * CLOCKS_PER_SEC);
+	//		fps +=1;
+	//	}
+	//	deltaTime = ((float)(clock() - start) / CLOCKS_PER_SEC) / frame;
+	//	printf_s("%f \n", deltaTime);
+	//}
+
+
+
+
 
 
 

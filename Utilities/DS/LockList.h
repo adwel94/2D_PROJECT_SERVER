@@ -29,7 +29,12 @@ namespace Utilities
 			{
 				Utilities::Lock::cAutoUnLock alock(this);
 				mList.remove(_data);
+			}
 
+			T LockFront()
+			{
+				Utilities::Lock::cAutoUnLock alock(this);
+				return mList.front();
 			}
 
 			size_t LockSize()

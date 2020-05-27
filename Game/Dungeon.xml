@@ -1,0 +1,8 @@
+
+<Dungeon>
+
+ <!--    몬스터 코드, 스폰위치, 최대 체력     -->
+
+<Mob type="202" x="9" y="1.5" Max_Left_x="8" Max_Right_x="17"/>
+
+</Dungeon>

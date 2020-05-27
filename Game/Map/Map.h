@@ -3,7 +3,6 @@
 #define _MAP_H_
 #include "DS/LockList.h"
 #include "CodeMaker/CodeMaker.h"
-#include <Thread\Thread.h>
 #include <Game.h>
 
 namespace GAME

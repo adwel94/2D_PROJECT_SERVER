@@ -1,7 +1,7 @@
 #include "Town.h"
 #include "Charactor/Charactor.h"
 
-GAME::Map::cTown::cTown() : GAME::Map::cMap(TOWN)
+GAME::Map::cTown::cTown() : GAME::Map::cMap(CODE::MAP::TOWN)
 {
 }
 

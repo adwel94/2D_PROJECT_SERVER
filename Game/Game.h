@@ -11,6 +11,8 @@
 #define DB_TABLE_LOGIN "user_table"
 #define DB_TABLE_CHAR "charactor_table"
 
+#define XML_PATH ""
+
 
 namespace GAME
 {
@@ -28,34 +30,40 @@ namespace GAME
 		
 	};
 
-	enum WAY : bool
+	enum DIRECTION
 	{
 		LEFT = true,
 		RIGHT = false,
 	};
 
+
+
 	namespace CODE
 	{
+		enum JOB
+		{
+			WARRIOR = 101,
+			ARCHER,
+			MAGICIAN,
+		};
 
+
+
+		enum MAP
+		{
+			TOWN = 1000,
+		};
+
+
+		enum MOB
+		{
+			GIANT_EYES = 201,
+			GOBLIN_ARCHER,
+			MINOTAUR,
+			DEVIL,
+		};
+		
 	}
-
-	enum MAPCODE
-	{
-		TOWN = 1000,
-	};
-
-
-
-
-	enum JOB
-	{
-		WARRIOR = 101,
-		ARCHER,
-		MAGICIAN
-	};
-
-
-
 }
 
 

@@ -19,7 +19,7 @@ bool GAME::Map::cMapManager::Req_Enter_Map(cGameClient* _client)
 
 	switch (mapcode)
 	{
-	case MAPCODE::TOWN:
+	case CODE::MAP::TOWN:
 		st_cTown::GetInstance()->In_Charactor(_client->Get_Charactor());
 		break;
 	default:
@@ -71,6 +71,16 @@ bool GAME::Map::cMapManager::Req_Enter_Map(cGameClient* _client)
 	return true;
 }
 
+GAME::Map::cMapManager::cMapManager()
+{
+	mLog.Connect("MAP_LOG.txt");
+}
+
+GAME::Map::cMapManager::~cMapManager()
+{
+	mLog.Close();
+}
+
 bool GAME::Map::cMapManager::Send_Chat_Data(cGameClient* _client)
 {
 
@@ -115,7 +125,7 @@ bool GAME::Map::cMapManager::Send_Move_Data(cGameClient* _client)
 	//캐릭터값에 입력
 	//printf_s("캐릭터 좌표 (%f,%f) 방향 %s \n", x, y, (is_left ? "left" : "right"));
 	_client->Get_Charactor()->mPosition.SetXY(x, y);
-	_client->Get_Charactor()->mWay = (is_left ? LEFT : RIGHT);
+	_client->Get_Charactor()->mDirection = is_left;
 
 	//iterator
 	cMap* map = _client->Get_Charactor()->GetMap();
@@ -182,13 +192,20 @@ void GAME::Map::cMapManager::Exit_Charactor(Charactor::cCharactor* _char)
 		buffer.Write(_char->Code());
 
 		map->Out_Charactor(_char);
-		Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&(map->CharList()));
-		while (iter.HasNext())
 		{
-			//맵에 있는 캐릭터들에게 전송
-			Charactor::cCharactor* charactor = iter.Next();
-			charactor->GetClient()->Send_Packet_Push(buffer);
-			charactor->GetClient()->WSA_Send_Packet();
+			Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&(map->CharList()));
+			while (iter.HasNext())
+			{
+				//맵에 있는 캐릭터들에게 전송
+				Charactor::cCharactor* charactor = iter.Next();
+				charactor->GetClient()->Send_Packet_Push(buffer);
+				charactor->GetClient()->WSA_Send_Packet();
+			}
+		}
+
+		if (map != st_cTown::GetInstance() && map->CharList().LockSize() == 0)
+		{
+			delete map;
 		}
 	}
 }

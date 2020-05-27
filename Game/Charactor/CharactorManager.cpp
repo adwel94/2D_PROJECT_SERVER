@@ -121,13 +121,13 @@ bool GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 		//코드에 따라 캐릭터 생성
 		switch (atoi(db_result.Now("mJob")))
 		{
-		case GAME::WARRIOR:
+		case GAME::CODE::JOB::WARRIOR:
 			charactor = new cWarrior(_client, strtoull(db_result.Now("mCode"),NULL,10), nickname);
 			break;
-		case GAME::ARCHER:
+		case GAME::CODE::JOB::ARCHER:
 			charactor = new cArcher(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
 			break;
-		case GAME::MAGICIAN:
+		case GAME::CODE::JOB::MAGICIAN:
 			charactor = new cMagician(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
 			break;
 		}
@@ -201,7 +201,7 @@ void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 	//자신이 있던 파티에서 나옴
 	Party::st_cPartyManager::GetInstance()->Exit_Charactor(_char);
 	//자신이있던 맵에서 나옴
-	Map::st_MapManager::GetInstance()->Exit_Charactor(_char);
+	Map::st_cMapManager::GetInstance()->Exit_Charactor(_char);
 
 
 

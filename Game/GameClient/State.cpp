@@ -5,6 +5,7 @@
 #include "GameClient/GameClient.h"
 #include "Map/MapManager.h"
 #include "Party/PartyManager.h"
+#include "Map/DungeonManager.h"
 
 GAME::STATE::cState* GAME::STATE::cState::All_State[] = {};
 
@@ -13,6 +14,7 @@ void GAME::STATE::cState::Create()
 	All_State[E::LOG_IN] = new cLogin_State();
 	All_State[E::CHARACTOR] = new cCharactor_State();
 	All_State[E::TOWN] = new cTown_State();
+	All_State[E::DUNGEON] = new cDungeon_State();
 }
 
 void GAME::STATE::cState::Destroy()
@@ -56,6 +58,7 @@ void GAME::STATE::cLogin_State::RecvProc(cGameClient* _client)
 		Login::st_cLoginManger::GetInstance()->Req_LogOut(_client);
 		break;
 	default:
+		printf_s("IP: %s Login State Error %d \n", _client->Get_IP(), protocol);
 		break;
 	}
 }
@@ -86,6 +89,7 @@ void GAME::STATE::cCharactor_State::RecvProc(cGameClient* _client)
 		Charactor::st_cCharactorManager::GetInstance()->Req_Delete_Charactor(_client);
 		break;
 	default:
+		printf_s("IP: %s Charactor State Error %d \n", _client->Get_IP(), protocol);
 		break;
 	}
 }
@@ -99,16 +103,16 @@ void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 	switch (protocol)
 	{
 	case PROTOCOL::CLIENT_SEND_CHAT:
-		Map::st_MapManager::GetInstance()->Send_Chat_Data(_client);
+		Map::st_cMapManager::GetInstance()->Send_Chat_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_MOVE_DATA:
-		Map::st_MapManager::GetInstance()->Send_Move_Data(_client);
+		Map::st_cMapManager::GetInstance()->Send_Move_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_MAP_ENTER:
-		Map::st_MapManager::GetInstance()->Req_Enter_Map(_client);
+		Map::st_cMapManager::GetInstance()->Req_Enter_Map(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
-		Map::st_MapManager::GetInstance()->Send_Jump_Data(_client);
+		Map::st_cMapManager::GetInstance()->Send_Jump_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_PARTY_INVITE:
 		Party::st_cPartyManager::GetInstance()->Req_Party_Invite(_client);
@@ -122,7 +126,43 @@ void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 	case PROTOCOL::CLIENT_PARTY_INVITE_MSG:
 		Party::st_cPartyManager::GetInstance()->Party_Invite_Msg(_client);
 		break;
+	case PROTOCOL::CLIENT_REQ_ENTER_DUNGEON:
+		if (Map::st_cDungeonManager::GetInstance()->Req_Enter_Dungeon(_client))
+		{
+			_client->Set_State(E::DUNGEON);
+		}
+		break;
 	default:
+		printf_s("IP: %s Town State Error %d \n", _client->Get_IP(), protocol);
+		break;
+	}
+}
+
+void GAME::STATE::cDungeon_State::RecvProc(cGameClient* _client)
+{
+	//프로토콜을 확인
+	PROTOCOL::Protocol protocol;
+	_client->RecvPacket().Read(protocol);
+	//프로토콜에 따른 작업 실행
+	switch (protocol)
+	{
+	case PROTOCOL::CLIENT_SEND_CHAT:
+		Map::st_cMapManager::GetInstance()->Send_Chat_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_MOVE_DATA:
+		Map::st_cMapManager::GetInstance()->Send_Move_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
+		Map::st_cMapManager::GetInstance()->Send_Jump_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_DUNGEON_DATA:
+		Map::st_cDungeonManager::GetInstance()->Req_Dungeon_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_REQ_PARTY_INFO:
+		Party::st_cPartyManager::GetInstance()->Req_Party_Info(_client);
+		break;
+	default:
+		printf_s("IP: %s Dungeon State Error %d \n", _client->Get_IP(), protocol);
 		break;
 	}
 }

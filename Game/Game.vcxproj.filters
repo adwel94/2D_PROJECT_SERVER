@@ -19,6 +19,9 @@
     <Filter Include="Charactor">
       <UniqueIdentifier>{d09809f9-e169-41c6-b120-65f18814e13b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{10c1e7e9-7afc-442a-bfdd-182d5ff7132b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -62,6 +65,18 @@
     <ClInclude Include="Map\Dungeon.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="Map\DungeonManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\Monster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\cGoblin.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster\cGiantEyes.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -101,6 +116,20 @@
     <ClCompile Include="Party\Party.cpp">
       <Filter>Party</Filter>
     </ClCompile>
-    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Map\Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\DungeonManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\cGoblin.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\Monster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster\cGiantEyes.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

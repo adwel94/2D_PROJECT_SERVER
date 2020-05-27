@@ -41,50 +41,6 @@ namespace Utilities
 		{
 			return (((_x) < (_y)) ? (_x) : (_y));
 		}
-
-
-
-		//행렬2x2
-		struct sMatrix2X2
-		{
-			//접근을 쉽게하기 위한 공용체
-			union
-			{
-				struct
-				{
-					float _00, _01;
-					float _10, _11;
-				};
-				float e[2][2];
-			};
-		};
-
-		//행렬 곱
-		sMatrix2X2 operator*(float _n, const sMatrix2X2& _m)
-		{
-			sMatrix2X2 m;
-			for (int i = 0; i < 2; i++)
-			{
-				for (int j = 0; j < 2; j++)
-				{
-					m.e[i][j] = _m.e[i][j] * _n;
-				}
-			}
-			return m;
-		}
-
-		//역행렬
-		sMatrix2X2 Matrix_Inverse(const sMatrix2X2& _m)
-		{
-			sMatrix2X2 m = { 0,0,0,0 };
-			float d = (_m.e[0][0] * _m.e[1][1]) - (_m.e[0][1] * _m.e[1][0]);
-			if (d == 0) return m;
-			float n = 1 / d;
-			m = { _m.e[1][1], (-1) * _m.e[0][1] , (-1) * _m.e[1][0],_m.e[0][0] };
-			return n * m;
-		}
-
-
 	}
 
 }

@@ -32,7 +32,7 @@ namespace GAME
 		public:
 
 			//캐릭터 위치
-			WAY mWay;
+			bool mDirection;
 			Utilities::MY_Math::cVector2D mPosition;
 
 
@@ -45,7 +45,7 @@ namespace GAME
 				mMap = _map;
 				mParty = nullptr;
 
-				mWay = LEFT;
+				mDirection = LEFT;
 				mPosition = Utilities::MY_Math::cVector2D(0, 0);
 			}
 
@@ -88,7 +88,6 @@ namespace GAME
 
 		class cWarrior : public cCharactor
 		{
-			static const int mJob_Code = JOB::WARRIOR;
 		public:
 			cWarrior(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
 				: cCharactor(_client, _code, _name, _map)
@@ -104,14 +103,13 @@ namespace GAME
 			// cCharactor을(를) 통해 상속됨
 			virtual int JobCode() override
 			{
-				return mJob_Code;
+				return  CODE::JOB::WARRIOR;
 			}
 
 		};
 
 		class cArcher : public cCharactor
 		{
-			static const int mJob_Code = JOB::ARCHER;
 		public:
 			cArcher(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
 				: cCharactor(_client, _code, _name, _map)
@@ -124,13 +122,12 @@ namespace GAME
 
 			virtual int JobCode() override
 			{
-				return mJob_Code;
+				return CODE::JOB::ARCHER;
 			}
 		};
 
 		class cMagician : public cCharactor
 		{
-			static const int mJob_Code = JOB::MAGICIAN;
 		public:
 			cMagician(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
 				: cCharactor(_client, _code, _name, _map)
@@ -143,7 +140,7 @@ namespace GAME
 
 			virtual int JobCode() override
 			{
-				return mJob_Code;
+				return CODE::JOB::MAGICIAN;
 			}
 		};
 	}
