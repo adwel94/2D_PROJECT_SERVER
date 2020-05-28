@@ -25,6 +25,16 @@ namespace GAME
 
 		};
 
+		enum MOBSTATE
+		{
+			NONE = -1,
+			MOVE,
+			STOP,
+			UGRRO,
+			DAMAGE,
+
+		};
+
 		class cMonster
 		{
 		protected:
@@ -34,9 +44,15 @@ namespace GAME
 			float mLeft_Max, mRight_Max;
 			//몬스터 스탯
 			sMobStat mStat;
+			//몬스터 상태
+			MOBSTATE mState;
 			//속해있는 던전
 			Map::cDungeon* mDungeon;
+			//활성 상태
+			bool mActive;
 		public:
+
+
 			//방향값
 			bool mDirection;
 			//목표
@@ -45,7 +61,7 @@ namespace GAME
 			Utilities::MY_Math::cVector2D mPosition;
 
 			cMonster(Utilities::CODE _code, float _left, float _right, float _x = 0, float _y = 0, Map::cDungeon* _dungeon = nullptr);
-
+			~cMonster();
 
 			Utilities::CODE Code() { return mCode; }
 			sMobStat Stat() { return mStat; }
@@ -60,6 +76,8 @@ namespace GAME
 
 			//1프레임당 실행될 함수
 			virtual void Update() = 0;
+			//클라에게 데이터 전송
+			virtual void SendState() = 0;
 			//몬스터 종류
 			virtual int Type() = 0;
 		};

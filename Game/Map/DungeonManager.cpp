@@ -17,8 +17,6 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 	TiXmlDocument xml;
 	if (xml.LoadFile("Dungeon.xml"))
 	{
-
-		printf_s("Connect Dungeon.xml\n");
 		//루트 <Dungeon>
 		TiXmlElement* root = xml.RootElement();
 		//몬스터 <Mob>
@@ -64,6 +62,9 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 			monster = monster->NextSiblingElement();
 		}
 	}
+
+	dungeon->Start();
+	printf_s("Create Dungeon Coed : %llu Monster Count : %d \n",dungeon->Code(),(int)dungeon->MobList().LockSize());
 	return dungeon;
 }
 

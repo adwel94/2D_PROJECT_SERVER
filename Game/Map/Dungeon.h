@@ -50,6 +50,7 @@ namespace GAME
 
 		public:
 			cDungeon(Utilities::CODE _code);
+			virtual ~cDungeon();
 
 			float DeltaTime() { return mDeltaTime; }
 

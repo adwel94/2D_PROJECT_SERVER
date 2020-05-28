@@ -22,6 +22,9 @@
     <Filter Include="Monster">
       <UniqueIdentifier>{10c1e7e9-7afc-442a-bfdd-182d5ff7132b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayerManager">
+      <UniqueIdentifier>{70ab7b25-2b95-44ce-b1cb-dfd71c8a9cad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -77,6 +80,9 @@
     <ClInclude Include="Monster\cGiantEyes.h">
       <Filter>Monster</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerManager\PlayerManager.h">
+      <Filter>PlayerManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -130,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="Monster\cGiantEyes.cpp">
       <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager\PlayerManager.cpp">
+      <Filter>PlayerManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

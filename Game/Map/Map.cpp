@@ -19,6 +19,7 @@ bool GAME::Map::cMap::In_Charactor(Charactor::cCharactor* _char)
 	return true;
 }
 
+
 bool GAME::Map::cMap::Out_Charactor(Charactor::cCharactor* _char)
 {
 	_char->SetMap(nullptr);

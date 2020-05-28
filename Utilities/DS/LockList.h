@@ -54,10 +54,11 @@ namespace Utilities
 		public:
 			cLockIterator(cLockList<T>* _list)
 			{
+				_list->Lock();
 				mList = _list;
 				mIter = mList->mList.begin();
 				mIndex = 0;
-				mList->Lock();
+
 			}
 
 			~cLockIterator()

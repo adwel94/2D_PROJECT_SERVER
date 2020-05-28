@@ -5,6 +5,7 @@
 #include "Party/PartyManager.h"
 #include "Map/MapManager.h"
 #include "Map/DungeonManager.h"
+#include "PlayerManager/PlayerManager.h"
 
 using namespace Server::Socket;
 
@@ -16,6 +17,7 @@ GAME::cMainManager::cMainManager() : Server::cIOCP_Manager<cGameClient*>()
 	Charactor::st_cCharactorManager::Create();
 	Party::st_cPartyManager::Create();
 	Map::st_cMapManager::Create();
+	st_cPlayerManager::Create();
 	Map::st_cDungeonManager::Create();
 }
 
@@ -31,6 +33,7 @@ GAME::cMainManager::~cMainManager()
 	Charactor::st_cCharactorManager::Destroy();
 	Party::st_cPartyManager::Destroy();
 	Map::st_cMapManager::Destroy();
+	st_cPlayerManager::Destroy();
 	Map::st_cDungeonManager::Destroy();
 }
 

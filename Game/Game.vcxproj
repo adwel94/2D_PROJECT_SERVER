@@ -159,6 +159,7 @@
     <ClInclude Include="Monster\Monster.h" />
     <ClInclude Include="Party\Party.h" />
     <ClInclude Include="Party\PartyManager.h" />
+    <ClInclude Include="PlayerManager\PlayerManager.h" />
     <ClInclude Include="PROTOCOL.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="Monster\Monster.cpp" />
     <ClCompile Include="Party\Party.cpp" />
     <ClCompile Include="Party\PartyManager.cpp" />
+    <ClCompile Include="PlayerManager\PlayerManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

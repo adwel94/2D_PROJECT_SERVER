@@ -6,6 +6,7 @@
 #include "Map/MapManager.h"
 #include "Party/PartyManager.h"
 #include "Map/DungeonManager.h"
+#include "PlayerManager/PlayerManager.h"
 
 GAME::STATE::cState* GAME::STATE::cState::All_State[] = {};
 
@@ -106,13 +107,13 @@ void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 		Map::st_cMapManager::GetInstance()->Send_Chat_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_MOVE_DATA:
-		Map::st_cMapManager::GetInstance()->Send_Move_Data(_client);
+		st_cPlayerManager::GetInstance()->Send_Move_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_MAP_ENTER:
 		Map::st_cMapManager::GetInstance()->Req_Enter_Map(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
-		Map::st_cMapManager::GetInstance()->Send_Jump_Data(_client);
+		st_cPlayerManager::GetInstance()->Send_Jump_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_PARTY_INVITE:
 		Party::st_cPartyManager::GetInstance()->Req_Party_Invite(_client);
@@ -125,6 +126,12 @@ void GAME::STATE::cTown_State::RecvProc(cGameClient* _client)
 		break;
 	case PROTOCOL::CLIENT_PARTY_INVITE_MSG:
 		Party::st_cPartyManager::GetInstance()->Party_Invite_Msg(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_ATK_DATA:
+		st_cPlayerManager::GetInstance()->Send_Atk_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_DAMAGE_DATA:
+		st_cPlayerManager::GetInstance()->Send_Damage_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_ENTER_DUNGEON:
 		if (Map::st_cDungeonManager::GetInstance()->Req_Enter_Dungeon(_client))
@@ -150,16 +157,22 @@ void GAME::STATE::cDungeon_State::RecvProc(cGameClient* _client)
 		Map::st_cMapManager::GetInstance()->Send_Chat_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_MOVE_DATA:
-		Map::st_cMapManager::GetInstance()->Send_Move_Data(_client);
+		st_cPlayerManager::GetInstance()->Send_Move_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_SEND_JUMP_DATA:
-		Map::st_cMapManager::GetInstance()->Send_Jump_Data(_client);
+		st_cPlayerManager::GetInstance()->Send_Jump_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_DUNGEON_DATA:
 		Map::st_cDungeonManager::GetInstance()->Req_Dungeon_Data(_client);
 		break;
 	case PROTOCOL::CLIENT_REQ_PARTY_INFO:
 		Party::st_cPartyManager::GetInstance()->Req_Party_Info(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_ATK_DATA:
+		st_cPlayerManager::GetInstance()->Send_Atk_Data(_client);
+		break;
+	case PROTOCOL::CLIENT_SEND_DAMAGE_DATA:
+		st_cPlayerManager::GetInstance()->Send_Damage_Data(_client);
 		break;
 	default:
 		printf_s("IP: %s Dungeon State Error %d \n", _client->Get_IP(), protocol);

@@ -25,3 +25,7 @@ void GAME::Monster::cGiantEyes::Update()
 		SetRandomDes();
 	}
 }
+
+void GAME::Monster::cGiantEyes::SendState()
+{
+}

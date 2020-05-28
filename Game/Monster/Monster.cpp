@@ -4,12 +4,18 @@
 
 GAME::Monster::cMonster::cMonster(Utilities::CODE _code, float _left, float _right, float _x, float _y, Map::cDungeon* _dungeon)
 {
+	mActive = true;
 	mCode = _code;
 	mLeft_Max = _left;
 	mRight_Max = _right;
 	mDirection = DIRECTION::LEFT;
 	mPosition.SetXY(_x, _y);
 	mDungeon = _dungeon;
+}
+
+GAME::Monster::cMonster::~cMonster()
+{
+	printf_s("Destroy Monster \n");
 }
 
 void GAME::Monster::cMonster::SetRandomDes()

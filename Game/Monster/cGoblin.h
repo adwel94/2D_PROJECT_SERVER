@@ -12,13 +12,17 @@ namespace GAME
 	{
 		class cGoblin : public cMonster
 		{
-			int mStopCount;
+			int mStopFrame;
 		public:
 			cGoblin(Utilities::CODE _code, float _left, float _right, float _x, float _y, Map::cDungeon* _dungeon);
+
 
 			// cMonster을(를) 통해 상속됨
 			void Update() override;
 			int Type() { return CODE::MOB::GOBLIN_ARCHER; }
+
+			// cMonster을(를) 통해 상속됨
+			virtual void SendState() override;
 		};
 	}
 }

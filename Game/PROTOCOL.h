@@ -87,6 +87,16 @@ namespace GAME
 			CLIENT_REQ_DUNGEON_DATA,
 			//서버 던전 정보 요청 결과 
 			SERVER_RE_DUNGEON_DATA,
+			//공격
+			CLIENT_SEND_ATK_DATA,
+			SERVER_SEND_ATK_DATA,
+			//피격
+			CLIENT_SEND_DAMAGE_DATA,
+			SERVER_SEND_DAMAGE_DATA,
+			//몬스터 상태 정보
+			SERVER_SEND_MONSTER_STATE
+		
+
 		};
 	}
 	//byte
