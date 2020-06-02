@@ -176,6 +176,9 @@
     <ClCompile Include="Byte\Byte.cpp">
       <Filter>Byte</Filter>
     </ClCompile>
+    <ClCompile Include="Math\Matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="DB\lib\libcrypto-1_1-x64.dll">

@@ -9,6 +9,7 @@ namespace GAME
 	{
 		class cGiantEyes : public cMonster
 		{
+			int mStopFrame;
 		public:
 			cGiantEyes(Utilities::CODE _code, float _left, float _right, float _x, float _y, Map::cDungeon* _dungeon);
 

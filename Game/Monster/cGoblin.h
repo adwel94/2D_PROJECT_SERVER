@@ -21,6 +21,8 @@ namespace GAME
 			void Update() override;
 			int Type() { return CODE::MOB::GOBLIN_ARCHER; }
 
+			bool Aggro_Check();
+
 			// cMonster을(를) 통해 상속됨
 			virtual void SendState() override;
 		};

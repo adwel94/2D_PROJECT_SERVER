@@ -1,5 +1,6 @@
 #include "Vector2D.h"
 #include "MyMath.h"
+#include "Matrix.h"
 #include <math.h>
 
 using namespace Utilities::MY_Math;
@@ -101,10 +102,32 @@ cVector2D Utilities::MY_Math::operator*(const cVector2D& _v, float _scalar)
 	return v;
 }
 
+cVector2D Utilities::MY_Math::operator*(const cVector2D& _v, const cMatrix4X4& _m)
+{
+	float my[4] = { _v.mX,_v.mY,0,1 };
+	float result[4] = { 0,0,0,0 };
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result[i] += (my[j] * _m.e[j][i]);
+		}
+	}
+	return cVector2D{ result[0], result[1] };
+}
+
 float Utilities::MY_Math::operator*(const cVector2D& _a, const cVector2D& _b)
 {
 	return (_a.mX * _b.mY) - (_a.mY * _b.mX);
 }
+
+float Utilities::MY_Math::GetLength(const cVector2D& _a, const cVector2D& _b)
+{
+	return(sqrt(SQUARE(_b.mX - _a.mX) + SQUARE(_b.mY - _a.mY)));
+}
+
+
 
 
 

@@ -2,9 +2,6 @@
 #ifndef _VECTOR2D_H_
 #define _VECTOR2D_H_
 
-
-
-
 //const¸¦ ÇÔ¼öµÚ¿¡ ºÙÀÏ½Ã ¸â¹öº¯¼ö¸¦ º¯°æ ÇÒ¼ö ¾ø´Ù
 
 namespace Utilities
@@ -12,6 +9,8 @@ namespace Utilities
 
 	namespace MY_Math
 	{
+
+		class cMatrix4X4;
 		
 		//º¤ÅÍ2D
 		class cVector2D
@@ -43,11 +42,12 @@ namespace Utilities
 		cVector2D operator+(const cVector2D&, const cVector2D&); //º¤ÅÍ ÇÕ
 		cVector2D operator-(const cVector2D&, const cVector2D&); //¹éÅÍ Â÷
 		cVector2D operator*(const cVector2D&, float);//º¤ÅÍ ½ºÄ®¶ó°ö	   
+		cVector2D operator*(const cVector2D&, const cMatrix4X4&);
 
 		float operator*(const cVector2D&, const cVector2D&);//º¤ÅÍ ½ºÄ®¶ó°ö		
 
 
-		float GetLength(const cVector2D&, const cVector2D&);
+		float GetLength(const cVector2D& _a, const cVector2D& _b);
 	}
 }
 #endif // !VECTOR2D

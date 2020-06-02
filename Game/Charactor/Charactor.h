@@ -53,6 +53,8 @@ namespace GAME
 			{ return mCode; }
 
 			virtual int JobCode() =0;
+			virtual int Atk() = 0;
+			virtual float AtkRange() = 0;
 
 			cGameClient* GetClient()
 			{
@@ -106,6 +108,20 @@ namespace GAME
 				return  CODE::JOB::WARRIOR;
 			}
 
+
+			// cCharactor을(를) 통해 상속됨
+			virtual int Atk() override
+			{
+				return 1;
+			}
+
+
+			// cCharactor을(를) 통해 상속됨
+			virtual float AtkRange() override
+			{
+				return 3.6f;
+			}
+
 		};
 
 		class cArcher : public cCharactor
@@ -124,25 +140,14 @@ namespace GAME
 			{
 				return CODE::JOB::ARCHER;
 			}
-		};
-
-		class cMagician : public cCharactor
-		{
-		public:
-			cMagician(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
-				: cCharactor(_client, _code, _name, _map)
-			{
-
-			}
 
 			// cCharactor을(를) 통해 상속됨
-			virtual void Update() override;
-
-			virtual int JobCode() override
+			virtual int Atk() override
 			{
-				return CODE::JOB::MAGICIAN;
+				return 1;
 			}
 		};
+
 	}
 
 }

@@ -23,6 +23,8 @@ namespace GAME
 			bool Req_Enter_Dungeon(cGameClient* _client);
 
 			bool Req_Dungeon_Data(cGameClient* _client);
+
+			bool Player_Atk_Monster(cGameClient* _client);
 		};
 
 		typedef Utilities::cSingleTon<cDungeonManager> st_cDungeonManager;

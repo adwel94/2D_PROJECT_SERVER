@@ -1,9 +1,11 @@
 #include "DungeonManager.h"
+#include "Monster/Monster.h"
 #include "Monster/cGiantEyes.h"
 #include "Monster/cGoblin.h"
 #include "CodeMaker/CodeMaker.h"
 #include "XML/include/tinyxml.h"
 #include "GameClient/GameClient.h"
+#include "Math/Vector2D.h"
 #include "PROTOCOL.h"
 
 
@@ -186,6 +188,92 @@ bool GAME::Map::cDungeonManager::Req_Dungeon_Data(cGameClient* _client)
 	}
 	return false;
 }
+
+bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
+{
+	Utilities::CODE mobcode;
+	_client->RecvPacket().Read(mobcode);
+
+	bool result = false;
+	bool death = false;
+
+	Charactor::cCharactor* charactor = _client->Get_Charactor();
+	Map::cDungeon* dungeon = static_cast<cDungeon*>(charactor->GetMap());
+	if (dungeon != nullptr)
+	{
+		Utilities::DS::cLockIterator<Monster::cMonster*> iter(&(dungeon->MobList()));
+		while (iter.HasNext())
+		{
+			Monster::cMonster* mob = iter.Next();
+			if (mob->Code() == mobcode)
+			{
+				//캐릭터와 몬스터의 거리가 공격 범위에 들어왔을 경우
+				if (Utilities::MY_Math::GetLength(mob->mPosition, charactor->mPosition) <= charactor->AtkRange() && mob->Isable())
+				{
+					//공격력 만큼 체력 감소
+					printf_s("공격 성공 \n");
+					mob->DisCountHp(charactor->Atk());			
+					result = true;
+					if (mob->Stat().NowHp == 0)
+					{
+						printf_s("뒤짐 \n");
+						death = true; 
+						mob->Disable();
+					}
+					break;
+				}
+			}
+
+		}
+	}
+
+	if (result)
+	{
+		if (death)
+		{
+			//죽었을 경우  클라에게 정보 전송
+			Utilities::sBuffer buffer;
+			buffer.Write(PROTOCOL::SERVER_SEND_MONSTER_STATE);
+			buffer.Write(GAME::Monster::DEATH);
+			buffer.Write(mobcode);
+
+			Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&dungeon->CharList());
+			while (iter.HasNext())
+			{
+				Charactor::cCharactor* charactor = iter.Next();
+
+				charactor->GetClient()->Send_Packet_Push(buffer);
+				charactor->GetClient()->WSA_Send_Packet();
+			}
+		}
+		else
+		{
+			//성공 했을 경우  클라에게 정보 전송
+			Utilities::sBuffer buffer;
+			buffer.Write(PROTOCOL::SERVER_SEND_MONSTER_STATE);
+			buffer.Write(GAME::Monster::DAMAGE);
+			buffer.Write(mobcode);
+			buffer.Write(charactor->Atk());
+
+			Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&dungeon->CharList());
+			while (iter.HasNext())
+			{
+				Charactor::cCharactor* charactor = iter.Next();
+
+				charactor->GetClient()->Send_Packet_Push(buffer);
+				charactor->GetClient()->WSA_Send_Packet();
+			}
+		}
+
+	}
+
+
+	return result;
+}
+
+
+
+
 
 
 

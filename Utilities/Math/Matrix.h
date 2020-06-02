@@ -22,29 +22,35 @@ namespace Utilities
 			};
 		};
 
-		cMatrix2x2 operator* (float _n, const cMatrix2x2& _m)
-		{
-			cMatrix2x2 m;
-			for (int i = 0; i < 2; i++)
-			{
-				for (int j = 0; j < 2; j++)
-				{
-					m.e[i][j] = _m.e[i][j] * _n;
-				}
-			}
-			return m;
-		}
+		cMatrix2x2 operator* (float _n, const cMatrix2x2& _m);
 
 		//¿ªÇà·Ä
-		cMatrix2x2 Matrix_Inverse(const cMatrix2x2& _m)
+		cMatrix2x2 Matrix_Inverse(const cMatrix2x2& _m);
+
+
+		class cMatrix4X4
 		{
-			cMatrix2x2 m = { 0,0,0,0 };
-			float d = (_m.e[0][0] * _m.e[1][1]) - (_m.e[0][1] * _m.e[1][0]);
-			if (d == 0) return m;
-			float n = 1 / d;
-			m = { _m.e[1][1], (-1) * _m.e[0][1] , (-1) * _m.e[1][0],_m.e[0][0] };
-			return n * m;
-		}
+		public:
+			union
+			{
+				struct
+				{
+					float _00, _01, _02, _03;
+					float _10, _11, _12, _13;
+					float _20, _21, _22, _23;
+					float _30, _31, _32, _33;
+				};
+				float e[4][4];
+			};
+		};
+
+		cMatrix4X4 Matrix_Unit();
+		cMatrix4X4 Matrix_Translation(float _x, float _y, float _z);
+
+
+		cMatrix4X4 Matrix_RoatationX(float _rad);
+		cMatrix4X4 Matrix_RoatationY(float _rad);
+		cMatrix4X4 Matrix_RoatationZ(float _rad);
 	}
 }
 #endif // !_MATRIX_H_

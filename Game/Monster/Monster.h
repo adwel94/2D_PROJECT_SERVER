@@ -14,6 +14,7 @@ namespace GAME
 	{
 		struct sMobStat
 		{
+		public:
 			int Atk;
 			float Speed;
 			int MaxHp;
@@ -32,6 +33,7 @@ namespace GAME
 			STOP,
 			UGRRO,
 			DAMAGE,
+			DEATH,
 
 		};
 
@@ -64,14 +66,17 @@ namespace GAME
 			~cMonster();
 
 			Utilities::CODE Code() { return mCode; }
-			sMobStat Stat() { return mStat; }
+			const sMobStat& Stat() { return mStat; }
 
 			float Left_Max() { return mLeft_Max; }
 			float Right_Max() { return mRight_Max; }
 
-			void SetHp(int _hp) { mStat.NowHp = _hp; }
+			void DisCountHp(int _hp) { mStat.NowHp -= _hp; }
 			//랜덤으로 목표지점을 설정
 			void SetRandomDes();
+
+			bool Isable() { return mActive; }
+			void Disable() { mActive = false; }
 
 
 			//1프레임당 실행될 함수

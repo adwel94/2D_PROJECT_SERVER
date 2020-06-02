@@ -12,11 +12,16 @@ namespace Utilities
 		{
 			return ((_x) * (_x));
 		}
-
-		//라디안을 각도로
-		inline double RAD(double  _x)
+		//rad to degree
+		inline double RAD2DEG(double _x)
 		{
-			return ((_x) * (3.14 / 180));
+			return ((_x) * (180 / 3.14159265));
+		}
+
+		//degree to rad
+		inline double DEG2RAD(double  _x)
+		{
+			return ((_x) * (3.14159265 / 180));
 		}
 
 		//절대값

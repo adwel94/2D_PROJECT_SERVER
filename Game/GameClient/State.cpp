@@ -174,6 +174,9 @@ void GAME::STATE::cDungeon_State::RecvProc(cGameClient* _client)
 	case PROTOCOL::CLIENT_SEND_DAMAGE_DATA:
 		st_cPlayerManager::GetInstance()->Send_Damage_Data(_client);
 		break;
+	case PROTOCOL::CLIENT_PLAYER_ATK_MONSTER:
+		Map::st_cDungeonManager::GetInstance()->Player_Atk_Monster(_client);
+		break;
 	default:
 		printf_s("IP: %s Dungeon State Error %d \n", _client->Get_IP(), protocol);
 		break;

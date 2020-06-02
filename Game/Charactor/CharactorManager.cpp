@@ -125,10 +125,10 @@ bool GAME::Charactor::cCharactorManager::Req_Select_Charactor(GAME::cGameClient*
 			charactor = new cWarrior(_client, strtoull(db_result.Now("mCode"),NULL,10), nickname);
 			break;
 		case GAME::CODE::JOB::ARCHER:
-			charactor = new cArcher(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
+			//charactor = new cArcher(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
 			break;
 		case GAME::CODE::JOB::MAGICIAN:
-			charactor = new cMagician(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
+			//charactor = new cMagician(_client, strtoull(db_result.Now("mCode"), NULL, 10), nickname);
 			break;
 		}
 		
