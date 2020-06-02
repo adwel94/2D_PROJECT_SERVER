@@ -35,6 +35,6 @@ void GAME::Monster::cMonster::SetRandomDes()
 	}
 
 	mDes.SetXY(x, mPosition.mY);
-	printf_s("Goblin %llu SetDes (%f) \n", mCode,mDes.mX);
+	//printf_s("Goblin %llu SetDes (%f) \n", mCode,mDes.mX);
 
 }

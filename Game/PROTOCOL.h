@@ -90,13 +90,19 @@ namespace GAME
 			//공격
 			CLIENT_SEND_ATK_DATA,
 			SERVER_SEND_ATK_DATA,
-			//피격
+			//클라이언트 피격모션 정보
 			CLIENT_SEND_DAMAGE_DATA,
+			//서버 피격 모션 정보
 			SERVER_SEND_DAMAGE_DATA,
 			//몬스터 상태 정보
 			SERVER_SEND_MONSTER_STATE,
 			//플레이어 몬스터 공격 
 			CLIENT_PLAYER_ATK_MONSTER,
+			//몬스터 플레이어 공격(int atk
+			SERVER_MONSTER_ATK_PLAYER,
+			//플레이어 죽음
+			CLIENT_SEND_DEATH_DATA,
+			SERVER_SEND_DEATH_DATA,
 		
 
 		};

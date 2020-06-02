@@ -34,6 +34,7 @@ namespace GAME
 			UGRRO,
 			DAMAGE,
 			DEATH,
+			ATK
 
 		};
 

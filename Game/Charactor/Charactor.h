@@ -29,7 +29,11 @@ namespace GAME
 			//파티
 			Party::cParty* mParty;
 
+			int mMaxHp;
+
+
 		public:
+
 
 			//캐릭터 위치
 			bool mDirection;
@@ -44,6 +48,7 @@ namespace GAME
 				mClient = _client;
 				mMap = _map;
 				mParty = nullptr;
+				mActive = true;
 
 				mDirection = LEFT;
 				mPosition = Utilities::MY_Math::cVector2D(0, 0);
@@ -52,6 +57,8 @@ namespace GAME
 			Utilities::CODE Code() 
 			{ return mCode; }
 
+			bool mActive;
+			int mNowHp;
 			virtual int JobCode() =0;
 			virtual int Atk() = 0;
 			virtual float AtkRange() = 0;
@@ -94,7 +101,8 @@ namespace GAME
 			cWarrior(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
 				: cCharactor(_client, _code, _name, _map)
 			{
-
+				mMaxHp = 10;
+				mNowHp = mMaxHp;
 			}
 
 

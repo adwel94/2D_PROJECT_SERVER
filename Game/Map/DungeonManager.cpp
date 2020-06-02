@@ -81,10 +81,7 @@ bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 		//파티장일 경우
 		if (charactor == charactor->GetParty()->Host())
 		{
-
-
-			//던전 생성
-			charactor->GetMap()->Out_Charactor(charactor);
+			//던전 생성	
 			cDungeon* dungeon = CreateDungeon();
 
 			//성공 메세지
@@ -94,21 +91,27 @@ bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 
 			//파티원 전부에게 전송
 			Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&(charactor->GetParty()->CharList()));
-			while (iter.HasNext())			{			
+			while (iter.HasNext())			
+			{			
 				
 				Charactor::cCharactor* member = iter.Next();
+				member->mActive = true;
 				//던전 입장
 				member->GetMap()->Out_Charactor(member);
 				dungeon->In_Charactor(member);
 				//전송
 				member->GetClient()->Send_Packet_Push(buffer);
 				member->GetClient()->WSA_Send_Packet();
+				//상태 변경
+				member->GetClient()->Set_State(STATE::E::DUNGEON);
 			}
 			return true;
 		}
 		//파티장이 아닐경우
 		else
 		{
+			charactor->mActive = true;
+
 			//실패메세지
 			Utilities::sBuffer buffer;
 			buffer.Write(PROTOCOL::SERVER_RE_ENTER_DUNGEON);
@@ -117,6 +120,7 @@ bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 			//실패 전송
 			_client->Send_Packet_Push(buffer);
 			_client->WSA_Send_Packet();
+			_client->Set_State(STATE::E::DUNGEON);
 
 			return false;
 		}
@@ -143,7 +147,6 @@ bool GAME::Map::cDungeonManager::Req_Dungeon_Data(cGameClient* _client)
 
 	Charactor::cCharactor* charactor = _client->Get_Charactor();
 	Map::cDungeon* dungeon = static_cast<cDungeon*>(charactor->GetMap());
-	printf_s("IP: %s Req_Dungeon_Data Charactor Code : %llu Dungeon Code : %llu \n", _client->Get_IP(), charactor->Code(), dungeon->Code());
 
 	Utilities::sBuffer buffer;
 	buffer.Write(PROTOCOL::SERVER_RE_DUNGEON_DATA);
@@ -151,21 +154,21 @@ bool GAME::Map::cDungeonManager::Req_Dungeon_Data(cGameClient* _client)
 
 	if (dungeon != nullptr)
 	{
+		printf_s("IP: %s Req_Dungeon_Data Charactor Code : %llu Dungeon Code : %llu \n", _client->Get_IP(), charactor->Code(), dungeon->Code());
 		//맵에 있는 파티원 정보 패킹
-		buffer.Write(int(dungeon->CharList().LockSize()) -1);
+		buffer.Write(int(charactor->GetParty()->CharList().LockSize()) - 1);
+		Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&(charactor->GetParty()->CharList()));
+		while (iter.HasNext())
 		{
-			Utilities::DS::cLockIterator<Charactor::cCharactor*> iter(&(dungeon->CharList()));
-			while (iter.HasNext())
-			{
-				Charactor::cCharactor* member = iter.Next();
-				//자기 자신을 제외한
-				if (charactor == member) continue;
+			Charactor::cCharactor* member = iter.Next();
+			//자기 자신을 제외한
+			if (charactor == member) continue;
 
-				buffer.Write(member->Code());
-				buffer.Write(member->NickName());
-				buffer.Write(member->JobCode());
-			}
+			buffer.Write(member->Code());
+			buffer.Write(member->NickName());
+			buffer.Write(member->JobCode());
 		}
+
 
 		//몬스터 정보 패킹
 		buffer.Write(int(dungeon->MobList().LockSize()));
@@ -211,12 +214,10 @@ bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
 				if (Utilities::MY_Math::GetLength(mob->mPosition, charactor->mPosition) <= charactor->AtkRange() && mob->Isable())
 				{
 					//공격력 만큼 체력 감소
-					printf_s("공격 성공 \n");
 					mob->DisCountHp(charactor->Atk());			
 					result = true;
 					if (mob->Stat().NowHp == 0)
 					{
-						printf_s("뒤짐 \n");
 						death = true; 
 						mob->Disable();
 					}

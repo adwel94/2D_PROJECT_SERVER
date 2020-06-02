@@ -54,6 +54,7 @@ namespace Utilities
 		public:
 			cLockIterator(cLockList<T>* _list)
 			{
+				//printf_s("lock\n");
 				_list->Lock();
 				mList = _list;
 				mIter = mList->mList.begin();
@@ -63,6 +64,7 @@ namespace Utilities
 
 			~cLockIterator()
 			{
+				//printf_s("unlock\n");
 				mList->UnLock();
 			}
 

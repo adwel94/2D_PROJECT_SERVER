@@ -7,6 +7,9 @@
 
 namespace GAME
 {
+
+	namespace Charactor { class cCharactor; }
+
 	class cPlayerManager
 	{
 
@@ -19,6 +22,10 @@ namespace GAME
 		bool Send_Atk_Data(cGameClient* _client);
 		//피격 데이터 전송
 		bool Send_Damage_Data(cGameClient* _client);
+		//죽음 데이터 전송
+		bool Send_Death_Data(cGameClient* _client);
+		//Player Death
+		void Death_Player(Charactor::cCharactor* _char);
 
 	};
 
