@@ -24,8 +24,9 @@ namespace GAME
 		bool Send_Damage_Data(cGameClient* _client);
 		//죽음 데이터 전송
 		bool Send_Death_Data(cGameClient* _client);
-		//Player Death
-		void Death_Player(Charactor::cCharactor* _char);
+		//죽음 모션 종료
+		bool Send_Death_End(cGameClient* _client);
+
 
 	};
 

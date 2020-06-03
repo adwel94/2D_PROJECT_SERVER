@@ -86,6 +86,7 @@ bool GAME::Login::cLoginManger::Req_Login(cGameClient* _client)
 	return result;
 }
 
+//회원가입 요청
 bool GAME::Login::cLoginManger::Req_Join(cGameClient* _client)
 {
 	char id[ID_SIZE];

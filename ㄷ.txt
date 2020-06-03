@@ -1,0 +1,51 @@
+   
+unlock_attack
+
+
+    protected virtual void Idle()
+    {
+        anim.SetInteger("State", (int)Player_State.Idle);
+    }
+
+ protected void Jump_Ani()
+    {
+        vertical = rigid.velocity.y;
+
+        if (vertical > 0.01 && !is_ground)
+        {
+            anim.SetInteger("State", (int)Player_State.Jump_Up);
+        }
+        else if (!is_ground && vertical < 0.01)
+        {
+            anim.SetInteger("State", (int)Player_State.Jump_Down);
+        }
+    }
+
+    public void Jump()
+    {
+        rigid.velocity = Vector2.zero;
+        Vector2 jump_velocity = new Vector2(0, 1);//점프 단위의 기준           
+        rigid.AddForce(jump_velocity * player_jump_power);  //점프를  jumpVelocity * Jump_Power만큼 해준다.             
+    }
+
+    public void Move(int _move)
+    {
+        if (Mathf.Abs(_move) > 0)
+        {
+            Quaternion rot = transform.rotation;//쿼터니언 변수에 transfom의 회전값을 초기화한다.
+            //transform의 rotation에 rot.x(지금 움직이는 방향 좌표), 음수인지 양수인지 비교하여 180도 뒤집는 방향을 계산, rot.z대입
+            transform.rotation = Quaternion.Euler(rot.x, Mathf.Sign(_move) == 1 ? 0 : 180, rot.z);
+            if(!clone)
+                Canvas.transform.rotation = Quaternion.Euler(rot.x, Mathf.Sign(_move) == 1 ? 0 : 180, rot.z);
+        }
+        if (_move == 0)
+        {
+            anim.SetInteger("State", (int)Player_State.Idle);
+        }
+        else
+        {
+            anim.SetInteger("State", (int)Player_State.Run);
+            Vector3 move_pos = new Vector3(_move, 0, 0);
+            transform.position += move_pos * player_speed * Time.deltaTime;
+        }
+    }

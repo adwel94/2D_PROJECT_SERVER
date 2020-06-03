@@ -12,11 +12,14 @@ namespace GAME
 
 	namespace Monster
 	{
+		//몬스터 스탯
 		struct sMobStat
 		{
 		public:
+			//공격력,스피드
 			int Atk;
 			float Speed;
+			//hp
 			int MaxHp;
 			int NowHp;
 
@@ -26,14 +29,21 @@ namespace GAME
 
 		};
 
+		//몬스터 상태
 		enum MOBSTATE
 		{
 			NONE = -1,
+			//이동
 			MOVE,
+			//정지
 			STOP,
+			//어그로
 			UGRRO,
+			//피격
 			DAMAGE,
+			//죽음
 			DEATH,
+			//공격
 			ATK
 
 		};

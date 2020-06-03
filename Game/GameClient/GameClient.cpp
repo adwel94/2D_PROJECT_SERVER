@@ -22,7 +22,7 @@ GAME::cGameClient::~cGameClient()
 	ClientCount--;
 	if (ClientCount == 0)
 	{
-		GAME::STATE::cState::Destroy();
+		//GAME::STATE::cState::Destroy();
 	}
 
 	Login::st_cLoginManger::GetInstance()->LogOut(this);

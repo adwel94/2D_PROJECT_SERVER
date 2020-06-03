@@ -103,6 +103,8 @@ namespace GAME
 			//플레이어 죽음
 			CLIENT_SEND_DEATH_DATA,
 			SERVER_SEND_DEATH_DATA,
+			//플레이어 죽음 모션 종료
+			CLIENT_SEND_DEATH_END,
 		
 
 		};

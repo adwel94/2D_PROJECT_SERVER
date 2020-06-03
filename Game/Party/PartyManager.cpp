@@ -2,6 +2,7 @@
 #include "GameClient/GameClient.h"
 #include "PROTOCOL.h"
 
+//파티 생성 요청
 bool GAME::Party::cPartyManager::Req_Create_Party(cGameClient* _client)
 {
 
@@ -48,6 +49,7 @@ bool GAME::Party::cPartyManager::Req_Create_Party(cGameClient* _client)
 	return result;
 }
 
+//파티 정보 요청
 bool GAME::Party::cPartyManager::Req_Party_Info(cGameClient* _client)
 {
 
@@ -86,6 +88,7 @@ bool GAME::Party::cPartyManager::Req_Party_Info(cGameClient* _client)
 	return false;
 }
 
+//파티 초대 요청
 bool GAME::Party::cPartyManager::Req_Party_Invite(cGameClient* _client)
 {
 
@@ -136,13 +139,13 @@ bool GAME::Party::cPartyManager::Req_Party_Invite(cGameClient* _client)
 	return result;
 }
 
+//파티 초대 메세지
 bool GAME::Party::cPartyManager::Party_Invite_Msg(cGameClient* _client)
 {
 
 	//파티 초대를 요청한 캐릭터 이름, 결과
 	bool invite;
 	_client->RecvPacket().Read(invite);
-
 
 	//결과값
 	bool result = false;
@@ -214,6 +217,7 @@ bool GAME::Party::cPartyManager::Party_Invite_Msg(cGameClient* _client)
 					charactor->GetClient()->WSA_Send_Packet();
 				}
 
+				//새로 들어온 유저에게 기존 유저들 정보 전송
 				newcharactor->GetClient()->Send_Packet_Push(buffer2);
 				newcharactor->GetClient()->WSA_Send_Packet();
 			}
@@ -225,7 +229,7 @@ bool GAME::Party::cPartyManager::Party_Invite_Msg(cGameClient* _client)
 
 
 
-
+//파티 탈퇴
 void GAME::Party::cPartyManager::Exit_Charactor(Charactor::cCharactor* _char)
 {
 	Party::cParty* party = _char->GetParty();
@@ -243,8 +247,7 @@ void GAME::Party::cPartyManager::Exit_Charactor(Charactor::cCharactor* _char)
 		}
 
 
-		//아닐경우 멤버들에게 전송
-
+		//아닐경우 멤버들에게 나갔다는 데이터전송
 		Utilities::sBuffer buffer;
 		buffer.Write(PROTOCOL::SERVER_PARTY_OUT);
 		buffer.Write(_char->Code());
