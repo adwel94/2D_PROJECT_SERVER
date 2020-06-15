@@ -3,7 +3,6 @@
 #define _LOCK_LIST_H_
 #include "Lock/Lock.h"
 #include <list>
-#include <iterator>
 
 namespace Utilities
 {
@@ -42,45 +41,7 @@ namespace Utilities
 				Utilities::Lock::cAutoUnLock alock(this);
 				return mList.size();
 			}
-
-		};
-
-		template <class T>
-		class cLockIterator
-		{
-			cLockList<T>* mList;
-			typename std::list<T>::iterator mIter;
-			int mIndex;
-		public:
-			cLockIterator(cLockList<T>* _list)
-			{
-				//printf_s("lock\n");
-				_list->Lock();
-				mList = _list;
-				mIter = mList->mList.begin();
-				mIndex = 0;
-
-			}
-
-			~cLockIterator()
-			{
-				//printf_s("unlock\n");
-				mList->UnLock();
-			}
-
-
-			bool HasNext()
-			{
-				return (mIndex != mList->mList.size());
-			}
-			
-			T Next()
-			{
-				mIndex++;
-				return *(mIter++);
-			}
-
-		};
+		};		
 
 	}
 }

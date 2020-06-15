@@ -25,13 +25,13 @@ GAME::cGameClient::~cGameClient()
 		//GAME::STATE::cState::Destroy();
 	}
 
-	Login::st_cLoginManger::GetInstance()->LogOut(this);
-
 	if (mChar != nullptr)
 	{
 		Charactor::st_cCharactorManager::GetInstance()->Exit_Charactor(mChar);
 		delete mChar;
 	}
+
+	Login::st_cLoginManger::GetInstance()->LogOut(this);
 
 }
 

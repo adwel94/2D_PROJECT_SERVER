@@ -5,9 +5,22 @@
 #include "CodeMaker/CodeMaker.h"
 #include "XML/include/tinyxml.h"
 #include "GameClient/GameClient.h"
+#include "Party/PartyManager.h"
+#include "MapManager.h"
 #include "Math/Vector2D.h"
+#include "DS/LockIterator.h"
 #include "PROTOCOL.h"
 
+
+GAME::Map::cDungeonManager::cDungeonManager()
+{
+	mLog.Connect("DUNGEON_LOG.txt");
+}
+
+GAME::Map::cDungeonManager::~cDungeonManager()
+{
+	mLog.Close();
+}
 
 GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 {
@@ -67,6 +80,7 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 
 	dungeon->Start();
 	printf_s("Create Dungeon Coed : %llu Monster Count : %d \n",dungeon->Code(),(int)dungeon->MobList().LockSize());
+	mLog.Record("Create Dungeon Coed : %llu Monster Count : %d", dungeon->Code(), (int)dungeon->MobList().LockSize());
 	return dungeon;
 }
 
@@ -75,6 +89,7 @@ bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 	Charactor::cCharactor* charactor = _client->Get_Charactor();
 
 	printf_s("IP: %s Req_Enter_Dungeon Charactor Code : %llu  \n", _client->Get_IP(), charactor->Code());
+	mLog.Record("IP: %s Req_Enter_Dungeon Charactor Code : %llu", _client->Get_IP(), charactor->Code());
 	//가입된 파티가 있을 경우
 	if (charactor->GetParty() != nullptr)
 	{
@@ -158,6 +173,7 @@ bool GAME::Map::cDungeonManager::Req_Dungeon_Data(cGameClient* _client)
 	if (dungeon != nullptr)
 	{
 		printf_s("IP: %s Req_Dungeon_Data Charactor Code : %llu Dungeon Code : %llu \n", _client->Get_IP(), charactor->Code(), dungeon->Code());
+		mLog.Record("IP: %s Req_Dungeon_Data Charactor Code : %llu Dungeon Code : %llu", _client->Get_IP(), charactor->Code(), dungeon->Code());
 
 		Utilities::sBuffer buffer;
 		buffer.Write(PROTOCOL::SERVER_RE_DUNGEON_DATA);
@@ -247,6 +263,7 @@ bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
 					{
 						death = true; 
 						mob->Disable();
+						dungeon->deathcount++;
 					}
 					break;
 				}
@@ -297,11 +314,40 @@ bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
 				charactor->GetClient()->WSA_Send_Packet();
 			}
 		}
-
 	}
-
-
 	return result;
+}
+
+bool GAME::Map::cDungeonManager::Dungeon_End(cGameClient* _client)
+{
+	Charactor::cCharactor* charactor = _client->Get_Charactor();
+	Map::cDungeon* dungeon = static_cast<cDungeon*>(charactor->GetMap());
+
+	//던전에 있고 죽은 몬스터의 수를 확인후 결과 전송
+	if (dungeon != nullptr && 
+		dungeon->deathcount == dungeon->MobList().LockSize())
+	{
+		//파티와 던전을 나간다.
+		Party::st_cPartyManager::GetInstance()->Exit_Charactor(_client->Get_Charactor());
+		Map::st_cMapManager::GetInstance()->Exit_Charactor(_client->Get_Charactor());
+
+		//hp를 초기화 하고 마을 상태로 되돌린다.
+		_client->Get_Charactor()->mNowHp = 10;
+		_client->Set_State(STATE::E::TOWN);
+
+		//클라에게 결과 전송
+		Utilities::sBuffer buffer;
+		buffer.Write(PROTOCOL::SERVER_SEND_DUNGEON_END);
+
+		_client->Send_Packet_Push(buffer);
+		_client->WSA_Send_Packet();
+
+		printf_s("Dungeon_End Code : %llu\n", dungeon->Code());
+		mLog.Record("Dungeon_End Code : %llu", dungeon->Code());
+
+		return true;
+	}
+	return false;
 }
 
 

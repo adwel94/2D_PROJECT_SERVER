@@ -11,11 +11,13 @@ GAME::Monster::cMonster::cMonster(Utilities::CODE _code, float _left, float _rig
 	mDirection = DIRECTION::LEFT;
 	mPosition.SetXY(_x, _y);
 	mDungeon = _dungeon;
+
+	//printf_s("Create Monster  Code : %llu, Type : %d\n", mCode, Type());
 }
 
 GAME::Monster::cMonster::~cMonster()
 {
-	printf_s("Destroy Monster \n");
+	//printf_s("Destroy Monster  Code : %llu, Type : %d\n",mCode,Type());
 }
 
 void GAME::Monster::cMonster::SetRandomDes()

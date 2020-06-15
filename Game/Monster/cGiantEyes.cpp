@@ -5,6 +5,7 @@
 #include "PROTOCOL.h"
 #include "Charactor/Charactor.h"
 #include "GameClient/GameClient.h"
+#include "DS/LockIterator.h"
 
 using namespace Utilities::MY_Math;
 
@@ -14,7 +15,7 @@ GAME::Monster::cGiantEyes::cGiantEyes(Utilities::CODE _code, float _left, float 
 {	
 	mStopFrame = GAME_FRAME;
 	//공격력,속도,최대체력,현재체력,어그로 범위, 공격 범위
-	mStat = { 1,0.7f,5,5,5.0f,1.2f };
+	mStat = { 2,0.5f,5,5,5.0f,1.2f };
 	mState = MOBSTATE::STOP;
 }
 
@@ -125,6 +126,7 @@ bool GAME::Monster::cGiantEyes::AroundCheck()
 					charactor->GetClient()->Send_Packet_Push(buffer);
 					charactor->GetClient()->WSA_Send_Packet();
 
+					charactor->mNowHp -= mStat.Atk;
 					mDes = charactor->mPosition;
 					mStopFrame = GAME_FRAME * 2;
 					mState = ATK;

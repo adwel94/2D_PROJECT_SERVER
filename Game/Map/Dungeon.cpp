@@ -1,5 +1,6 @@
 #include "Dungeon.h"
 #include "Monster/Monster.h"
+#include "DS/LockIterator.h"
 
 bool GAME::Map::cDungeon::FrameProc()
 {
@@ -14,6 +15,7 @@ bool GAME::Map::cDungeon::FrameProc()
 
 GAME::Map::cDungeon::cDungeon(Utilities::CODE _code) : cMap(_code)
 {
+	deathcount = 0;
 	mDeltaTime = 1.0f / (float)GAME_FRAME;
 	mThread.Create(FrameThread, this, false, true);
 }

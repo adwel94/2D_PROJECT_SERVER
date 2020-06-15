@@ -180,6 +180,9 @@ void GAME::STATE::cDungeon_State::RecvProc(cGameClient* _client)
 	case PROTOCOL::CLIENT_SEND_DEATH_END:
 		st_cPlayerManager::GetInstance()->Send_Death_End(_client);
 		break;
+	case PROTOCOL::CLIENT_SNED_DUNGEON_END:
+		Map::st_cDungeonManager::GetInstance()->Dungeon_End(_client);
+		break;
 	default:
 		printf_s("IP: %s Dungeon State Error %d \n", _client->Get_IP(), protocol);
 		break;

@@ -4,6 +4,7 @@
 #include "Map/MapManager.h"
 #include "Party/PartyManager.h"
 #include "GameClient/State.h"
+#include "DS/LockIterator.h"
 
 //플레이어 이동 정보
 bool GAME::cPlayerManager::Send_Move_Data(cGameClient* _client)

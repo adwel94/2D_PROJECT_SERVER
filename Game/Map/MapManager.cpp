@@ -1,6 +1,7 @@
 #include "MapManager.h"
 #include "GameClient/GameClient.h"
 #include "DS/LockList.h"
+#include "DS/LockIterator.h"
 #include "PROTOCOL.h"
 #include "Map/Town.h"
 
@@ -15,7 +16,9 @@ bool GAME::Map::cMapManager::Req_Enter_Map(cGameClient* _client)
 	int mapcode;
 	_client->RecvPacket().Read(mapcode);
 
-	printf_s("IP: %s Charactor : %s MapCode : %d  \n", _client->Get_IP(), _client->Get_Charactor()->NickName(), mapcode);
+	printf_s("IP: %s Req_Enter_Map Charactor Code : %llu  Map Code : %llu \n", _client->Get_IP(), _client->Get_Charactor()->Code(), mapcode);
+	mLog.Record("IP: %s Req_Enter_Map Charactor Code : %llu  Map Code : %llu", _client->Get_IP(), _client->Get_Charactor()->Code(), mapcode);
+
 
 	switch (mapcode)
 	{
@@ -187,6 +190,7 @@ void GAME::Map::cMapManager::Exit_Charactor(Charactor::cCharactor* _char)
 	if (map != nullptr)
 	{
 		printf_s("IP: %s Exit_Map Charactor Code : %llu  Map Code : %llu \n", _char->GetClient()->Get_IP(), _char->Code(), map->Code());
+		mLog.Record("IP: %s Exit_Map Charactor Code : %llu  Map Code : %llu", _char->GetClient()->Get_IP(), _char->Code(), map->Code());
 		Utilities::sBuffer buffer;
 		buffer.Write(PROTOCOL::SERVER_PLAYER_OUT);
 		buffer.Write(_char->Code());

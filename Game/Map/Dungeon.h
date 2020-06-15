@@ -49,6 +49,8 @@ namespace GAME
 			virtual bool FrameProc();
 
 		public:
+			int deathcount;
+
 			cDungeon(Utilities::CODE _code);
 			virtual ~cDungeon();
 

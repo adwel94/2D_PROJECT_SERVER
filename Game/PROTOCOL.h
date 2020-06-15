@@ -105,6 +105,9 @@ namespace GAME
 			SERVER_SEND_DEATH_DATA,
 			//플레이어 죽음 모션 종료
 			CLIENT_SEND_DEATH_END,
+			//던전 종료
+			CLIENT_SNED_DUNGEON_END,
+			SERVER_SEND_DUNGEON_END
 		
 
 		};

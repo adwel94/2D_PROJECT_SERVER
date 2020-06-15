@@ -63,6 +63,8 @@ namespace GAME
 			Map::cDungeon* mDungeon;
 			//활성 상태
 			bool mActive;
+			//몬스터 타입
+			int mType;
 		public:
 
 

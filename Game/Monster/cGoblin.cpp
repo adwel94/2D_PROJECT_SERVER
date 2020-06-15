@@ -7,6 +7,7 @@
 #include "Charactor/Charactor.h"
 #include "GameClient/GameClient.h"
 #include "PlayerManager/PlayerManager.h"
+#include "DS/LockIterator.h"
 
 using namespace Utilities::MY_Math;
 
@@ -15,9 +16,10 @@ GAME::Monster::cGoblin::cGoblin(Utilities::CODE _code, float _left, float _right
 {
 	mStopFrame = GAME_FRAME;
 	//공격력,속도,최대체력,현재체력,어그로 범위, 공격 범위
-	mStat = { 5,0.5f,3,3,7.0f,7.0f};
+	mStat = { 1,0.5f,3,3,7.0f,7.0f};
 	mState = MOBSTATE::STOP;
 	mDirection = DIRECTION::RIGHT;
+
 }
 
 void GAME::Monster::cGoblin::Update()

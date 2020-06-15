@@ -29,6 +29,7 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 	//파일 이름+
 	strcat_s(mMsg, _name);	
 	strcpy_s(mName, _name);
+
 	//파일 이어 쓰기로 연결
 	if (fopen_s(&mFp, mMsg, "a") != 0)
 	{
@@ -38,6 +39,7 @@ bool Utilities::cLog::Connect(const char* _name, const char* _path)
 
 	printf_s("Log Connect Success Name : %s \n", _name);
 	Record("---------------------Connect-----------------------");
+
 	return true;
 }
 
@@ -65,18 +67,20 @@ bool Utilities::cLog::Record(const char* _msg, ...)
 		sprintf_s(timeinfo, "%d-%d-%d %d:%d:%d - ", now.tm_year+1900, now.tm_mon+1, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec);
 	}
 
-	//가변 인수 확인
+	//가변 인수 확인, 기록
 	va_list arg;
 	va_start(arg, _msg); 
 	vsprintf_s(log, _msg, arg);
 	va_end(arg);
 
+	//줄바꿈 입력
 	log[strlen(log) + 1] = '\0';
 	log[strlen(log)] = '\n';
 
-
+	//write
 	fputs(timeinfo, mFp);
 	fputs(log, mFp);
+
 	return true;	
 }
 

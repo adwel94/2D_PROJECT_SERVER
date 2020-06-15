@@ -7,6 +7,7 @@
 
 namespace Utilities
 {
+	//로그 기록
 	class cLog
 	{
 	public:
@@ -19,8 +20,10 @@ namespace Utilities
 		};
 
 	protected:
-		FILE* mFp;//파일 포인터
-		char mName[NAME_LEN] = "\0";//파일 이름	
+		//파일 포인터
+		FILE* mFp;
+		//파일 이름	
+		char mName[NAME_LEN] = "\0";
 	public:
 
 		cLog()
@@ -28,7 +31,7 @@ namespace Utilities
 			mFp = nullptr;
 		}
 
-		//파일이름,경로
+		//파일이름,경로 연결
 		bool Connect(const char* _name, const char* _path = "..\\LogFile");
 		//기록
 		bool Record(const char* _msg, ...);

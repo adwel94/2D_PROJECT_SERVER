@@ -41,18 +41,9 @@ namespace GAME
 
 
 
-			cCharactor(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr)
-			{
-				mCode = _code;
-				strcpy_s(mNickName, _name);
-				mClient = _client;
-				mMap = _map;
-				mParty = nullptr;
-				mActive = true;
+			cCharactor(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr);
+			virtual ~cCharactor();
 
-				mDirection = LEFT;
-				mPosition = Utilities::MY_Math::cVector2D(0, 0);
-			}
 
 			Utilities::CODE Code() 
 			{ return mCode; }

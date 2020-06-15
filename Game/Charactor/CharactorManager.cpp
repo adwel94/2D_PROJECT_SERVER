@@ -205,6 +205,6 @@ void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 
 
 
-	printf_s("IP: %s Exit_Charactor Code : %llu \n", _char->GetClient()->Get_IP(), _char->Code());
+	
 }
 

@@ -168,7 +168,7 @@
     <ClInclude Include="DB\include\my_list.h" />
     <ClInclude Include="DS\LockList.h" />
     <ClInclude Include="DS\LockQueue.h" />
-    <ClInclude Include="LockIterator.h" />
+    <ClInclude Include="DS\LockIterator.h" />
     <ClInclude Include="Lock\Lock.h" />
     <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Math\MyMath.h" />

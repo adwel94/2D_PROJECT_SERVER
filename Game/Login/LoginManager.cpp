@@ -1,5 +1,6 @@
 #include "LoginManager.h"
 #include "Game.h"
+#include "DS/LockIterator.h"
 #include "PROTOCOL.h"
 
 
