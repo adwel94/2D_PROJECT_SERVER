@@ -50,6 +50,8 @@ namespace GAME
 
 			bool mActive;
 			int mNowHp;
+			int mLevel;
+
 			virtual int JobCode() =0;
 			virtual int Atk() = 0;
 			virtual float AtkRange() = 0;

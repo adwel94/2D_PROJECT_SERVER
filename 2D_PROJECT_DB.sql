@@ -44,16 +44,23 @@ mCode bigint unsigned,
 mUser_Code bigint unsigned,
 mName char(30) unique, 
 mJob int,
+mLevel int,
 
 primary key(mCode),
 foreign key(mUser_Code) references user_table(mCode) on delete cascade
 );
+
+alter table charactor_table add mLevel int;
 
 insert into charactor_table values(1,1,'nick1',100);
 insert into charactor_table values(2,1,'nick2',100);
 insert into charactor_table values(3,1,'nick3',100);
 
 select* from charactor_table;
+
+SET SQL_SAFE_UPDATES =0;
+
+update charactor_table set mLevel = 1;
 
 insert into test_table values(3,5,7);
 

@@ -21,9 +21,7 @@ GAME::Monster::cGiantEyes::cGiantEyes(Utilities::CODE _code, float _left, float 
 
 void GAME::Monster::cGiantEyes::Update()
 {
-	if (!mActive) return;
-
-	
+	if (!mActive) return;	
 
 	switch (mState)
 	{
@@ -55,12 +53,15 @@ void GAME::Monster::cGiantEyes::Update()
 		}
 		break;
 	case GAME::Monster::UGRRO:
-		if (AttackCheck()) break;
 		if (ABS((double)mDes.mX - (double)mPosition.mX) > 0.1f)
 		{
 			cVector2D gap = mDes - mPosition;
 			cVector2D move = mPosition + (gap * (mStat.Speed * 1.5f) * mDungeon->DeltaTime());
 			mPosition.SetXY(move.mX, mDes.mY);
+			if (AttackCheck())
+			{
+				SendState();
+			};
 		}
 		else
 		{
@@ -128,7 +129,7 @@ bool GAME::Monster::cGiantEyes::AroundCheck()
 
 					charactor->mNowHp -= mStat.Atk;
 					mDes = charactor->mPosition;
-					mStopFrame = GAME_FRAME * 2;
+					mStopFrame = GAME_FRAME;
 					mState = ATK;
 					SendState();
 					return true;
@@ -199,7 +200,7 @@ bool GAME::Monster::cGiantEyes::AttackCheck()
 					charactor->GetClient()->WSA_Send_Packet();
 
 					mDes = charactor->mPosition;
-					mStopFrame = GAME_FRAME * 2;
+					mStopFrame = GAME_FRAME;
 					mState = ATK;
 					SendState();
 					return true;

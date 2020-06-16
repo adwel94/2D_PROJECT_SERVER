@@ -78,6 +78,7 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 		}
 	}
 
+	//던전 스레드 시작
 	dungeon->Start();
 	printf_s("Create Dungeon Coed : %llu Monster Count : %d \n",dungeon->Code(),(int)dungeon->MobList().LockSize());
 	mLog.Record("Create Dungeon Coed : %llu Monster Count : %d", dungeon->Code(), (int)dungeon->MobList().LockSize());
@@ -90,6 +91,7 @@ bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 
 	printf_s("IP: %s Req_Enter_Dungeon Charactor Code : %llu  \n", _client->Get_IP(), charactor->Code());
 	mLog.Record("IP: %s Req_Enter_Dungeon Charactor Code : %llu", _client->Get_IP(), charactor->Code());
+
 	//가입된 파티가 있을 경우
 	if (charactor->GetParty() != nullptr)
 	{
@@ -228,6 +230,7 @@ bool GAME::Map::cDungeonManager::Req_Dungeon_Data(cGameClient* _client)
 }
 
 
+//플레이어가 몬스터를 공격
 bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
 {
 	Utilities::CODE mobcode;
@@ -318,6 +321,7 @@ bool GAME::Map::cDungeonManager::Player_Atk_Monster(cGameClient* _client)
 	return result;
 }
 
+//던전 종료 체크
 bool GAME::Map::cDungeonManager::Dungeon_End(cGameClient* _client)
 {
 	Charactor::cCharactor* charactor = _client->Get_Charactor();
@@ -333,6 +337,7 @@ bool GAME::Map::cDungeonManager::Dungeon_End(cGameClient* _client)
 
 		//hp를 초기화 하고 마을 상태로 되돌린다.
 		_client->Get_Charactor()->mNowHp = 10;
+		_client->Get_Charactor()->mLevel++;
 		_client->Set_State(STATE::E::TOWN);
 
 		//클라에게 결과 전송
