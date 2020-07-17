@@ -206,14 +206,14 @@ bool GAME::Charactor::cCharactorManager::Req_Delete_Charactor(GAME::cGameClient*
 
 }
 
-bool GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _client)
-{
-	//세이브
-	//파티 out
-	//맵 out
-
-	return true;
-}
+//bool GAME::Charactor::cCharactorManager::Req_Out_Charactor(GAME::cGameClient* _client)
+//{
+//	//세이브
+//	//파티 out
+//	//맵 out
+//
+//	return true;
+//}
 
 void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 {
@@ -222,6 +222,11 @@ void GAME::Charactor::cCharactorManager::Exit_Charactor(cCharactor* _char)
 	//자신이있던 맵에서 나옴
 	Map::st_cMapManager::GetInstance()->Exit_Charactor(_char);
 	//레벨 업데이트
+	Run_SQL("update %s set mLevel = %d where mCode = %llu", DB_TABLE_CHAR, _char->mLevel, _char->Code());
+}
+
+void GAME::Charactor::cCharactorManager::Save_Charactor(cCharactor* _char)
+{
 	Run_SQL("update %s set mLevel = %d where mCode = %llu", DB_TABLE_CHAR, _char->mLevel, _char->Code());
 }
 

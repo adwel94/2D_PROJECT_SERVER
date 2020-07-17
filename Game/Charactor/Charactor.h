@@ -28,33 +28,33 @@ namespace GAME
 			Map::cMap* mMap;	
 			//파티
 			Party::cParty* mParty;
-
+			//최대체력
 			int mMaxHp;
-
-
 		public:
 
 
-			//캐릭터 위치
+			//캐릭터 방향, 위치
 			bool mDirection;
 			Utilities::MY_Math::cVector2D mPosition;
 
+			//상태값
+			bool mActive; //죽었는지 살았는지
+			int mNowHp; //현재 체력
+			int mLevel; //레벨
 
-
+			//생성자, 소멸자
 			cCharactor(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map = nullptr);
 			virtual ~cCharactor();
 
 
-			Utilities::CODE Code() 
-			{ return mCode; }
-
-			bool mActive;
-			int mNowHp;
-			int mLevel;
-
-			virtual int JobCode() =0;
+			//직업코드, 공격력, 공격 범위
+			virtual int JobCode() = 0;
 			virtual int Atk() = 0;
 			virtual float AtkRange() = 0;
+
+			//GET ,SET
+			Utilities::CODE Code() 
+			{ return mCode; }
 
 			cGameClient* GetClient()
 			{
@@ -84,8 +84,7 @@ namespace GAME
 			Party::cParty* GetParty() 
 			{ return mParty; }
 
-
-			virtual void Update() = 0;
+			//virtual void Update() = 0;
 		};
 
 		class cWarrior : public cCharactor
@@ -100,7 +99,7 @@ namespace GAME
 
 
 			// cCharactor을(를) 통해 상속됨
-			virtual void Update() override;
+			//virtual void Update() override;
 
 
 			// cCharactor을(를) 통해 상속됨
@@ -135,7 +134,7 @@ namespace GAME
 			}
 
 			// cCharactor을(를) 통해 상속됨
-			virtual void Update() override;
+			//virtual void Update() override;
 
 			virtual int JobCode() override
 			{

@@ -1,16 +1,16 @@
 #include "Charactor.h"
 #include "GameClient/GameClient.h"
 
-void GAME::Charactor::cWarrior::Update()
-{
-}
-
-
-
-
-void GAME::Charactor::cArcher::Update()
-{
-}
+//void GAME::Charactor::cWarrior::Update()
+//{
+//}
+//
+//
+//
+//
+//void GAME::Charactor::cArcher::Update()
+//{
+//}
 
 GAME::Charactor::cCharactor::cCharactor(cGameClient* _client, Utilities::CODE _code, const char* _name, Map::cMap* _map)
 {

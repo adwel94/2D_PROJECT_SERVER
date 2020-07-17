@@ -54,6 +54,7 @@ namespace Server
 		virtual void CompletionProcess(T _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) = 0;
 		virtual void ErrorProcess(T _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) = 0;
 		virtual void DisconnectProcess(T _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) = 0;
+		virtual void EndProcess() = 0;
 
 		//accept 후
 		virtual void AcceptProcess_IN(SOCKET _sock,SOCKADDR_IN& _addr);
@@ -178,7 +179,6 @@ namespace Server
 	{
 		//key 생성
 		T key = CreateKey(_sock, _addr);
-		mKey_List.LockAdd(key);
 		//포트 연결
 		CreateIoCompletionPort((HANDLE)_sock, mPort, (ULONG_PTR)key, 0);
 		//accpet후 작업

@@ -28,8 +28,7 @@ namespace GAME
 
 		virtual void DisconnectProcess(cGameClient* _key, LPOVERLAPPED _overlap = NULL, DWORD _trans = 0) override;
 
-
-
+		virtual void EndProcess() override;
 
 	};
 

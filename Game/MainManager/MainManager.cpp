@@ -6,6 +6,7 @@
 #include "Map/MapManager.h"
 #include "Map/DungeonManager.h"
 #include "PlayerManager/PlayerManager.h"
+#include "DS/LockIterator.h"
 
 using namespace Server::Socket;
 
@@ -50,7 +51,13 @@ void GAME::cMainManager::Run()
 
 		if (num == 0)
 		{
+			EndProcess();//save
 			End_IOCP();
+			break;
+		}
+		else if (num == 1)
+		{
+			EndProcess();
 			break;
 		}
 	}
@@ -63,9 +70,11 @@ GAME::cGameClient* GAME::cMainManager::CreateKey(SOCKET _sock, const SOCKADDR_IN
 
 void GAME::cMainManager::AcceptProcess(cGameClient* _key, SOCKET _sock, const SOCKADDR_IN& _addr)
 {
+	mKey_List.LockAdd(_key);
 	_key->Set_State(GAME::STATE::E::LOG_IN);
 	_key->Set_Recv_Size(sizeof(int));
 	_key->WSA_Recv_Packet();
+
 
 }
 
@@ -94,7 +103,18 @@ void GAME::cMainManager::DisconnectProcess(cGameClient* _key, LPOVERLAPPED _over
 	inet_ntop(AF_INET, &(_key->GetAddr().sin_addr), ip, sizeof(ip));
 	printf_s("IOCP Disconnect Client IP : %s PORT : %d \n", ip, _key->GetAddr().sin_port);
 	mLog.Record("IOCP Disconnect Client IP : %s PORT : %d", ip, _key->GetAddr().sin_port);
+	mKey_List.LockRemove(_key);
 	delete _key;
+}
+
+//캐릭터 전부 save
+void GAME::cMainManager::EndProcess()
+{
+	Utilities::DS::cLockIterator<cGameClient*> iter(&mKey_List);
+	while (iter.HasNext())
+	{
+		Charactor::st_cCharactorManager::GetInstance()->Save_Charactor(iter.Next()->Get_Charactor());
+	}
 }
 
 

@@ -14,7 +14,7 @@ namespace GAME
 	namespace Map
 	{
 
-
+		//带傈 包府 概聪历
 		class cDungeonManager 
 		{
 			//带傈俊 内靛 何咯且 积己扁
@@ -22,6 +22,7 @@ namespace GAME
 			//带傈 肺弊
 			Utilities::cLog mLog;
 		public:		
+			//积己磊, 家戈磊
 			cDungeonManager();
 			~cDungeonManager();
 			//带傈 积己

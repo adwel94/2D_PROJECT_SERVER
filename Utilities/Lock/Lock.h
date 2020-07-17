@@ -9,7 +9,6 @@ namespace Utilities
 
 
 		//임계영역 클래스
-
 		class cLock
 		{
 		protected:
@@ -18,7 +17,7 @@ namespace Utilities
 		public:
 			//크리티컬 섹션 초기화, 삭제
 			cLock();
-			~cLock();
+			virtual ~cLock();
 			//섹션 Enter, Leave
 			void Lock();
 			void UnLock();

@@ -32,10 +32,12 @@ namespace GAME
 			//캐릭터 삭제
 			bool Req_Delete_Charactor(GAME::cGameClient* _client);
 			//캐릭터 로그아웃
-			bool Req_Out_Charactor(GAME::cGameClient* _client);
+			//bool Req_Out_Charactor(GAME::cGameClient* _client);
+
 
 
 			void Exit_Charactor(cCharactor* _char);
+			void Save_Charactor(cCharactor* _char);
 
 
 

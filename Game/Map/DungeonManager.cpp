@@ -14,14 +14,17 @@
 
 GAME::Map::cDungeonManager::cDungeonManager()
 {
+	//로그 연결
 	mLog.Connect("DUNGEON_LOG.txt");
 }
 
 GAME::Map::cDungeonManager::~cDungeonManager()
 {
+	//로그 해제
 	mLog.Close();
 }
 
+//던전 생성
 GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 {
 
@@ -61,6 +64,7 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 			float right_max = attribute->DoubleValue();
 			attribute = attribute->Next();
 
+			//타입에 따른 생성
 			switch (type)
 			{
 			case CODE::MOB::GOBLIN_ARCHER:
@@ -73,7 +77,10 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 				break;
 			}
 
+			//몬스터 추가
 			dungeon->Add_Monster(mob);
+			
+			//다음 XML(몬스터) 검색
 			monster = monster->NextSiblingElement();
 		}
 	}
@@ -85,6 +92,7 @@ GAME::Map::cDungeon* GAME::Map::cDungeonManager::CreateDungeon()
 	return dungeon;
 }
 
+//던전 입장 요청
 bool GAME::Map::cDungeonManager::Req_Enter_Dungeon(cGameClient* _client)
 {
 	Charactor::cCharactor* charactor = _client->Get_Charactor();
