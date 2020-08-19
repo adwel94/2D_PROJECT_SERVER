@@ -17,6 +17,7 @@ namespace Utilities
 
 			std::list<T> mList;
 
+			~cLockList(){}
 
 			void LockAdd(T _data)
 			{

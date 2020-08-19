@@ -7,10 +7,7 @@ Utilities::Lock::cLock::cLock()
 	InitializeCriticalSection(&mCS);
 }
 
-Utilities::Lock::cLock::~cLock()
-{
-	DeleteCriticalSection(&mCS);
-}
+
 
 void Utilities::Lock::cLock::Lock()
 {

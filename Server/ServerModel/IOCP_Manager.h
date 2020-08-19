@@ -64,7 +64,7 @@ namespace Server
 	};
 
 	template<class T>
-	inline Server::cIOCP_Manager<T>::cIOCP_Manager()
+	Server::cIOCP_Manager<T>::cIOCP_Manager()
 	{
 		mThread_count = -1;
 		mLog.Connect("IOCP_MANAGER.txt");
@@ -73,7 +73,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline Server::cIOCP_Manager<T>::~cIOCP_Manager()
+	Server::cIOCP_Manager<T>::~cIOCP_Manager()
 	{
 		mLog.Close();
 		mServer.End();
@@ -83,7 +83,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline bool cIOCP_Manager<T>::Initialize_IOCP(const char* _addr, int _port, int _thread_count)
+	bool cIOCP_Manager<T>::Initialize_IOCP(const char* _addr, int _port, int _thread_count)
 	{
 
 		//wsa_start
@@ -137,7 +137,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline bool cIOCP_Manager<T>::Run_IOCP()
+	bool cIOCP_Manager<T>::Run_IOCP()
 	{
 
 		//스레드 시작
@@ -155,7 +155,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline void cIOCP_Manager<T>::End_IOCP()
+	void cIOCP_Manager<T>::End_IOCP()
 	{
 		mServer.End();
 		CloseHandle(mPort);
@@ -175,7 +175,7 @@ namespace Server
 
 
 	template<class T>
-	inline void cIOCP_Manager<T>::AcceptProcess_IN(SOCKET _sock, SOCKADDR_IN& _addr)
+	void cIOCP_Manager<T>::AcceptProcess_IN(SOCKET _sock, SOCKADDR_IN& _addr)
 	{
 		//key 생성
 		T key = CreateKey(_sock, _addr);
@@ -192,7 +192,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline Utilities::cThread::T_retval cIOCP_Manager<T>::Accept_Process_thread(LPVOID _iocp)
+	Utilities::cThread::T_retval cIOCP_Manager<T>::Accept_Process_thread(LPVOID _iocp)
 	{
 		cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
 		if (iocp->mPort == NULL)
@@ -217,7 +217,7 @@ namespace Server
 	}
 
 	template<class T>
-	inline Utilities::cThread::T_retval cIOCP_Manager<T>::IOCP_Process_thread(LPVOID _iocp)
+	Utilities::cThread::T_retval cIOCP_Manager<T>::IOCP_Process_thread(LPVOID _iocp)
 	{
 		cIOCP_Manager* iocp = (cIOCP_Manager*)_iocp;
 		DWORD transferred; //전송량

@@ -18,6 +18,7 @@ namespace Utilities
 		public:
 
 			Utilities::Lock::cLock mLock;
+			~cLockQueue() {}
 
 			T LockFront()
 			{

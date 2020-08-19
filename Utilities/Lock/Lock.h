@@ -17,7 +17,10 @@ namespace Utilities
 		public:
 			//크리티컬 섹션 초기화, 삭제
 			cLock();
-			virtual ~cLock();
+			virtual ~cLock()
+			{
+				DeleteCriticalSection(&mCS);
+			}
 			//섹션 Enter, Leave
 			void Lock();
 			void UnLock();

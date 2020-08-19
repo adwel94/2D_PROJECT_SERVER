@@ -17,6 +17,7 @@ namespace Utilities
 			typename std::list<T>::iterator mIter;
 			int mIndex;
 		public:
+
 			cLockIterator(cLockList<T>* _list)
 			{
 				_list->Lock();
